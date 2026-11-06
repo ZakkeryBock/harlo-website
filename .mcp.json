@@ -1,0 +1,15 @@
+{
+  "mcpServers": {
+    "agency": {
+      "command": "node",
+      "args": [
+        "C:/Users/zbock/Desktop/Youtube/Agency/bin/agency.js",
+        "mcp"
+      ],
+      "env": {
+        "AGENCY_AGENT": "claude-code",
+        "AGENCY_ROOT": "E:/Harlo Stack"
+      }
+    }
+  }
+}
