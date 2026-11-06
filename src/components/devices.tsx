@@ -1,0 +1,181 @@
+import { Check } from "./ui";
+
+/**
+ * The three Harlo surfaces, drawn as product screens: the desktop command
+ * center, Harlo Go on a phone, and Harlo Driver on a truck tablet. One account
+ * and one set of records behind all three. All names and numbers are made up.
+ */
+
+/* ----------------------------------------------------------------- desktop */
+
+const BOARD = [
+  { id: "NL-88412", lane: "Joliet, IL to Columbus, OH", who: "Unit 118, M. Reyes", state: "At pickup", tone: "go" },
+  { id: "NL-88430", lane: "Gary, IN to Louisville, KY", who: "Unit 122, L. Ortega", state: "In transit", tone: "go" },
+  { id: "HB-20417", lane: "Elk Grove, IL to Nashville, TN", who: "Lakeshore Transport", state: "Running late", tone: "warn" },
+  { id: "NL-88441", lane: "Aurora, IL to St. Louis, MO", who: "Unassigned", state: "Needs a truck", tone: "stop" },
+] as const;
+
+const toneText = { go: "text-go", warn: "text-warn", stop: "text-stop" } as const;
+
+export function DesktopScreen({ className = "" }: { className?: string }) {
+  return (
+    <div
+      className={`overflow-hidden rounded-xl border border-line bg-paper shadow-[0_24px_60px_-28px_rgb(28_34_30/0.4)] ${className}`}
+      role="img"
+      aria-label="Harlo on desktop: the dispatch board with four loads, a sidebar of modules, and Ike's summary of what needs attention."
+    >
+      <div aria-hidden="true">
+        <div className="flex items-center gap-1.5 border-b border-line bg-mist px-3 py-2">
+          <span className="size-2 rounded-full bg-line" />
+          <span className="size-2 rounded-full bg-line" />
+          <span className="size-2 rounded-full bg-line" />
+          <span className="ml-3 truncate rounded bg-paper px-2 py-0.5 text-[0.625rem] text-muted">app.goharlo.com/dispatch</span>
+        </div>
+        <div className="grid grid-cols-[5.5rem_1fr] sm:grid-cols-[7rem_1fr]">
+          <div className="border-r border-line bg-mist/60 p-2.5 text-[0.625rem] leading-6 text-body">
+            {["Dashboard", "Dispatch", "Loads", "Drivers", "Equipment", "Customers", "Money"].map((x) => (
+              <p key={x} className={x === "Dispatch" ? "rounded bg-paper px-1.5 font-semibold text-ink" : "px-1.5"}>
+                {x}
+              </p>
+            ))}
+          </div>
+          <div className="min-w-0 p-3">
+            <div className="flex items-center justify-between gap-2">
+              <p className="text-xs font-bold text-ink">Dispatch board</p>
+              <p className="rounded bg-rust-soft px-1.5 py-0.5 text-[0.625rem] font-semibold text-rust-deep">
+                Ike: 2 need you
+              </p>
+            </div>
+            <div className="mt-2 divide-y divide-line rounded-md border border-line">
+              {BOARD.map((b) => (
+                <div key={b.id} className="grid grid-cols-[1fr_auto] gap-2 px-2 py-1.5">
+                  <div className="min-w-0">
+                    <p className="truncate text-[0.6875rem] font-semibold text-ink">
+                      {b.id} <span className="font-normal text-body">{b.lane}</span>
+                    </p>
+                    <p className="truncate text-[0.625rem] text-muted">{b.who}</p>
+                  </div>
+                  <p className={`self-center text-[0.625rem] font-semibold whitespace-nowrap ${toneText[b.tone]}`}>{b.state}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ------------------------------------------------------------------- phone */
+
+const LOADS = [
+  { lane: "Joliet, IL to Columbus, OH", when: "Thu 07:00", rate: "$1,150", state: "Booked" },
+  { lane: "Gary, IN to Louisville, KY", when: "In transit", rate: "$980", state: "On the road" },
+  { lane: "Elk Grove, IL to Detroit, MI", when: "Delivered Tue", rate: "$1,040", state: "Delivered" },
+];
+
+export function Phone({ className = "" }: { className?: string }) {
+  return (
+    <div
+      className={`mx-auto w-full max-w-[20rem] rounded-[2.6rem] bg-pine p-2.5 shadow-[0_40px_80px_-40px_rgb(28_34_30/0.6)] ${className}`}
+      role="img"
+      aria-label="Harlo Go on a phone: Ike's note about what needs attention, this week's delivered total, and three loads."
+    >
+      <div aria-hidden="true" className="overflow-hidden rounded-[2.1rem] bg-mist">
+        <div className="flex justify-center pt-2.5">
+          <span className="h-5 w-24 rounded-full bg-pine" />
+        </div>
+        <div className="px-4 pt-4 pb-6">
+          <p className="text-xs text-muted">Good morning, Ray</p>
+          <p className="text-xl font-extrabold tracking-tight text-ink">Reyes Trucking</p>
+
+          <div className="mt-4 rounded-2xl bg-paper p-3.5">
+            <p className="text-[0.6875rem] font-semibold text-rust-deep">Ike</p>
+            <p className="mt-0.5 text-[0.8125rem] leading-snug text-ink">
+              Unit 204&apos;s inspection lapses before Thursday. Swap to Unit 118?
+            </p>
+            <div className="mt-2.5 flex gap-2">
+              <span className="rounded-md bg-rust-ink px-2.5 py-1 text-[0.6875rem] font-semibold text-white">Swap</span>
+              <span className="rounded-md border border-line px-2.5 py-1 text-[0.6875rem] font-semibold text-ink">Later</span>
+            </div>
+          </div>
+
+          <div className="mt-3 grid grid-cols-2 gap-2">
+            <div className="rounded-xl bg-paper p-3">
+              <p className="text-[0.6875rem] text-muted">Delivered this week</p>
+              <p className="text-lg font-extrabold text-ink tabular-nums">$4,820</p>
+            </div>
+            <div className="rounded-xl bg-paper p-3">
+              <p className="text-[0.6875rem] text-muted">On the road</p>
+              <p className="text-lg font-extrabold text-ink tabular-nums">2 loads</p>
+            </div>
+          </div>
+
+          <p className="mt-5 mb-2 text-sm font-bold text-ink">Loads</p>
+          <div className="grid gap-2">
+            {LOADS.map((l) => (
+              <div key={l.lane} className="rounded-xl bg-paper p-3">
+                <div className="flex items-baseline justify-between gap-2">
+                  <p className="truncate text-[0.8125rem] font-semibold text-ink">{l.lane}</p>
+                  <p className="text-[0.8125rem] font-bold text-ink tabular-nums">{l.rate}</p>
+                </div>
+                <div className="mt-0.5 flex justify-between text-[0.6875rem] text-muted">
+                  <span>{l.when}</span>
+                  <span className={l.state === "On the road" ? "font-semibold text-go" : ""}>{l.state}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+/* ------------------------------------------------------------ truck tablet */
+
+export function DriverTablet({ className = "" }: { className?: string }) {
+  return (
+    <div
+      className={`rounded-[1.6rem] bg-pine p-2.5 shadow-[0_40px_80px_-40px_rgb(28_34_30/0.6)] ${className}`}
+      role="img"
+      aria-label="Harlo Driver on a truck tablet: the current load and next stop, a message from dispatch, the documents to capture, and a large Arrived button."
+    >
+      <div aria-hidden="true" className="overflow-hidden rounded-[1.15rem] bg-mist">
+        <div className="flex items-center justify-between bg-paper px-4 py-2.5">
+          <p className="text-xs font-bold text-ink">Harlo Driver</p>
+          <p className="text-[0.6875rem] text-muted">Unit 118, Marcus Reyes</p>
+        </div>
+        <div className="grid gap-3 p-3 sm:grid-cols-[1.25fr_1fr]">
+          <div className="rounded-xl bg-paper p-3.5">
+            <p className="text-[0.6875rem] text-muted">Next stop, 2 of 2</p>
+            <p className="text-base leading-tight font-extrabold text-ink">Columbus, OH</p>
+            <p className="mt-0.5 text-xs text-body">Ohio Paper DC, 4410 Alum Creek Dr</p>
+            <p className="mt-2 text-xs text-body">
+              Appointment <span className="font-semibold text-ink">Fri 09:00</span>, door 14
+            </p>
+            <div className="mt-3 grid grid-cols-2 gap-2">
+              <span className="grid h-10 place-items-center rounded-lg bg-rust-ink text-sm font-bold text-white">Arrived</span>
+              <span className="grid h-10 place-items-center rounded-lg border border-line text-sm font-semibold text-ink">
+                Directions
+              </span>
+            </div>
+          </div>
+          <div className="grid content-start gap-3">
+            <div className="rounded-xl bg-paper p-3">
+              <p className="text-[0.6875rem] font-semibold text-ink">Dispatch</p>
+              <p className="mt-0.5 text-xs leading-snug text-body">Receiver asks for check-in at the guard shack. Thanks Marcus.</p>
+            </div>
+            <div className="rounded-xl bg-paper p-3 text-xs">
+              <p className="text-[0.6875rem] font-semibold text-ink">Paperwork</p>
+              <p className="mt-1 flex items-center gap-1.5 text-go">
+                <Check className="size-3.5" /> BOL captured
+              </p>
+              <p className="mt-1 text-warn">POD at delivery</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}

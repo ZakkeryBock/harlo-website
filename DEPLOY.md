@@ -1,74 +1,39 @@
 # Deploying
 
-The site is live at **<https://zakkerybock.github.io/harlo-website/>**.
+`goharlo.com` still points at Webflow. Nothing here changes that until DNS is
+moved by hand.
 
-Pushing to `main` republishes it. No build, no CI — GitHub Pages serves the
-files directly, usually within a minute.
+## Recommended host: Cloudflare Pages
 
-## goharlo.com still points at Webflow
+- **Free plan:** commercial use is allowed, bandwidth is unlimited, and there
+  are 500 builds a month.
+- **DNS is already there:** the `goharlo.com` zone is on Cloudflare, so the
+  custom domain attaches in two clicks.
+- **Why not Vercel Hobby:** it forbids commercial use. GitHub Pages also works
+  for a static site, but it can't do preview deploys per branch.
 
-**Nothing about the live `goharlo.com` has been changed.** The old Webflow
-one-pager is still serving there, untouched. Switching the domain over needs
-access to Cloudflare DNS, which is a deliberate, human step — do it when you
-have a minute to watch it, not in a hurry.
+### One-time setup (dashboard)
 
-### The switch
+1. Cloudflare → Workers & Pages → Create → Pages → Connect to Git →
+   `ZakkeryBock/harlo-website`.
+2. Build command `npm run build`, output directory `out`, environment variable
+   `NODE_VERSION=22`.
+3. Production branch `main`. Every other branch gets a preview URL.
+4. Custom domains → add `goharlo.com` and `www.goharlo.com`. Cloudflare
+   replaces the Webflow records itself and asks you to confirm.
 
-1. **Add the domain to this repo.** Create a file named `CNAME` at the repo
-   root containing exactly:
+### Or from the CLI
 
-   ```
-   goharlo.com
-   ```
+```sh
+npm run build
+npx wrangler pages deploy out --project-name harlo-website
+```
 
-   > Do this **only when you are ready to move DNS**, and not before. The
-   > moment `CNAME` exists, GitHub redirects
-   > `zakkerybock.github.io/harlo-website` to `goharlo.com` — so if DNS still
-   > points at Webflow, the preview URL stops showing this site and you lose
-   > the thing you were checking against.
+## Cutover checklist
 
-2. **Point DNS at GitHub Pages.** In Cloudflare, on the `goharlo.com` zone,
-   replace the existing apex records with:
-
-   | Type | Name | Value |
-   |---|---|---|
-   | A | `@` | `185.199.108.153` |
-   | A | `@` | `185.199.109.153` |
-   | A | `@` | `185.199.110.153` |
-   | A | `@` | `185.199.111.153` |
-   | CNAME | `www` | `zakkerybock.github.io` |
-
-   Set the proxy status to **DNS only** (grey cloud) at first. GitHub needs an
-   unproxied record to issue the TLS certificate; with the orange cloud on,
-   certificate provisioning fails and you get a warning in repo settings that
-   is easy to misread as a DNS mistake.
-
-3. **Wait for the certificate.** Repo → Settings → Pages will show *"Your site
-   is published at https://goharlo.com"* with *Enforce HTTPS* available once
-   the cert is issued. This normally takes a few minutes and occasionally up to
-   an hour. Tick **Enforce HTTPS**.
-
-4. **Optional: turn Cloudflare's proxy back on.** Once HTTPS is enforced and
-   working, you can flip the records back to proxied. Set the zone's SSL/TLS
-   mode to **Full (strict)** — *Flexible* will cause a redirect loop against
-   Pages.
-
-5. **Cancel Webflow** once you are happy, not before. Keeping it a few days
-   costs one month of hosting and buys you a rollback: point the A records
-   back and you are live again in minutes.
-
-### Rolling back
-
-Restore the previous apex DNS records and delete the `CNAME` file. There is no
-state to migrate and nothing to undo on the GitHub side.
-
-## What still needs a decision
-
-- **The contact form is a `mailto:` link.** A static host cannot accept a form
-  post. If you want a real form, the options are a form service (Formspree,
-  Basin) or an endpoint on the app — either way someone has to be reading the
-  inbox it lands in.
-- **`support@goharlo.com` must be a monitored mailbox.** It is the only contact
-  route on the site and it appears in both policies.
-- **The legal pages are a copy.** See the note in `README.md` — when the app's
-  `/privacy` or `/terms` change, regenerate these in the same PR.
+1. Deploy, then check the `*.pages.dev` URL on a phone and a desktop.
+2. Attach `goharlo.com` (step 4 above). The Webflow site stops serving.
+3. Keep Webflow until the end of its paid term as a rollback. To roll back,
+   point the apex records back to Webflow.
+4. Make sure `sales@goharlo.com` and `support@goharlo.com` are monitored
+   inboxes. They are the only contact routes on the site.

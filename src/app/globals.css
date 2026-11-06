@@ -1,0 +1,202 @@
+@import "tailwindcss";
+
+/*
+ * Harlo brand tokens.
+ *
+ * Drawn from the brand marks (rust #CA6B44, sage #4C544A, cream #F4F0DF) and
+ * tightened for a product site: white paper instead of cream, the sage family
+ * deepened into a pine ink for text and dark surfaces, and rust kept for the
+ * mark and for the one action we want people to take. #CA6B44 fails AA under
+ * white text, so buttons use the deeper rust-ink (4.98:1).
+ */
+@theme {
+  --color-paper: #ffffff;
+  --color-mist: #f4f5f1;
+  --color-mist-2: #eceee8;
+  --color-line: #e1e4dc;
+  --color-ink: #1c221e;
+  --color-body: #4c544a;
+  --color-muted: #6b7268;
+  --color-rust: #ca6b44;
+  --color-rust-ink: #b4532e;
+  --color-rust-deep: #96421f;
+  --color-rust-soft: #f8e9e1;
+  --color-rust-light: #e08a63;
+  --color-pine: #1c221e;
+  --color-pine-2: #252c27;
+  --color-pine-3: #323a34;
+  --color-on-pine: #e8eae4;
+  --color-on-pine-muted: #a9b0a5;
+  --color-cream: #f4f0df;
+  --color-go: #2f7a4a;
+  --color-go-soft: #e3f0e6;
+  --color-warn: #8f5a0e;
+  --color-warn-soft: #fbf0dc;
+  --color-stop: #b23a2a;
+  --color-stop-soft: #f9e4e0;
+
+  --font-sans: var(--font-overpass), ui-sans-serif, system-ui, sans-serif;
+
+  --text-display: clamp(2.5rem, 1.6rem + 3.6vw, 4.5rem);
+  --text-display--line-height: 1.02;
+  --text-display--letter-spacing: -0.035em;
+  --text-h2: clamp(1.875rem, 1.4rem + 1.9vw, 2.875rem);
+  --text-h2--line-height: 1.08;
+  --text-h2--letter-spacing: -0.028em;
+  --text-h3: 1.3125rem;
+  --text-h3--line-height: 1.25;
+  --text-h3--letter-spacing: -0.015em;
+  --text-lead: clamp(1.0625rem, 1rem + 0.3vw, 1.25rem);
+  --text-lead--line-height: 1.55;
+
+  --ease-out-soft: cubic-bezier(0.22, 0.61, 0.36, 1);
+}
+
+/* Base rules live in the base layer so Tailwind utilities can override them. */
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+    scroll-padding-top: 5rem;
+  }
+
+  body {
+    background: var(--color-paper);
+    color: var(--color-body);
+    font-family: var(--font-sans);
+    font-size: 1.0625rem;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    color: var(--color-ink);
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  ::selection {
+    background: var(--color-rust-soft);
+    color: var(--color-ink);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-rust-ink);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  .on-pine :focus-visible {
+    outline-color: var(--color-cream);
+  }
+
+  details > summary {
+    list-style: none;
+  }
+  details > summary::-webkit-details-marker {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-delay: 0ms !important;
+    transition-duration: 0.001ms !important;
+  }
+}
+
+/* ---- hero demo: the page's one orchestrated sequence ------------------- */
+
+.demo [data-step] {
+  opacity: 0;
+  transform: translateY(6px);
+  animation: demo-in 420ms var(--ease-out-soft) forwards;
+  animation-delay: calc(var(--d, 0) * 1ms);
+}
+
+@keyframes demo-in {
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.demo .demo-file {
+  animation: demo-drop 640ms var(--ease-out-soft) 250ms both;
+}
+
+@keyframes demo-drop {
+  from {
+    opacity: 0;
+    transform: translate(28px, -22px) rotate(4deg);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.demo .demo-scan {
+  transform-origin: left;
+  animation: demo-scan 1500ms ease-in-out 900ms both;
+}
+
+@keyframes demo-scan {
+  0% {
+    transform: scaleX(0);
+    opacity: 1;
+  }
+  85% {
+    transform: scaleX(1);
+    opacity: 1;
+  }
+  100% {
+    transform: scaleX(1);
+    opacity: 0;
+  }
+}
+
+.demo .demo-reading {
+  animation: demo-reading 1700ms linear 900ms both;
+}
+
+@keyframes demo-reading {
+  0%,
+  90% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.demo .demo-cta {
+  animation: demo-ping 1200ms var(--ease-out-soft) 4400ms both;
+}
+
+@keyframes demo-ping {
+  0% {
+    box-shadow: 0 0 0 0 rgb(180 83 46 / 0.45);
+  }
+  100% {
+    box-shadow: 0 0 0 12px rgb(180 83 46 / 0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .demo .demo-reading {
+    display: none;
+  }
+}
