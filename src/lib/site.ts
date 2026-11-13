@@ -9,15 +9,24 @@
 
 export const SITE_URL = "https://goharlo.com";
 
+/**
+ * Where the apps live. Production unless a build says otherwise: a preview of
+ * this site for testing sign-up end to end is built with
+ * NEXT_PUBLIC_APP_URL=https://harlo-app-dev.vercel.app (and the Go one), so
+ * its buttons create accounts on dev, never in production.
+ */
+const APP = process.env.NEXT_PUBLIC_APP_URL || "https://app.goharlo.com";
+const GO = process.env.NEXT_PUBLIC_GO_URL || "https://go.goharlo.com";
+
 export const LINKS = {
-  signup: "https://app.goharlo.com/signup",
+  signup: `${APP}/signup`,
   /** Signup preselects the workspace type. The app reads ?side= on /signup. */
-  signupCarrier: "https://app.goharlo.com/signup?side=carrier",
-  signupBroker: "https://app.goharlo.com/signup?side=broker",
-  signupBoth: "https://app.goharlo.com/signup?side=both",
-  login: "https://app.goharlo.com/login",
-  goSignup: "https://go.goharlo.com/signup",
-  goLogin: "https://go.goharlo.com/login",
+  signupCarrier: `${APP}/signup?side=carrier`,
+  signupBroker: `${APP}/signup?side=broker`,
+  signupBoth: `${APP}/signup?side=both`,
+  login: `${APP}/login`,
+  goSignup: `${GO}/signup`,
+  goLogin: `${GO}/login`,
   sales: "mailto:sales@goharlo.com?subject=Harlo%20for%20our%20fleet",
   support: "mailto:support@goharlo.com",
 } as const;
