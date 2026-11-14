@@ -29,7 +29,20 @@ export const LINKS = {
   goLogin: `${GO}/login`,
   sales: "mailto:sales@goharlo.com?subject=Harlo%20for%20our%20fleet",
   support: "mailto:support@goharlo.com",
+  partners: "/partners",
+  developers: process.env.NEXT_PUBLIC_DEVELOPER_URL || "https://developer.goharlo.com",
 } as const;
+
+/**
+ * The partner form posts to the partner-inquiry Edge Function (harlo-infra
+ * migration 101). Production unless the build says otherwise; a preview built
+ * against dev sets NEXT_PUBLIC_PARTNER_ENDPOINT and Cloudflare's test
+ * Turnstile key, so test inquiries never reach the real inbox.
+ */
+export const PARTNER_ENDPOINT =
+  process.env.NEXT_PUBLIC_PARTNER_ENDPOINT || "https://uymounluwsykwapucbbg.supabase.co/functions/v1/partner-inquiry";
+// Public by design (it ships in the page); the secret half lives only in the function.
+export const TURNSTILE_SITE_KEY = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY || "0x4AAAAAAF0ThLi-1KoztRti";
 
 export const TRIAL_DAYS = 14;
 

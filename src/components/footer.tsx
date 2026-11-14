@@ -22,6 +22,8 @@ const COLUMNS = [
     links: [
       { href: "/about", label: "About" },
       { href: "/security", label: "Security" },
+      { href: "/partners", label: "Partners" },
+      { href: LINKS.developers, label: "Developers" },
       { href: LINKS.sales, label: "Sales" },
       { href: LINKS.support, label: "Support" },
     ],
