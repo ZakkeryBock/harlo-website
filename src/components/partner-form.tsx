@@ -163,7 +163,7 @@ export function PartnerForm({ fallbackEmail }: { fallbackEmail: string }) {
           <span className="text-[0.9375rem] font-semibold text-ink">
             Website <span className="font-normal text-muted">(optional)</span>
           </span>
-          <input id={`${id}-website`} name="website" type="url" maxLength={300} placeholder="https://" autoComplete="url" className={field} />
+          <input id={`${id}-website`} name="website" type="text" inputMode="url" maxLength={300} placeholder="acme.com" autoComplete="url" className={field} />
         </label>
         <label className="block sm:col-span-2" htmlFor={`${id}-message`}>
           <span className="text-[0.9375rem] font-semibold text-ink">What do you have in mind?</span>
