@@ -1,9 +1,25 @@
 # Deploying
 
-`goharlo.com` still points at Webflow. Nothing here changes that until DNS is
-moved by hand.
+## Live: Hostinger, from the `hostinger` branch (2026-11-20)
 
-## Recommended host: Cloudflare Pages
+goharlo.com is served by Hostinger (LiteSpeed) behind Cloudflare. Hostinger's
+Git deployment copies files and cannot run a Next.js build, so:
+
+1. Every push to `main` (or `redesign`) runs `.github/workflows/hostinger.yml`:
+   it builds the site and force-pushes the static files in `out/` to the
+   `hostinger` branch.
+2. In hPanel → Websites → goharlo.com → Advanced → Git, the repository is
+   `ZakkeryBock/harlo-website`, branch **`hostinger`**, directory empty
+   (public_html). Press Deploy, or turn on auto-deployment.
+
+`public/.htaccess` maps `/pricing` to `pricing.html` (the export also writes a
+`pricing/` folder of page data, which would otherwise answer 403) and serves
+`404.html`. It deliberately has no http→https redirect: Cloudflare can reach the
+origin over plain http, so turn on "Always Use HTTPS" in Cloudflare instead.
+
+Never point Hostinger at `main`: that is the source, not a built site.
+
+## Earlier recommendation: Cloudflare Pages
 
 - **Free plan:** commercial use is allowed, bandwidth is unlimited, and there
   are 500 builds a month.
