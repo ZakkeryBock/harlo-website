@@ -233,8 +233,11 @@ export default function TermsPage() {
           no ownership of what a carrier enters or uploads. The customer grants us a worldwide,
           non-exclusive licence to host, process, transmit, back up, display, and otherwise use
           Customer Data as needed to provide, secure, support, and improve the service — including
-          processing it through the automated analysis described in section 12, and deriving
-          Aggregated Data under section 8.
+          processing it through the automated analysis described in section 12, using it to train and
+          improve Harlo&apos;s own models (including the Harlo Intelligence Engine), and deriving
+          Aggregated Data under section 8. We do not sell Customer Data. Models we train belong to us,
+          and the limits in section 8 apply to what they learn: they never disclose a customer&apos;s
+          rates, margins, relationships, driver records, or load-level detail to anyone else.
         </p>
         <p>
           The customer is responsible for having the right to provide the data it puts into Harlo —

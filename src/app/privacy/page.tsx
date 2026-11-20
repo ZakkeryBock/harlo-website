@@ -15,6 +15,10 @@ import {
  * DOT compliance records, and A2P messaging. Have counsel read it before it is
  * relied on.
  *
+ * Section 6 commits Harlo to masking direct identifiers (names, phones, emails,
+ * licence numbers) before training its own models: any training pipeline must
+ * do that, or this text must change first (owner decision 2026-11-20).
+ *
  * Keep it truthful as the product changes: if Harlo starts sending data to a
  * new processor, that processor belongs in section 7 in the same PR. Section 5
  * (aggregated data) is a promise, not marketing — do not let the product drift
@@ -57,7 +61,8 @@ export default function PrivacyPage() {
         <p>
           We are the controller for a smaller set of data: the accounts of the people who sign in,
           billing records, support correspondence, the operational logs we keep to run the service,
-          and the aggregated statistics described in section 5.
+          the aggregated statistics described in section 5, and the de-identified data we use to train
+          and improve Harlo&apos;s own models (section 6).
         </p>
       </LegalSection>
 
@@ -128,7 +133,7 @@ export default function PrivacyPage() {
             "Keeping an audit trail of changes, which we retain because carriers are subject to audit.",
             "Security, abuse prevention, troubleshooting, and support.",
             "Billing, and measuring usage against a subscription.",
-            "Improving Harlo, and building the cross-carrier statistics described in section 5.",
+            "Improving Harlo, building the cross-carrier statistics described in section 5, and training Harlo's own models as described in section 6.",
             "Meeting our own legal obligations, and establishing or defending legal claims.",
           ]}
         />
@@ -146,7 +151,7 @@ export default function PrivacyPage() {
           Where we act as a processor, the carrier determines the legal basis. Where we act as a
           controller, we rely on: performance of a contract, for accounts, billing, and delivering the
           service; our legitimate interests, for security, abuse prevention, support, product
-          improvement, and the aggregated statistics in section 5, balanced against the rights of the
+          improvement, training Harlo&apos;s own models, and the aggregated statistics in section 5, balanced against the rights of the
           people concerned; consent, where the law requires it, such as for messaging; and legal
           obligation, where we must keep or disclose something.
         </p>
@@ -206,11 +211,28 @@ export default function PrivacyPage() {
           Where a third-party provider is used, it processes the content only to return a result to us
           and under contractual restrictions.{" "}
           <strong className="text-foreground">
-            Carrier data is not used to train third-party models.
-          </strong>{" "}
-          We may use carrier data to evaluate and improve our own systems, in line with section 5 and
-          our agreement with the carrier.
+            Third-party model providers do not train their models on carrier data.
+          </strong>
         </p>
+        <p>
+          <strong className="text-foreground">
+            We use carrier data to train and improve Harlo&apos;s own models
+          </strong>
+          , including the Harlo Intelligence Engine behind Ike, document reading, alerts and
+          benchmarks. That is how Harlo learns to read a new broker&apos;s rate confirmation, notice a
+          load going late, or show a carrier how its lanes compare. We do this for our own purpose of
+          making Harlo better for every customer, so for this use we act on our own account rather than
+          on a carrier&apos;s instructions. These limits apply:
+        </p>
+        <LegalList
+          items={[
+            "We never sell carrier data, and we never sell or license access to it.",
+            "Before data is used for training, we remove or mask what identifies individual people (names, phone numbers, email addresses, licence numbers) wherever the model does not need it to learn.",
+            "What a model tells one customer never reveals another customer's rates, margins, customers, drivers or loads.",
+            "Everything section 5 promises about aggregated data applies to what our models learn.",
+            "Trained models belong to Harlo. As with section 5, deleting a carrier's data does not require us to retrain models already built from it.",
+          ]}
+        />
         <p>
           Harlo&apos;s conclusions are decision support, not decisions. Nothing in Harlo makes a
           decision with legal or similarly significant effect on a person on its own: anything that

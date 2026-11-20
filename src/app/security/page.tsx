@@ -32,6 +32,10 @@ const POINTS = [
     d: "Ike reads and drafts, but a person approves every change before it touches a load.",
   },
   {
+    t: "Used to make Harlo smarter, never sold",
+    d: "Harlo trains its own models on activity across the platform, with people's names and contact details removed, so it reads documents better and spots trouble sooner for everyone. Your data is never sold, outside AI providers don't train on it, and no other customer sees your rates, customers or loads.",
+  },
+  {
     t: "Consent on record",
     d: "Drivers opt in before Harlo ever texts them, and the proof of consent is kept with their record.",
   },

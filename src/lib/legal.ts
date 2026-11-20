@@ -30,4 +30,4 @@ export const GOVERNING_STATE = "Illinois";
 export const GOVERNING_VENUE = "Cook County, Illinois";
 
 /** Shown on each policy. Update when the text materially changes. */
-export const EFFECTIVE_DATE = "August 22, 2026";
+export const EFFECTIVE_DATE = "November 20, 2026";

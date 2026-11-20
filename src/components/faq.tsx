@@ -33,8 +33,12 @@ export const FAQ_TRIAL: QA[] = [
     q: "Who can see my data?",
     a: (
       <>
-        Only people in your company. Every account is isolated at the database level, changes are
-        recorded in an audit log, and Ike proposes changes rather than making them on its own. Read the{" "}
+        Your records are visible only to people in your company. Every account is isolated at the
+        database level, changes are recorded in an audit log, and Ike proposes changes rather than
+        making them on its own. Harlo also learns from activity across the platform, with people&apos;s
+        details removed, to train its own models and give every customer better insights, like how
+        long a facility really holds trucks. We never sell your data, and no other customer ever sees
+        your rates, margins, customers, drivers or loads. Read the{" "}
         <a className="font-semibold text-ink underline underline-offset-2" href="/privacy">
           privacy policy
         </a>{" "}
