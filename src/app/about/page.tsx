@@ -34,15 +34,15 @@ const TIMELINE = [
 const BELIEFS = [
   {
     t: "Software should do the reading",
-    d: "A dispatcher's time is worth more than re-typing a PDF. If a document arrives with the answer in it, Harlo should find the answer.",
+    d: "If a document has the answer in it, Harlo should find it. Nobody should re-type a PDF.",
   },
   {
     t: "People approve, Harlo proposes",
-    d: "Ike suggests changes and shows what it read. A person on your team decides. That's the deal, and it doesn't change with the plan you're on.",
+    d: "Ike suggests and shows what it read. A person decides. On every plan.",
   },
   {
     t: "A small fleet deserves the same tools",
-    d: "There's one Harlo. A two-truck carrier gets the same records, the same compliance checks and the same assistant as a hundred-truck fleet.",
+    d: "One Harlo. A two-truck carrier gets the same tools as a hundred-truck fleet.",
   },
 ];
 
@@ -54,9 +54,8 @@ export default function AboutPage() {
         <Container className="relative">
           <h1 className="max-w-[16ch] text-display font-extrabold">We ran a trucking company first.</h1>
           <p className="mt-6 max-w-2xl text-lead">
-            Harlo wasn&apos;t dreamed up in a venture studio. It started as the system that ran a small
-            carrier, built by the people doing its dispatch and its paperwork. Today it&apos;s an AI-native
-            platform built to give every carrier that same edge.
+            Harlo started as the system that ran a small carrier, built by the people doing its dispatch and
+            paperwork. Now it gives every carrier that edge.
           </p>
         </Container>
       </section>
@@ -94,8 +93,7 @@ export default function AboutPage() {
           <h2 className="text-h2 font-extrabold">Talk to the people who build it</h2>
           <div className="grid gap-4 text-lead">
             <p>
-              {LEGAL_ENTITY} is based in Illinois. When you email us, you reach the team that writes the
-              software, not a ticket queue.
+              {LEGAL_ENTITY} is based in Illinois. Email us and you reach the team that builds Harlo.
             </p>
             <p className="text-base">
               Sales:{" "}

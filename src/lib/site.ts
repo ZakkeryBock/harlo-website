@@ -103,7 +103,7 @@ export const PLANS: Plan[] = [
       "Ike assistant and driver texts",
       "Custom roles and permissions",
     ],
-    cta: { label: "Start my free trial", href: LINKS.signupCarrier },
+    cta: { label: "Start free trial", href: LINKS.signupCarrier },
   },
   {
     code: "fleet",
@@ -118,7 +118,7 @@ export const PLANS: Plan[] = [
     loads: "Unlimited loads",
     ai: "100 AI credits per truck",
     includes: ["Everything in Pro", "Single sign-on", "Lower per-truck rate"],
-    cta: { label: "Start my free trial", href: LINKS.signupCarrier },
+    cta: { label: "Start free trial", href: LINKS.signupCarrier },
   },
   {
     code: "enterprise",
@@ -220,7 +220,7 @@ export const BROKER_PLANS: BrokerPlan[] = [
     users: "Unlimited users",
     ai: "400 AI credits a month",
     includes: ["Carrier rate cons built from the load", "Tracking, late alerts and customer updates", "Custom roles and permissions"],
-    cta: { label: "Start my free trial", href: LINKS.signupBroker },
+    cta: { label: "Start free trial", href: LINKS.signupBroker },
   },
   {
     code: "scale",
@@ -233,7 +233,7 @@ export const BROKER_PLANS: BrokerPlan[] = [
     users: "Unlimited users",
     ai: "1,500 AI credits a month",
     includes: ["Everything in Broker", "Single sign-on", "Lower per-load rate"],
-    cta: { label: "Start my free trial", href: LINKS.signupBroker },
+    cta: { label: "Start free trial", href: LINKS.signupBroker },
   },
   {
     code: "benterprise",

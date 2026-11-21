@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Overpass } from "next/font/google";
 import { Nav } from "@/components/nav";
 import { Footer } from "@/components/footer";
+import { AdPixels } from "@/components/ad-pixels";
 import { SITE_URL } from "@/lib/site";
 import "./globals.css";
 
@@ -15,12 +16,12 @@ const overpass = Overpass({
 });
 
 const description =
-  "Harlo is the AI-native TMS for carriers and brokers. One connected platform for loads, dispatch, compliance, carriers and money, with an AI teammate that watches your operation and gets the next step ready. Live today, free to start.";
+  "Harlo is the TMS for carriers and brokers: loads, dispatch, compliance, carriers and money in one platform. Free to start.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),
   title: {
-    default: "Harlo: the AI-native TMS that works with you",
+    default: "Harlo: the TMS for carriers and brokers",
     template: "%s | Harlo",
   },
   description,
@@ -29,7 +30,7 @@ export const metadata: Metadata = {
     type: "website",
     siteName: "Harlo",
     url: SITE_URL,
-    title: "Harlo: the AI-native TMS that works with you",
+    title: "Harlo: the TMS for carriers and brokers",
     description,
   },
   twitter: { card: "summary_large_image" },
@@ -55,6 +56,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           {children}
         </div>
         <Footer />
+        <AdPixels />
       </body>
     </html>
   );

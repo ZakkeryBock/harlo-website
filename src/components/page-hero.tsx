@@ -8,7 +8,7 @@ export function PageHero({
   lead,
   visual,
   secondary = { href: "/pricing", label: "See pricing" },
-  cta = { href: LINKS.signup, label: "Start my free trial" },
+  cta = { href: LINKS.signup, label: "Start free trial" },
   note = TRIAL_NOTE,
 }: {
   title: string;

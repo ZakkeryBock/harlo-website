@@ -7,7 +7,7 @@ export const BROKER_STEPS: Step[] = [
     key: "book",
     tab: "Book it",
     title: "Customer tenders become loads.",
-    body: "Drop in a shipper's tender and Ike builds the load: customer, lane, appointments, commodity and the rate you quoted. Every customer load lives on one board instead of across a dozen inboxes.",
+    body: "Drop in a tender and Ike builds the load: customer, lane, appointments, commodity and rate. Every customer load on one board.",
     points: [
       "Reads tenders, rate confirmations, BOLs and PODs",
       "Customer rate, accessorials and references captured",
@@ -28,7 +28,7 @@ export const BROKER_STEPS: Step[] = [
     key: "cover",
     tab: "Cover it",
     title: "Cover it with carriers you can trust.",
-    body: "Harlo checks every carrier before you tender: operating authority, insurance on file and when it expires. A carrier that doesn't check out can't be booked, and the ones that do get a rate confirmation built straight from the load.",
+    body: "Authority and insurance are checked before you book. A carrier that doesn't pass can't be booked, and the ones that do get a rate confirmation built straight from the load.",
     points: [
       "Carrier authority and insurance tracked with expirations",
       "Carrier rate confirmations generated from the load",
@@ -47,7 +47,7 @@ export const BROKER_STEPS: Step[] = [
     key: "track",
     tab: "Track it",
     title: "Know where every load is, without the check calls.",
-    body: "The driver gets load details by text and every arrival and departure lands on the load. When something starts running late, Ike flags it and drafts the customer update, so you call them before they call you.",
+    body: "Stop times land on the load. When a load runs late, Ike flags it and drafts the customer update.",
     points: [
       "Arrival and departure times on every stop",
       "Late loads flagged before the appointment is missed",
@@ -67,7 +67,7 @@ export const BROKER_STEPS: Step[] = [
     key: "settle",
     tab: "Settle it",
     title: "Bill the customer, pay the carrier, keep the spread.",
-    body: "The customer rate, carrier pay and signed POD sit on the same load, so invoicing is one step and your margin is a real number the day it delivers.",
+    body: "Customer rate, carrier pay and signed POD on one load. Invoicing is one step, and margin is real the day it delivers.",
     points: [
       "Customer invoice and carrier pay on one record",
       "Signed POD attached before anything is billed",

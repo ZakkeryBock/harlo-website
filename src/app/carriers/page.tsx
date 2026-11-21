@@ -11,28 +11,28 @@ import { LINKS } from "@/lib/site";
 export const metadata: Metadata = {
   title: "For carriers",
   description:
-    "Harlo is the AI-native TMS for carriers running 1 to 100 trucks: loads from rate cons, compliance-checked dispatch, driver texts and margin on every load.",
+    "Harlo for carriers running 1 to 100 trucks: loads from rate cons, compliance-checked dispatch, driver texts and margin on every load.",
   alternates: { canonical: "/carriers" },
 };
 
 const FLEETS = [
   {
     size: "1 or 2 trucks",
-    who: "Owner-operators and small carriers running the business from the cab with the Harlo Go app.",
+    who: "Owner-operators running from the cab with Harlo Go.",
     plan: "Free, with no time limit",
     href: "/go",
     link: "See Harlo Go",
   },
   {
     size: "4 to 25 trucks",
-    who: "Growing fleets with a dispatcher or two and an office that's outgrown the spreadsheet.",
+    who: "Growing fleets that have outgrown the spreadsheet.",
     plan: "Pro, $39 per truck, Harlo Driver included",
     href: "/pricing",
     link: "See Pro pricing",
   },
   {
     size: "26 to 100 trucks",
-    who: "Established carriers with a dispatch floor, a safety team and a mountain of paperwork.",
+    who: "Established carriers with a dispatch floor and a safety team.",
     plan: "Fleet, $32 per truck, Harlo Driver included",
     href: "/pricing",
     link: "See Fleet pricing",
@@ -40,22 +40,21 @@ const FLEETS = [
 ];
 
 const COMPLIANCE = [
-  "CDLs, medical cards and registrations tracked with their expiry dates",
-  "Annual inspections and maintenance logged against each unit",
-  "Out-of-service equipment and unfit drivers blocked from dispatch",
-  "Warnings while there's still time to renew, not after",
+  "CDLs, medical cards and registrations, with expiry dates",
+  "Inspections and maintenance per unit",
+  "Unfit drivers and out-of-service trucks blocked from dispatch",
+  "Warnings before anything lapses",
 ];
 
 export default function CarriersPage() {
   return (
     <main>
       <PageHero
-        title="Keep every truck legal and every load profitable."
+        title="Every truck legal. Every load profitable."
         lead={
           <p>
-            Harlo runs the whole carrier operation, from booking to dispatch to the margin each load made.
-            It keeps unfit drivers and trucks off the road on its own, keeps every load visible, and Ike
-            tells you what needs attention before it costs you.
+            Booking, dispatch, compliance and margin in one place. Unfit drivers and trucks can&apos;t be
+            dispatched.
           </p>
         }
         visual={
@@ -67,7 +66,7 @@ export default function CarriersPage() {
             watching="Ike is watching 18 trucks"
           />
         }
-        cta={{ href: LINKS.signupCarrier, label: "Start my free trial" }}
+        cta={{ href: LINKS.signupCarrier, label: "Start free trial" }}
         secondary={{ href: "/pricing#carrier", label: "See carrier pricing" }}
       />
 
@@ -76,7 +75,7 @@ export default function CarriersPage() {
           <div className="max-w-2xl">
             <h2 className="text-h2 font-extrabold">Book it, dispatch it, run it, get paid.</h2>
             <p className="mt-5 text-lead">
-              One load, one record, from the minute the rate con lands to the day the money does.
+              One load, one record, from rate con to payment.
             </p>
           </div>
           <div className="mt-12">
@@ -92,10 +91,8 @@ export default function CarriersPage() {
               Compliance that enforces itself.
             </h2>
             <p className="mt-5 max-w-xl text-lead text-on-pine">
-              Most software reminds you. Harlo refuses. If a driver&apos;s medical card or a truck&apos;s
-              registration has lapsed, that driver or truck can&apos;t be assigned or dispatched until
-              it&apos;s fixed. Fitness is worked out from the records themselves, so nobody has to remember
-              to flip a switch.
+              Most software reminds you. Harlo blocks it. A driver or truck with a lapsed card or
+              registration can&apos;t be dispatched until it&apos;s fixed.
             </p>
           </div>
           <ul className="grid content-start gap-5 text-lead">
@@ -111,10 +108,9 @@ export default function CarriersPage() {
 
       <section className="py-20 sm:py-28">
         <Container>
-          <h2 className="max-w-2xl text-h2 font-extrabold">The right Harlo for the fleet you run.</h2>
+          <h2 className="max-w-2xl text-h2 font-extrabold">Built for every fleet size.</h2>
           <p className="mt-5 max-w-2xl text-lead">
-            Same records, same assistant, at every size. Grow from one truck to a hundred without switching
-            systems or losing a record.
+            Grow from one truck to a hundred without switching systems.
           </p>
           <div className="mt-12 divide-y divide-line border-y border-line">
             {FLEETS.map((f) => (
@@ -138,8 +134,7 @@ export default function CarriersPage() {
           <div>
             <h2 className="text-h2 font-extrabold">Booking your own freight too?</h2>
             <p className="mt-5 max-w-2xl text-lead">
-              Add a brokerage workspace next to your carrier one. Loads you broker and loads you haul stay
-              separate, and covering a brokered load with your own truck takes one click.
+              Add a brokerage workspace. Cover brokered loads with your own trucks in one click.
             </p>
           </div>
           <div className="flex flex-col gap-3 sm:flex-row lg:justify-end">

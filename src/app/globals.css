@@ -200,3 +200,140 @@
     display: none;
   }
 }
+
+/* ---- home hero: the ops board, one 12s loop of four 3s beats ------------ */
+
+.ops-state,
+.ops-feed,
+.ops-filed {
+  opacity: 0;
+}
+
+@property --ops-n {
+  syntax: "<integer>";
+  inherits: false;
+  initial-value: 37;
+}
+
+/* The counter lives on the element that animates; ::after only prints it. */
+.ops-count {
+  counter-reset: n var(--ops-n);
+}
+
+.ops-count::after {
+  content: counter(n);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .ops-state {
+    animation: ops-beat 12s linear infinite;
+  }
+  .ops-feed {
+    animation: ops-feed 12s var(--ease-out-soft) infinite;
+  }
+  .ops-filed {
+    animation: ops-filed 12s linear infinite;
+  }
+  .ops-count {
+    animation: ops-count 12s steps(4, jump-none) infinite;
+  }
+  .ops-line {
+    stroke-dasharray: 100;
+    animation: ops-line 12s var(--ease-out-soft) infinite;
+  }
+  .ops-live {
+    animation: ops-live 2s ease-in-out infinite;
+  }
+}
+
+/* No motion: hold one finished frame. */
+@media (prefers-reduced-motion: reduce) {
+  .ops-state.ops-still,
+  .ops-feed.ops-still,
+  .ops-feed.ops-still .ops-filed {
+    opacity: 1;
+    animation: none !important;
+  }
+  .ops-state,
+  .ops-feed,
+  .ops-filed,
+  .ops-count,
+  .ops-line,
+  .ops-live {
+    animation: none !important;
+  }
+}
+
+@keyframes ops-beat {
+  0%,
+  24% {
+    opacity: 1;
+  }
+  25%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes ops-feed {
+  0% {
+    opacity: 0;
+    transform: translateX(-14px);
+  }
+  4%,
+  21% {
+    opacity: 1;
+    transform: none;
+  }
+  25%,
+  100% {
+    opacity: 0;
+    transform: translateX(14px);
+  }
+}
+
+@keyframes ops-filed {
+  0%,
+  9% {
+    opacity: 0;
+  }
+  11%,
+  22% {
+    opacity: 1;
+  }
+  25%,
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes ops-count {
+  from {
+    --ops-n: 34;
+  }
+  to {
+    --ops-n: 37;
+  }
+}
+
+@keyframes ops-line {
+  0% {
+    stroke-dashoffset: 100;
+    opacity: 1;
+  }
+  60%,
+  92% {
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+  100% {
+    stroke-dashoffset: 0;
+    opacity: 0;
+  }
+}
+
+@keyframes ops-live {
+  50% {
+    opacity: 0.35;
+  }
+}

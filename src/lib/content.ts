@@ -3,16 +3,18 @@
 export const GUARDRAILS = [
   {
     t: "It proposes, you decide",
-    d: "Ike drafts the change and someone on your team approves it. Nothing on a load moves without a person saying so.",
+    d: "Nothing on a load changes until someone approves it.",
   },
   {
     t: "It shows its work",
-    d: "The document Ike read stays attached to the load, so anyone can check its answer against the original.",
+    d: "The source document stays on the load, so any answer can be checked.",
   },
   {
-    t: "Every change is on the record",
-    d: "Approved changes are logged with who approved them and when, right alongside everything else in the audit trail.",
+    t: "Every change is logged",
+    d: "Who approved what, and when, in the audit trail.",
   },
 ];
 
-export const TRIAL_NOTE = "Free for 14 days with every feature on. No card required.";
+export const TRIAL_NOTE = "Try Pro free for 14 days. No card required.";
+
+export const BROKER_TRIAL_NOTE = "Try Broker free for 14 days. No card required.";

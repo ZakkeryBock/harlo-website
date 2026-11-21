@@ -11,7 +11,7 @@ const COLUMNS = [
       { href: "/carriers", label: "For carriers" },
       { href: "/brokers", label: "For brokers" },
       { href: "/workspaces", label: "Workspaces" },
-      { href: "/ike", label: "Ike AI" },
+      { href: "/ike", label: "Ike" },
       { href: "/apps", label: "Apps" },
       { href: "/go", label: "Harlo Go" },
       { href: "/pricing", label: "Pricing" },
@@ -34,6 +34,7 @@ const COLUMNS = [
       { href: "/privacy", label: "Privacy Policy" },
       { href: "/terms", label: "Terms of Service" },
       { href: "https://app.goharlo.com/sms-consent", label: "SMS consent" },
+      { href: "/privacy-choices", label: "Your privacy choices" },
     ],
   },
 ];
@@ -45,7 +46,7 @@ export function Footer() {
         <div className="max-w-xs">
           <Wordmark className="h-5 w-auto text-cream" />
           <p className="mt-5 text-[0.9375rem] leading-relaxed">
-            The AI-native TMS for carriers and brokers, built by people who used to run a trucking company.
+            The TMS for carriers and brokers, built by people who ran a trucking company.
           </p>
           <div className="mt-6 flex flex-wrap gap-x-5 gap-y-2 text-sm">
             <a className="text-on-pine hover:text-white" href={LINKS.login}>

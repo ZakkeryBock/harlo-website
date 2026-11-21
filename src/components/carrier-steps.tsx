@@ -7,7 +7,7 @@ export const CARRIER_STEPS: Step[] = [
     key: "book",
     tab: "Book it",
     title: "Rate con in. Load out.",
-    body: "Drop in a rate confirmation and Ike builds the load for you: broker, stops, appointments, rate and accessorials. Review it, save it, move on. Nobody on your team re-types a PDF again.",
+    body: "Drop in a rate con and Ike builds the load: broker, stops, appointments, rate and accessorials. Nobody re-types a PDF.",
     points: [
       "Reads rate confirmations, BOLs and PODs",
       "Truck-routed miles and rate per mile on every load",
@@ -27,7 +27,7 @@ export const CARRIER_STEPS: Step[] = [
     key: "dispatch",
     tab: "Dispatch it",
     title: "Dispatch with total confidence.",
-    body: "Harlo knows the status of every CDL, medical card and registration in your fleet, and it won't let anything roll that isn't legal. You hear about it from Harlo before it lapses, not from a DOT officer on the shoulder.",
+    body: "Harlo tracks every CDL, medical card and registration, and won't dispatch anything that isn't legal.",
     points: [
       "Pair a driver, power unit and trailer once, dispatch them together",
       "Expiring documents flagged before they lapse",
@@ -47,7 +47,7 @@ export const CARRIER_STEPS: Step[] = [
     key: "run",
     tab: "Run it",
     title: "Every load, live.",
-    body: "Drivers get the load plan in Harlo Driver on their phone or the truck's tablet, or by text if they'd rather. Arrivals and departures land on the load, and your dashboard shows what's moving, what's late and who's open tomorrow.",
+    body: "Load plans go to Harlo Driver or by text. Stop times land on the load, and your dashboard shows what's moving, what's late and who's open tomorrow.",
     points: [
       "Harlo Driver app, or texts with consent tracked for you",
       "Arrival and departure times on every stop",
@@ -72,7 +72,7 @@ export const CARRIER_STEPS: Step[] = [
     key: "paid",
     tab: "Get paid",
     title: "See your margin the day it delivers.",
-    body: "Rates, driver pay, fuel, advances and fees all live on the load, so you know exactly what every load made, not what you think it made at the end of the month.",
+    body: "Rates, pay, fuel, advances and fees live on the load, so you know what every load made.",
     points: [
       "Margin on every load",
       "Advances and their fees tracked against the route",

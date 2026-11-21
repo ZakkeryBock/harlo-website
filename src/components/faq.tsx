@@ -3,41 +3,39 @@ export type QA = { q: string; a: React.ReactNode };
 export const FAQ_TRIAL: QA[] = [
   {
     q: "Do I need a credit card to start?",
-    a: "No. Your trial runs for 14 days with every feature turned on, and we never ask for a card until you choose a paid plan.",
+    a: "No. You only add a card when you choose a paid plan.",
   },
   {
     q: "What happens when the 14 days are up?",
-    a: "Your workspace moves to Free on its own and nothing is deleted. Free covers up to 2 trucks for carriers and 25 loads a month for brokers. Above that you can still see everything, but you can't add new loads, trucks or users until you pick a plan.",
+    a: "Your workspace moves to Free and nothing is deleted. Over Free's limits, everything stays readable, but adding loads, trucks or users needs a paid plan.",
   },
   {
     q: "What counts as a truck?",
-    a: "An active power unit in Harlo. Trailers, drivers, dispatchers and office users are never billed. Trucks you add partway through a month are prorated.",
+    a: "An active power unit. Trailers, drivers and users are never billed. Trucks added mid-month are prorated.",
   },
   {
     q: "What's an AI credit?",
-    a: "One task for Ike, such as reading a document or answering a question. Every plan includes a monthly allowance that resets on the 1st. On paid plans, anything over the allowance is billed at 5 cents a credit (4 cents on Fleet), with a hard ceiling so a busy month never turns into a surprise.",
+    a: "One task for Ike, like reading a document or answering a question. Every plan includes a monthly allowance. Paid plans can go over at 5¢ a credit (4¢ on Fleet), up to a hard ceiling.",
   },
   {
     q: "Can I pay yearly?",
-    a: "Yes. Yearly billing costs ten months' price for twelve months of service, so two months are free. You can switch between monthly and yearly from your billing settings.",
+    a: "Yes. Twelve months for the price of ten. Switch any time in billing settings.",
   },
   {
     q: "Is there a contract?",
-    a: "Monthly plans are month to month and you can cancel any time. Cancelling stops the next renewal and your account stays open until the end of the period you paid for.",
+    a: "No. Cancel any time in billing settings. Your plan runs to the end of the period you paid for.",
   },
   {
     q: "Do my drivers need to install an app?",
-    a: "No. Drivers who opt in get load details by text. On Pro and up you can also give them Harlo Driver, a dedicated app for their phone or the truck's tablet with load plans, stops and messages from dispatch.",
+    a: "No. Drivers can get load details by text. On Pro and up they can also use Harlo Driver on a phone or the truck's tablet.",
   },
   {
     q: "Who can see my data?",
     a: (
       <>
-        Your records are visible only to people in your company. Every account is isolated at the
-        database level, changes are recorded in an audit log, and Ike proposes changes rather than
-        making them on its own. Harlo also learns from activity across the platform, with people&apos;s
-        details removed, to train its own models and give every customer better insights, like how
-        long a facility really holds trucks. We never sell your data, and no other customer ever sees
+        Only people in your company. Every account is isolated in the database and every change is
+        logged. Harlo trains its own models on activity across the platform, with personal details
+        removed, so it gets better for everyone. We never sell your data, and no other customer sees
         your rates, margins, customers, drivers or loads. Read the{" "}
         <a className="font-semibold text-ink underline underline-offset-2" href="/privacy">
           privacy policy
@@ -53,19 +51,19 @@ export const FAQ_BILLING: QA[] = [
   ...FAQ_TRIAL.slice(0, 3),
   {
     q: "Do the apps cost extra?",
-    a: "No. Every plan includes Harlo on desktop and the Harlo Go phone app, signed in to the same account. Pro and up also include Harlo Driver for your drivers' phones and truck tablets. Your plan decides what's inside, not which devices you can use.",
+    a: "No. Every plan includes desktop and Harlo Go. Pro and up add Harlo Driver.",
   },
   {
     q: "What counts as a load for a brokerage?",
-    a: "A load booked in your brokerage workspace and covered by a carrier during the month. Quotes and cancelled loads don't count, and on the Carrier + Broker plan neither do loads you cover with your own fleet.",
+    a: "A brokered load covered by a carrier during the month. Quotes, cancelled loads, and loads covered by your own fleet on Carrier + Broker don't count.",
   },
   {
     q: "What if my brokerage goes over its included loads?",
-    a: "Nothing stops. Extra loads are billed at your plan's per-load rate on the next invoice: $1.75 on Broker and $1.25 on Broker Scale. Above about 460 loads a month, Broker Scale is the cheaper plan.",
+    a: "Nothing stops. Extra loads bill at $1.75 on Broker or $1.25 on Broker Scale. Above about 460 loads a month, Scale is cheaper.",
   },
   {
     q: "How is the Carrier + Broker plan priced?",
-    a: "The carrier side is billed per truck with no minimum: $39 a truck, or $32 from 26 trucks. The brokerage side is whichever broker plan fits your volume, at 25% off. Both live under one login and one bill.",
+    a: "Carrier side: $39 a truck ($32 from 26 trucks), no minimum. Brokerage side: the broker plan that fits your volume, 25% off. One login, one bill.",
   },
   ...FAQ_TRIAL.slice(3),
 ];

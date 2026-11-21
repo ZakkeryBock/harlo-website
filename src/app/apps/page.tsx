@@ -18,7 +18,7 @@ const APPS = [
     name: "Harlo for desktop",
     who: "For the office. Every plan.",
     title: "The command center.",
-    body: "The full system in any browser: the dispatch board, compliance, customers and carriers, money, workspaces, settings and everything Ike knows. This is where the operation is built and run.",
+    body: "The full system in any browser. Where the operation is built and run.",
     points: ["Dispatch board and load planning", "Compliance, maintenance and settlement", "Roles, workspaces, dashboards and reports"],
     visual: <DesktopScreen />,
   },
@@ -27,7 +27,7 @@ const APPS = [
     name: "Harlo Go",
     who: "For owners, dispatchers and reps. Every plan.",
     title: "Your operation, in your pocket.",
-    body: "Harlo Go is the phone app for the people running the business. See what Ike flagged and approve it, check any load, snap paperwork, and know what you made this week, from the cab, the dock or the couch. For a one-truck carrier, it's all you need to run the business.",
+    body: "Approve what Ike flagged, check any load, snap paperwork, and see what you made this week. For a one-truck carrier, it's all you need to run the business.",
     points: ["Ike's brief, alerts and one-tap approvals", "Every load, document and dollar", "Snap a rate con or BOL with the camera"],
     visual: <Phone className="max-w-[17rem]" />,
   },
@@ -36,7 +36,7 @@ const APPS = [
     name: "Harlo Driver",
     who: "For your drivers. Pro and up.",
     title: "A dedicated screen in every cab.",
-    body: "Give drivers their load plan, stops, appointments and messages from dispatch on their phone or the tablet already mounted in the truck. One tap logs an arrival, the camera captures the BOL and POD, and dispatch sees it the same second.",
+    body: "Load plans, stops, appointments and dispatch messages on a phone or the truck's tablet. One tap logs an arrival; the camera captures the BOL and POD.",
     points: ["Load plans, stops and appointment details", "Messages with dispatch, tied to the load", "Arrivals, departures, BOLs and PODs in one tap"],
     visual: <DriverTablet />,
   },
@@ -45,19 +45,19 @@ const APPS = [
 const CONTINUITY = [
   {
     t: "Start on your phone, finish at your desk",
-    d: "Snap a rate con in the truck stop with Harlo Go. When you sit down, the load is on the board, ready to dispatch.",
+    d: "Snap a rate con with Harlo Go. At your desk, it's on the board.",
   },
   {
     t: "Dispatch from the desk, it's in the cab",
-    d: "Assign Unit 118 on the dispatch board and the load plan lands on Marcus's tablet before you've closed the tab.",
+    d: "Assign Unit 118 and the load plan lands on Marcus's tablet.",
   },
   {
     t: "One tap from the driver, everyone knows",
-    d: "Marcus taps Arrived. The stop time is on the load, the customer's ETA is current, and nobody makes a check call.",
+    d: "Marcus taps Arrived. The stop time and the customer's ETA update. No check call.",
   },
   {
     t: "Ike tells you once, wherever you are",
-    d: "An alert shows on whatever screen you're using. Approve it on your phone and it's handled on the desktop too.",
+    d: "Approve an alert on your phone and it's handled everywhere.",
   },
 ];
 
@@ -105,15 +105,13 @@ export default function AppsPage() {
       <section className="relative overflow-hidden pt-14 pb-20 sm:pt-20">
         <Container>
           <div className="max-w-3xl">
-            <h1 className="text-display font-extrabold">One Harlo. Every screen in your operation.</h1>
+            <h1 className="text-display font-extrabold">One Harlo. Every screen.</h1>
             <p className="mt-6 max-w-2xl text-lead">
-              One account and one subscription put Harlo on every device: the full system on the desktop,
-              Harlo Go on your phone, and Harlo Driver in the cab. Same records everywhere, always in sync.
-              Nothing to connect, nothing to export.
+              Desktop, phone and cab. One account, the same records, always in sync.
             </p>
             <div className="mt-9 flex flex-col gap-3 sm:flex-row">
               <Button href={LINKS.signup} size="lg">
-                Start my free trial
+                Start free trial
               </Button>
               <Button href="/pricing" size="lg" variant="secondary">
                 See pricing
@@ -155,8 +153,7 @@ export default function AppsPage() {
         <Container>
           <h2 className="max-w-2xl text-h2 font-extrabold text-white">It just works, from the desk to the dock.</h2>
           <p className="mt-5 max-w-2xl text-lead text-on-pine">
-            The apps aren&apos;t separate products that sync overnight. They&apos;re three windows onto the same
-            live operation, so work started on one screen is waiting on the next.
+            Three windows onto the same live operation.
           </p>
           <div className="mt-14 grid gap-px overflow-hidden rounded-3xl bg-pine-3 sm:grid-cols-2">
             {CONTINUITY.map((c) => (
@@ -174,8 +171,7 @@ export default function AppsPage() {
           <div>
             <h2 className="text-h2 font-extrabold">Already have tablets in your trucks? Put them to work.</h2>
             <p className="mt-5 text-lead">
-              Many fleets issue a tablet to every truck. Harlo Driver turns it into the driver&apos;s link to
-              dispatch, with a mode built for shared, mounted devices.
+              Harlo Driver turns them into the driver&apos;s link to dispatch, with a mode for shared, mounted devices.
             </p>
             <ul className="mt-7 grid gap-3">
               {TABLET.map((t) => (
@@ -194,8 +190,7 @@ export default function AppsPage() {
         <Container>
           <h2 className="max-w-2xl text-h2 font-extrabold">What each screen is for.</h2>
           <p className="mt-4 max-w-2xl">
-            The desktop does everything. The apps do what that person needs, where they are, and nothing that
-            gets in the way.
+            The desktop does everything. The apps do what that person needs.
           </p>
           <div className="mt-10 -mx-5 overflow-x-auto px-5 sm:mx-0 sm:px-0">
             <table className="w-full min-w-[40rem] border-collapse text-left text-[0.9375rem]">
@@ -250,7 +245,7 @@ export default function AppsPage() {
 
       <EndCta
         title="Download nothing. Start in your browser."
-        body="Sign up on any device. Harlo Go and Harlo Driver sign in with the same account whenever you're ready for them."
+        body="Sign up on any device. Go and Driver use the same account."
       />
     </main>
   );

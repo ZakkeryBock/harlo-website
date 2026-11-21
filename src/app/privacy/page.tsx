@@ -23,6 +23,16 @@ import {
  * new processor, that processor belongs in section 7 in the same PR. Section 5
  * (aggregated data) is a promise, not marketing — do not let the product drift
  * past it.
+ *
+ * Section 7 names the processors in use (checked 2026-11-21 against the cloud
+ * setup). Section 8: advertising pixels are allowed on the marketing website
+ * ONLY, loaded by harlo-website's AdPixels, which stays off under Global Privacy
+ * Control or an opt-out at goharlo.com/privacy-choices. Never put one in an app.
+ * Section 9's deletion promise is enforced by harlo-infra 107 (Close workspace +
+ * the daily account-retention job).
+ *
+ * Copied verbatim to harlo-website (src/app/privacy) apart from the metadata
+ * title and the absolute /sms-consent links — change both together.
  */
 
 export const metadata: Metadata = {
@@ -39,8 +49,9 @@ export default function PrivacyPage() {
         <p>
           {LEGAL_ENTITY} (&ldquo;{COMPANY}&rdquo;, &ldquo;we&rdquo;) provides operational software to
           trucking companies. This policy explains what information the Harlo platform handles, why,
-          who it is shared with, and what we do and do not do with it. It covers our website and the
-          Harlo application.
+          who it is shared with, and what we do and do not do with it. It covers our website
+          (goharlo.com), the Harlo web application, the Harlo Go and Harlo Driver apps, and the Harlo
+          API.
         </p>
       }
     >
@@ -55,14 +66,16 @@ export default function PrivacyPage() {
           If you are a driver, employee, or contact of a carrier that uses Harlo and you want to see,
           correct, or delete information about you,{" "}
           <strong className="text-foreground">contact that carrier first</strong> — they decide what
-          their records say. We will help them respond, and we will pass along requests we receive
-          directly.
+          their records say. That includes drivers who sign in to Harlo Driver: the carrier that
+          invited you controls what is recorded about you there. We will help the carrier respond,
+          and we will pass along requests we receive directly.
         </p>
         <p>
           We are the controller for a smaller set of data: the accounts of the people who sign in,
-          billing records, support correspondence, the operational logs we keep to run the service,
-          the aggregated statistics described in section 5, and the de-identified data we use to train
-          and improve Harlo&apos;s own models (section 6).
+          billing records, support correspondence, inquiries sent through our website, the
+          operational logs we keep to run the service, the aggregated statistics described in
+          section 5, and the de-identified data we use to train and improve Harlo&apos;s own models
+          (section 6).
         </p>
       </LegalSection>
 
@@ -100,8 +113,33 @@ export default function PrivacyPage() {
               .
             </>,
             <>
+              <strong className="text-foreground">Harlo Driver</strong> — the phone number a driver
+              signs in with, the one-time codes sent to it, and what the driver records in the app:
+              arrivals and departures at stops (with the time), photos or files of paperwork such as
+              a bill of lading or proof of delivery, and messages with the carrier&apos;s dispatchers.
+            </>,
+            <>
+              <strong className="text-foreground">Notifications</strong> — if you turn on push
+              notifications, your browser or device&apos;s push address and encryption keys and a
+              short browser description, so we can deliver them.
+            </>,
+            <>
+              <strong className="text-foreground">Connected services and the API</strong> — where a
+              carrier connects a service such as a telematics provider, the data we retrieve from it
+              for that carrier and the access credential, which we store encrypted. For the API, a
+              hash of each key (never the key itself) and a log of requests: time, endpoint, IP
+              address, and browser or client string.
+            </>,
+            <>
+              <strong className="text-foreground">Website inquiries</strong> — if you contact us
+              through goharlo.com (for example the partner form), the name, email, company, and
+              message you send.
+            </>,
+            <>
               <strong className="text-foreground">Technical and usage data</strong> — IP address,
               browser and device information, pages and features used, and error and performance logs.
+              When someone files a problem report from inside Harlo, we may attach a recording of
+              their session to it (see section 8).
             </>,
             <>
               <strong className="text-foreground">Billing data</strong> — plan, metered usage, and
@@ -131,7 +169,8 @@ export default function PrivacyPage() {
             "Producing the analysis Harlo exists for — compliance and fitness conclusions, risk and exception signals, document understanding, and the assistant's answers.",
             "Sending operational notifications, including text messages to drivers who have consented.",
             "Keeping an audit trail of changes, which we retain because carriers are subject to audit.",
-            "Security, abuse prevention, troubleshooting, and support.",
+            "Security, abuse prevention (including bot protection on sign-up and website forms), troubleshooting, and support.",
+            "Replying to inquiries, and sending service and account emails — sign-in links, invitations, billing notices, and notices of changes to our terms or this policy.",
             "Billing, and measuring usage against a subscription.",
             "Improving Harlo, building the cross-carrier statistics described in section 5, and training Harlo's own models as described in section 6.",
             "Meeting our own legal obligations, and establishing or defending legal claims.",
@@ -139,10 +178,12 @@ export default function PrivacyPage() {
         />
         <p>
           <strong className="text-foreground">
-            We do not sell personal information, and we do not share it for cross-context behavioural
+            We do not sell personal information, and nothing in the Harlo apps is used for
             advertising.
           </strong>{" "}
-          We do not use carrier data to advertise to anyone, and we do not send marketing texts.
+          We do not use carrier data to advertise to anyone, and we do not send marketing texts. The
+          one place we use advertising technology is our marketing website, as section 8 describes,
+          and you can opt out of it.
         </p>
       </LegalSection>
 
@@ -204,8 +245,9 @@ export default function PrivacyPage() {
         <p>
           Harlo interprets operational data — it reads uploaded documents, derives compliance
           conclusions, and answers questions about a carrier&apos;s operation. Some of that runs on
-          models we host ourselves, and some, where a carrier has it enabled, runs on third-party model
-          providers we contract with.
+          models we host ourselves, and some runs on third-party model providers we contract with
+          (currently Anthropic). Conversations with Harlo&apos;s assistant are saved in the
+          carrier&apos;s workspace so it can pick up where it left off.
         </p>
         <p>
           Where a third-party provider is used, it processes the content only to return a result to us
@@ -248,9 +290,28 @@ export default function PrivacyPage() {
           items={[
             <>
               <strong className="text-foreground">Service providers</strong> who help us run Harlo,
-              under contracts limiting them to that purpose — hosting and infrastructure, network and
-              security providers, text-message delivery (Twilio), AI model providers where enabled,
-              mapping and geocoding, error monitoring, email delivery, and payment processing.
+              under contracts limiting them to that purpose. Today those are: Supabase (database,
+              sign-in, file storage, and background functions), Vercel and Railway (application
+              hosting), Cloudflare (network, security, and bot protection), Hostinger (hosting for
+              our marketing website), Twilio (text messages and sign-in codes), Resend (email
+              delivery), Stripe (payments), PostHog (product analytics, error tracking, and masked
+              session recordings), Stadia Maps (address search and routing — addresses entered for
+              stops and facilities are sent to it), and Anthropic (AI model provider, section 6).
+              Where we add or replace a provider that processes personal information, we update
+              this list.
+            </>,
+            <>
+              <strong className="text-foreground">Parties the carrier directs us to share with</strong>{" "}
+              — for example when a carrier emails a rate confirmation to a carrier or broker, books
+              a load to another workspace it controls, connects a third-party service, or points
+              the API or a webhook at its own system. We share only what that action needs.
+            </>,
+            <>
+              <strong className="text-foreground">Advertising platforms, from our marketing website only</strong>{" "}
+              — when we run ads, Google, Meta, and LinkedIn may receive the pages you visit on
+              goharlo.com and identifiers from your browser, so we can measure those ads and show
+              Harlo ads to people who visited. Nothing from the Harlo apps or from any carrier&apos;s
+              data is ever sent to them. See section 8 to opt out.
             </>,
             <>
               <strong className="text-foreground">The carrier</strong> whose account the data belongs
@@ -285,15 +346,27 @@ export default function PrivacyPage() {
       <LegalSection title="8. Cookies and tracking">
         <p>
           Harlo uses cookies and similar storage that are strictly necessary to run the application:
-          keeping you signed in, keeping your session secure, and remembering interface preferences. We
-          use a small amount of first-party analytics to understand which features are used and to find
-          errors.
+          keeping you signed in, keeping your session secure, and remembering interface preferences.
+          We also use PostHog, an analytics provider acting as our processor, to understand which
+          features are used and to find errors. It can record a session so we can see a problem
+          someone reports; those recordings mask all text and form fields, so names, addresses,
+          documents, and what you type are not captured, and we use them only to fix and improve
+          Harlo. The Harlo apps never use advertising cookies or pixels.
         </p>
         <p>
-          We do not use advertising cookies, and we do not allow third parties to track you across other
-          sites through Harlo. Because we do no cross-context behavioural advertising, we treat Global
-          Privacy Control and Do Not Track signals as already satisfied. Blocking necessary cookies in
-          your browser will stop the application from working.
+          <strong className="text-foreground">Our marketing website</strong> (goharlo.com) may use
+          advertising cookies and pixels from Google, Meta, and LinkedIn to measure our ads and to
+          show Harlo ads to people who have visited. Under some state laws that counts as
+          &ldquo;sharing&rdquo; for advertising. We do not load them if your browser sends a Global
+          Privacy Control signal, and you can turn them off at{" "}
+          <a className="underline" href="https://goharlo.com/privacy-choices">
+            Your privacy choices
+          </a>
+          . The website&apos;s partner form also loads Cloudflare Turnstile, which checks that a
+          visitor is a person and may set a cookie or read browser signals to do so.
+        </p>
+        <p>
+          Blocking necessary cookies in your browser will stop the application from working.
         </p>
       </LegalSection>
 
@@ -301,22 +374,34 @@ export default function PrivacyPage() {
         <p>
           Operational and audit records are kept for as long as the carrier&apos;s account is active,
           because the carrier needs them and is often required by DOT and FMCSA rules to keep them. When
-          an account closes, the carrier may export its data; we then delete or de-identify it within 90
-          days, except where we must keep something longer to meet a legal, tax, or regulatory
-          obligation, or to resolve a dispute.
+          an admin closes a workspace (in its settings, or by asking us), the carrier may export its
+          data for 30 days; we then delete it — records, uploaded files, and logins that belong to no
+          other workspace — and in every case within 90 days of closure, except where we must keep
+          something longer to meet a legal, tax, or regulatory obligation, or to resolve a dispute.
+          A carrier may ask us to delete its data sooner at{" "}
+          <a className="underline" href={`mailto:${PRIVACY_EMAIL}`}>
+            {PRIVACY_EMAIL}
+          </a>
+          . Statistics and models covered by sections 5 and 6 are not deleted, because they no
+          longer identify anyone.
         </p>
         <p>
           Proof-of-consent records for text messaging are kept for at least four years after consent is
-          withdrawn, because that is what defending a TCPA claim requires. Backups age out on their own
-          schedule, generally within 90 days.
+          withdrawn, because that is what defending a TCPA claim requires. Billing and tax records are
+          kept for as long as accounting and tax law require. Website inquiries and support
+          correspondence are kept for as long as needed to answer them and for our records. Backups
+          are held by our hosting provider and age out on its schedule, so deleted data can remain in
+          a backup until then.
         </p>
       </LegalSection>
 
       <LegalSection title="10. Security">
         <p>
           Access to a carrier&apos;s data is restricted at the database level, so one carrier cannot read
-          another&apos;s. Data is encrypted in transit. Access is limited by role, changes are recorded in
-          an audit trail, and administrative access is limited to staff who need it and is logged.
+          another&apos;s. Data is encrypted in transit and at rest. Access is limited by role, changes
+          are recorded in an audit trail, and administrative access is limited to staff who need it.
+          When our staff sign in to a carrier&apos;s account to support it, that access is written to
+          the carrier&apos;s own audit trail, where its administrators can see it.
         </p>
         <p>
           No system is perfectly secure. If a breach affects your information we will notify you and the
@@ -328,7 +413,8 @@ export default function PrivacyPage() {
         <p>
           Depending on where you live you may have the right to access, correct, delete, or receive a
           portable copy of your personal information, to limit the use of sensitive information, to opt
-          out of its sale or sharing (we do neither), to withdraw consent, and not to be discriminated
+          out of its sale (we do not sell it) or its sharing for advertising (see section 8), to
+          withdraw consent, and not to be discriminated
           against for exercising these rights. Residents of California, Colorado, Connecticut, Virginia,
           Texas, and other states with comparable laws have these rights; so do people covered by the UK
           and EU GDPR.
@@ -367,6 +453,11 @@ export default function PrivacyPage() {
             /sms-consent
           </a>
           .
+        </p>
+        <p>
+          Harlo Driver sign-in: when a carrier invites a driver to the Harlo Driver app, we text a
+          one-time sign-in code to that number. These codes are for security only, are never used for
+          marketing, and are sent only to a number a carrier has given us for one of its own drivers.
         </p>
       </LegalSection>
 

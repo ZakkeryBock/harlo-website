@@ -15,19 +15,19 @@ export const metadata: Metadata = {
 const JOBS = [
   {
     t: "Ike in your pocket",
-    d: "The morning brief, alerts as they happen, and one-tap approvals. Swap the truck, send the customer update, chase the POD, from wherever you are.",
+    d: "The morning brief, alerts and one-tap approvals, wherever you are.",
   },
   {
     t: "Every load, live",
-    d: "Booked, on the road and delivered, with stops, documents and money attached. The same records your office sees, updated the same second.",
+    d: "Stops, documents and money on every load. Same records as the office, same second.",
   },
   {
     t: "Paperwork from the camera",
-    d: "Photograph a rate con, BOL or receipt and it lands on the right load. Ike does the typing, you check it.",
+    d: "Snap a rate con, BOL or receipt and it lands on the right load.",
   },
   {
     t: "Know what you made",
-    d: "Delivered this week, margin per load and what's still waiting to be invoiced, at a glance.",
+    d: "This week's deliveries, margin per load, and what's left to invoice.",
   },
 ];
 
@@ -39,8 +39,7 @@ export default function GoPage() {
           <div>
             <h1 className="max-w-[12ch] text-display font-extrabold">Harlo, in your pocket.</h1>
             <p className="mt-6 max-w-[32rem] text-lead">
-              Harlo Go is the Harlo phone app, included with every plan. Run your day from the cab, the dock or
-              the couch, and pick up right where you left off when you sit down at the desk.
+              The Harlo phone app, included on every plan. Pick up at the desk where you left off.
             </p>
             <div className="mt-9 flex flex-col gap-3 sm:flex-row">
               <Button href={LINKS.goSignup} size="lg">
@@ -74,9 +73,7 @@ export default function GoPage() {
           <div>
             <h2 className="text-h2 font-extrabold">Running one or two trucks? Start here, free.</h2>
             <p className="mt-5 text-lead">
-              Most owner-operators run the business from their phone, so that&apos;s where Harlo starts. Free
-              covers up to 2 trucks with no time limit, and the desktop is always there when you want the bigger
-              screen.
+              Free covers up to 2 trucks, with no time limit. The desktop is there when you want a bigger screen.
             </p>
           </div>
           <ul className="grid content-start gap-4 text-lead">
@@ -100,8 +97,7 @@ export default function GoPage() {
           <div>
             <h2 className="text-h3 font-bold">Have drivers? Give them Harlo Driver.</h2>
             <p className="mt-2 max-w-2xl">
-              On Pro and up, your drivers get their own app for load plans, stops and messages with dispatch, on
-              their phone or the truck&apos;s tablet.{" "}
+              On Pro and up, drivers get their own app for load plans, stops and dispatch messages.{" "}
               <Link href="/apps" className="font-semibold text-rust-ink underline-offset-4 hover:underline">
                 How the apps work together
               </Link>
@@ -115,7 +111,7 @@ export default function GoPage() {
 
       <EndCta
         title="Book your next load from the cab."
-        body="Sign up on your phone in a couple of minutes and see your operation in Harlo Go."
+        body="Sign up on your phone in two minutes."
         href={LINKS.goSignup}
         label="Start free on your phone"
       />

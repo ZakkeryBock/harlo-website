@@ -13,23 +13,23 @@ export const metadata: Metadata = {
 const POINTS = [
   {
     t: "Isolation enforced by the database",
-    d: "Every row of data belongs to one company and one workspace, and the database itself refuses to return it to anyone else. It isn't left to the app to remember.",
+    d: "Every row belongs to one company and workspace, and the database refuses to return it to anyone else.",
   },
   {
     t: "Roles and permissions",
-    d: "Decide who can see money, who can dispatch and who can change settings, per person and per workspace.",
+    d: "Who sees money, who dispatches, who changes settings. Per person, per workspace.",
   },
   {
     t: "A full audit trail",
-    d: "Who changed what, when, and what it was before. That includes every change Ike proposed and the person who approved it.",
+    d: "Who changed what, when, and what it was before, including every change Ike proposed and who approved it.",
   },
   {
     t: "Single sign-on",
-    d: "Fleet and Enterprise teams can sign in with their company identity provider, so access ends the day someone leaves.",
+    d: "Fleet and Enterprise sign in with their identity provider. Access ends the day someone leaves.",
   },
   {
     t: "AI that asks permission",
-    d: "Ike reads and drafts, but a person approves every change before it touches a load.",
+    d: "Ike drafts. A person approves every change.",
   },
   {
     t: "Used to make Harlo smarter, never sold",
@@ -37,7 +37,7 @@ const POINTS = [
   },
   {
     t: "Consent on record",
-    d: "Drivers opt in before Harlo ever texts them, and the proof of consent is kept with their record.",
+    d: "Drivers opt in before Harlo texts them, and the proof is kept on their record.",
   },
 ];
 
@@ -48,8 +48,7 @@ export default function SecurityPage() {
         <Container>
           <h1 className="max-w-[18ch] text-display font-extrabold">Your data stays yours, workspace by workspace.</h1>
           <p className="mt-6 max-w-2xl text-lead">
-            Rates, customers, drivers and margins are the most sensitive numbers in your business. Harlo is
-            built so they reach only the people you choose.
+            Rates, customers, drivers and margins reach only the people you choose.
           </p>
         </Container>
       </section>

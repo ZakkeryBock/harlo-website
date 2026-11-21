@@ -4,15 +4,17 @@ import { LINKS } from "@/lib/site";
 import { TRIAL_NOTE } from "@/lib/content";
 
 export function EndCta({
-  title = "See your operation running on Harlo.",
-  body = "Start free and add your first load. Within minutes you'll see Ike at work on your own freight.",
+  title = "See your operation on Harlo.",
+  body = "Free to start. No card, no sales call.",
   href = LINKS.signup,
-  label = "Start my free trial",
+  label = "Start free trial",
+  note = TRIAL_NOTE,
 }: {
   title?: string;
   body?: string;
   href?: string;
   label?: string;
+  note?: string;
 }) {
   return (
     <section className="relative overflow-hidden bg-rust-ink text-white">
@@ -38,7 +40,7 @@ export function EndCta({
           </Button>
         </div>
         <p className="mt-5 text-sm text-white/90">
-          {TRIAL_NOTE}
+          {note}
         </p>
       </Container>
     </section>

@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { Briefing } from "@/components/briefing";
+import { OpsBoard } from "@/components/ops-board";
 import { Faq, FAQ_TRIAL, type QA } from "@/components/faq";
 import { EndCta } from "@/components/end-cta";
 import { WorkspaceSwitcher } from "@/components/workspaces";
@@ -8,56 +8,44 @@ import { Button, Check, Container } from "@/components/ui";
 import { BUNDLE_BROKER_DISCOUNT, LINKS, brokerPlan, plan, usd } from "@/lib/site";
 import { GUARDRAILS, TRIAL_NOTE } from "@/lib/content";
 
-const PROMISES = [
-  "Live today, not in 90 days",
-  "Carriers, brokers and both",
-  "Desktop, phone and driver apps included",
-];
+const PROMISES = ["Live the day you sign up", "Carriers, brokers, or both", "Desktop, phone and driver apps"];
 
 /** What Ike does all day. Jobs, not features. */
 const JOBS = [
   {
-    t: "Watches everything",
-    d: "Every load, stop, driver, truck, carrier and dollar, around the clock. Ike notices the late load, the lapsing insurance and the lane losing money before anyone has to go looking.",
+    t: "Watches every load",
+    d: "Late loads, lapsing insurance and lanes losing money, flagged before anyone goes looking.",
     eg: "“Unit 204's inspection lapses before Thursday's load.”",
   },
   {
-    t: "Handles the busywork",
-    d: "Tenders and carrier paperwork arriving by email, check-call texts from drivers, PODs to chase, documents to file. Ike turns them into updates on the right record.",
+    t: "Reads the paperwork",
+    d: "Rate cons, PODs, certificates and driver texts become updates on the right record.",
     eg: "“Renewed certificate filed. Lakeshore is cleared to book.”",
   },
   {
-    t: "Answers anything",
-    d: "Ask in plain English and get an answer from your live operation: what's at risk today, who's open tomorrow, which customers paid late, which lanes made money.",
+    t: "Answers in plain English",
+    d: "What's at risk today, who's open tomorrow, which lanes made money.",
     eg: "“Which loads delivered without a POD this week?”",
   },
   {
-    t: "Gets the next step ready",
-    d: "When something needs doing, Ike drafts it: the customer update, the truck swap, the driver reminder. One click from your team and it's done, with a record of who approved it.",
+    t: "Drafts the next step",
+    d: "The customer update, the truck swap, the reminder. One click to send.",
     eg: "“I drafted a heads-up to Midwest Paper. Send it?”",
   },
 ];
 
 const SIDES = [
   {
-    who: "For carriers",
-    title: "Keep every truck legal and every load profitable.",
-    points: [
-      "Dispatch that won't let an unfit driver or truck roll",
-      "Drivers updated by text, with every stop time on the load",
-      "Margin on every load the day it delivers",
-    ],
+    who: "Carriers",
+    title: "Every truck legal. Every load profitable.",
+    points: ["Dispatch that blocks unfit drivers and trucks", "Driver updates by text", "Margin on every load"],
     href: "/carriers",
     link: "Harlo for carriers",
   },
   {
-    who: "For brokers",
-    title: "Book, cover and bill every load from one board.",
-    points: [
-      "Carriers vetted for authority and insurance before you book",
-      "Late loads flagged with the customer update already written",
-      "Customer rate, carrier pay and margin on one record",
-    ],
+    who: "Brokers",
+    title: "Book, cover and bill from one board.",
+    points: ["Carriers vetted before you book", "Late loads flagged early", "Rate, carrier pay and margin on one record"],
     href: "/brokers",
     link: "Harlo for brokers",
   },
@@ -67,80 +55,66 @@ const SIDES = [
 const MODULES = [
   {
     group: "Operations",
-    items: ["Orders and loads", "Dispatch board", "Multi-stop routes", "Tracking and stop times", "Truck-routed miles", "Dashboards you build"],
+    items: ["Orders and loads", "Dispatch board", "Multi-stop routes", "Tracking and stop times", "Truck-routed miles", "Dashboards"],
   },
   {
     group: "Fleet and safety",
-    items: ["Driver management", "Equipment and trailers", "CDL and medical cards", "Registrations and inspections", "Maintenance and out of service", "Dispatch fitness checks"],
+    items: ["Drivers", "Equipment and trailers", "CDL and medical cards", "Registrations and inspections", "Maintenance", "Dispatch fitness checks"],
   },
   {
     group: "Brokerage",
-    items: ["Customers and tenders", "Carrier onboarding", "Authority and insurance checks", "Carrier rate confirmations", "Customer updates", "Brokerage to fleet handoff"],
+    items: ["Customers and tenders", "Carrier onboarding", "Authority and insurance checks", "Rate confirmations", "Customer updates", "Brokerage to fleet handoff"],
   },
   {
     group: "Money",
-    items: ["Rate and accessorial lines", "Driver pay", "Fuel and advances", "Margin by load and lane", "POD before billing", "Settlement"],
+    items: ["Rates and accessorials", "Driver pay", "Fuel and advances", "Margin by load and lane", "POD before billing", "Settlement"],
   },
   {
-    group: "Team and control",
+    group: "Team",
     items: ["Unlimited users", "Roles and permissions", "Multiple workspaces", "Audit trail", "Single sign-on", "Desktop, phone and driver apps"],
   },
 ];
 
 type Cmp = { k: string; harlo: string; legacy: string; enterprise: string };
 const COMPARE: Cmp[] = [
-  { k: "Up and running", harlo: "Same day", legacy: "6 months or more", enterprise: "About 90 days" },
-  { k: "Starting price", harlo: "$0, published", legacy: "Quote only", enterprise: "Around $2,000 a month" },
-  { k: "Try it first", harlo: "14 days free, no card", legacy: "Sales demo", enterprise: "Sales demo" },
+  { k: "Up and running", harlo: "Same day", legacy: "6+ months", enterprise: "About 90 days" },
+  { k: "Starting price", harlo: "$0, published", legacy: "Quote only", enterprise: "~$2,000 / mo" },
+  { k: "Try it first", harlo: "14 days, no card", legacy: "Sales demo", enterprise: "Sales demo" },
   { k: "Users", harlo: "Unlimited", legacy: "Per seat", enterprise: "Unlimited" },
-  { k: "AI", harlo: "Built in, asks before acting", legacy: "Add-on, or none", enterprise: "Built in" },
-  { k: "Carriers and brokers", harlo: "Both, in linked workspaces", legacy: "Usually one", enterprise: "Both" },
+  { k: "Carriers and brokers", harlo: "Both, linked", legacy: "Usually one", enterprise: "Both" },
   { k: "Right size for", harlo: "1 truck to enterprise", legacy: "Mid-size fleets", enterprise: "Mid-size and up" },
 ];
 
 const EASY = [
-  {
-    t: "Pick your side",
-    d: "Create a carrier workspace, a brokerage workspace or both. No sales call, no card, no implementation project.",
-  },
-  {
-    t: "Bring your operation in",
-    d: "Add your trucks, drivers, customers and carriers, or hand Ike your spreadsheets and paperwork and let it do the typing.",
-  },
-  {
-    t: "Bring your team",
-    d: "Invite dispatchers, reps and billing as you go. Every user is included, and anyone who gets stuck can just ask Ike.",
-  },
+  { t: "Pick your side", d: "Carrier, brokerage, or both. No sales call." },
+  { t: "Bring your data", d: "Add trucks, drivers and customers, or import your spreadsheets." },
+  { t: "Invite your team", d: "Every user is included." },
 ];
 
 const HOME_FAQ: QA[] = [
   {
     q: "Is Harlo for carriers or brokers?",
-    a: "Both. Carriers get dispatch, driver and equipment compliance and margin per load. Brokers get customers, carrier vetting, tracking and settlement. If you do both, run them side by side as separate workspaces under one login.",
+    a: "Both. Run either one, or both side by side as separate workspaces under one login.",
   },
   {
-    q: "How is Harlo different from a traditional TMS?",
-    a: "A traditional TMS stores what your team types into it. Harlo understands your operation: it watches every load and record, tells you what needs attention, and gets the next step ready for a person to approve. It's also live the day you sign up, with published prices and no per-seat fees.",
-  },
-  {
-    q: "How long does it take to get set up?",
-    a: "Most teams run their first load the same day. Sign up, pick carrier, broker or both, and add your first load. There's no implementation project, and Ike answers how-to questions inside the app.",
+    q: "How long does setup take?",
+    a: "Most teams run their first load the same day. There's no implementation project.",
   },
   {
     q: "What's a workspace?",
-    a: "A self-contained Harlo for one operation: a carrier, a brokerage, an authority or a terminal. Each keeps its own loads, people and settings, and you switch between them in a click.",
+    a: "One operation — a carrier, a brokerage, an authority or a terminal — with its own loads, people and settings. Switch between them in a click.",
   },
   ...FAQ_TRIAL.slice(0, 2),
 ];
 
 const TEASER = [
-  { who: "Carriers", price: usd(plan("pro").month!), unit: "per truck / mo", note: "Free for up to 2 trucks", href: "/pricing#carrier" },
-  { who: "Brokers", price: usd(brokerPlan("broker").month!), unit: "/ mo for 200 loads", note: "Free for up to 25 loads a month", href: "/pricing#broker" },
+  { who: "Carriers", price: usd(plan("pro").month!), unit: "per truck / mo", note: "Free up to 2 trucks", href: "/pricing#carrier" },
+  { who: "Brokers", price: usd(brokerPlan("broker").month!), unit: "/ mo, 200 loads", note: "Free up to 25 loads a month", href: "/pricing#broker" },
   {
     who: "Carrier + Broker",
     price: `${BUNDLE_BROKER_DISCOUNT * 100}% off`,
     unit: "the brokerage side",
-    note: "Both workspaces, one login, one bill",
+    note: "One login, one bill",
     href: "/pricing#both",
   },
 ];
@@ -151,17 +125,17 @@ export default function Home() {
       {/* ---------------------------------------------------------------- hero */}
       <section className="relative overflow-hidden">
         <div className="pointer-events-none absolute inset-y-0 right-0 hidden w-[44%] bg-mist lg:block" />
-        <Container className="relative grid items-center gap-12 pt-12 pb-16 sm:pt-16 lg:grid-cols-[1fr_1.02fr] lg:gap-16 lg:pt-20 lg:pb-24">
+        <Container className="relative grid items-center gap-12 pt-12 pb-16 sm:pt-16 lg:grid-cols-[1fr_1.05fr] lg:gap-16 lg:pt-20 lg:pb-24">
           <div>
-            <h1 className="max-w-[13ch] text-display font-extrabold">Meet the TMS that works with you.</h1>
-            <p className="mt-6 max-w-[34rem] text-lead">
-              Harlo is the AI-native platform for running freight, whether you haul it, broker it or both. It
-              understands your whole operation, watches every load around the clock, and has the next step
-              ready before your team has to ask.
+            <h1 className="max-w-[12ch] text-display font-extrabold">
+              Run freight, <span className="text-rust-ink">not spreadsheets.</span>
+            </h1>
+            <p className="mt-6 max-w-[30rem] text-lead">
+              The TMS for carriers and brokers. Free to start, built to grow with you.
             </p>
             <div className="mt-9 flex flex-col gap-3 sm:flex-row">
               <Button href={LINKS.signup} size="lg">
-                Start my free trial
+                Start free trial
               </Button>
               <Button href="/pricing" size="lg" variant="secondary">
                 See pricing
@@ -170,7 +144,7 @@ export default function Home() {
             <p className="mt-4 text-sm text-muted">{TRIAL_NOTE}</p>
           </div>
           <div className="lg:pl-2">
-            <Briefing />
+            <OpsBoard />
           </div>
         </Container>
       </section>
@@ -189,54 +163,10 @@ export default function Home() {
         </Container>
       </section>
 
-      {/* ---------------------------------------------------------------- ike */}
-      <section id="ike" className="on-pine bg-pine py-20 text-on-pine-muted sm:py-28">
-        <Container>
-          <div className="grid gap-8 lg:grid-cols-[1fr_1fr] lg:items-end lg:gap-20">
-            <h2 className="max-w-xl text-h2 font-extrabold text-white">
-              Your software records the work. Harlo does it with you.
-            </h2>
-            <p className="max-w-xl text-lead text-on-pine">
-              Ike is the AI built into the core of Harlo. It isn&apos;t a chatbot in the corner. It&apos;s a
-              teammate on every desk that knows your loads, people and money as well as your best
-              dispatcher.
-            </p>
-          </div>
-          <div className="mt-14 grid gap-px overflow-hidden rounded-3xl bg-pine-3 sm:grid-cols-2">
-            {JOBS.map((j) => (
-              <div key={j.t} className="flex flex-col bg-pine-2 p-7 sm:p-9">
-                <h3 className="text-h3 font-bold text-white">{j.t}</h3>
-                <p className="mt-3">{j.d}</p>
-                <p className="mt-6 border-l-2 border-rust pl-4 text-[0.9375rem] text-on-pine">{j.eg}</p>
-              </div>
-            ))}
-          </div>
-          <div className="mt-12 grid gap-8 border-t border-pine-3 pt-10 md:grid-cols-[1fr_auto] md:items-start">
-            <dl className="grid gap-6 sm:grid-cols-3 sm:gap-8">
-              {GUARDRAILS.map((g) => (
-                <div key={g.t}>
-                  <dt className="font-semibold text-white">{g.t}</dt>
-                  <dd className="mt-1 text-[0.9375rem]">{g.d}</dd>
-                </div>
-              ))}
-            </dl>
-            <Button href="/ike" variant="outline-light">
-              Meet Ike
-            </Button>
-          </div>
-        </Container>
-      </section>
-
       {/* -------------------------------------------------------------- sides */}
       <section id="product" className="py-20 sm:py-28">
         <Container>
-          <div className="max-w-2xl">
-            <h2 className="text-h2 font-extrabold">One platform for both sides of the load.</h2>
-            <p className="mt-5 text-lead">
-              Shippers, brokers, carriers and drivers all touch the same load. Harlo is built so every one of
-              them works from the same record.
-            </p>
-          </div>
+          <h2 className="max-w-2xl text-h2 font-extrabold">Both sides of the load. One platform.</h2>
           <div className="mt-12 grid gap-5 lg:grid-cols-2">
             {SIDES.map((s, i) => {
               const dark = i === 0;
@@ -275,11 +205,8 @@ export default function Home() {
       <section className="border-t border-line py-20 sm:py-28">
         <Container>
           <div className="grid gap-6 lg:grid-cols-[1fr_1fr] lg:items-end lg:gap-20">
-            <h2 className="max-w-xl text-h2 font-extrabold">Everything you need to run freight. Already connected.</h2>
-            <p className="max-w-xl text-lead">
-              No modules to buy, no add-ons to bolt on. Every paid plan gets the whole platform, and every part
-              of it shares the same records, so nothing is typed twice.
-            </p>
+            <h2 className="max-w-xl text-h2 font-extrabold">Everything to run freight. Already connected.</h2>
+            <p className="max-w-xl text-lead">Every paid plan gets the whole platform. Nothing to bolt on.</p>
           </div>
           <div className="mt-14 grid gap-10 sm:grid-cols-2 lg:grid-cols-5 lg:gap-8">
             {MODULES.map((m) => (
@@ -300,36 +227,35 @@ export default function Home() {
       <section className="on-pine overflow-hidden bg-pine py-20 text-on-pine-muted sm:py-28">
         <Container>
           <div className="grid gap-6 lg:grid-cols-[1fr_1fr] lg:items-end lg:gap-20">
-            <h2 className="max-w-xl text-h2 font-extrabold text-white">One Harlo. Every screen in your operation.</h2>
+            <h2 className="max-w-xl text-h2 font-extrabold text-white">One account. Every screen.</h2>
             <p className="max-w-xl text-lead text-on-pine">
-              The full system on the desktop, Harlo Go on your phone, Harlo Driver in the cab. One account, one
-              subscription, the same live records on all three. Start a load on one screen and it&apos;s waiting on
-              the next.
+              Desktop for the office, Harlo Go for your phone, Harlo Driver for the cab. Same live records on all
+              three.
             </p>
           </div>
           <div className="mt-14 grid items-end gap-8 md:grid-cols-[1.5fr_1fr] lg:grid-cols-[1.6fr_0.9fr_1.3fr]">
             <figure>
               <DesktopScreen />
               <figcaption className="mt-4">
-                <span className="font-semibold text-white">Harlo for desktop.</span> The command center for the office.
+                <span className="font-semibold text-white">Harlo.</span> The command center.
               </figcaption>
             </figure>
             <figure>
               <Phone className="max-w-[14rem]" />
               <figcaption className="mt-4 text-center md:text-left">
-                <span className="font-semibold text-white">Harlo Go.</span> Your operation in your pocket.
+                <span className="font-semibold text-white">Harlo Go.</span> In your pocket.
               </figcaption>
             </figure>
             <figure className="md:col-span-2 lg:col-span-1">
               <DriverTablet />
               <figcaption className="mt-4">
-                <span className="font-semibold text-white">Harlo Driver.</span> A dedicated screen in every cab.
+                <span className="font-semibold text-white">Harlo Driver.</span> In every cab.
               </figcaption>
             </figure>
           </div>
           <div className="mt-12">
             <Button href="/apps" variant="outline-light">
-              How the apps work together
+              See the apps
             </Button>
           </div>
         </Container>
@@ -339,11 +265,9 @@ export default function Home() {
       <section className="bg-mist py-20 sm:py-28">
         <Container className="grid items-center gap-14 lg:grid-cols-[1.1fr_1fr] lg:gap-20">
           <div>
-            <h2 className="max-w-xl text-h2 font-extrabold">One login. Every operation you run.</h2>
+            <h2 className="max-w-xl text-h2 font-extrabold">One login. Every operation.</h2>
             <p className="mt-5 max-w-xl text-lead">
-              Run a carrier and a brokerage, a second authority or a new terminal, each in its own workspace
-              with its own loads, people and settings. Switch in a click, and cover a brokered load with your
-              own trucks without re-keying a thing.
+              A carrier, a brokerage, a second authority — each in its own workspace. Switch in a click.
             </p>
             <div className="mt-8">
               <Button href="/workspaces" variant="secondary">
@@ -355,20 +279,47 @@ export default function Home() {
         </Container>
       </section>
 
+      {/* ---------------------------------------------------------------- ike */}
+      <section id="ike" className="on-pine bg-pine py-20 text-on-pine-muted sm:py-28">
+        <Container>
+          <div className="grid gap-8 lg:grid-cols-[1fr_1fr] lg:items-end lg:gap-20">
+            <h2 className="max-w-xl text-h2 font-extrabold text-white">Ike does the busywork.</h2>
+            <p className="max-w-xl text-lead text-on-pine">
+              The assistant built into Harlo. It drafts, your team decides.
+            </p>
+          </div>
+          <div className="mt-14 grid gap-px overflow-hidden rounded-3xl bg-pine-3 sm:grid-cols-2">
+            {JOBS.map((j) => (
+              <div key={j.t} className="flex flex-col bg-pine-2 p-7 sm:p-9">
+                <h3 className="text-h3 font-bold text-white">{j.t}</h3>
+                <p className="mt-3">{j.d}</p>
+                <p className="mt-6 border-l-2 border-rust pl-4 text-[0.9375rem] text-on-pine">{j.eg}</p>
+              </div>
+            ))}
+          </div>
+          <div className="mt-12 grid gap-8 border-t border-pine-3 pt-10 md:grid-cols-[1fr_auto] md:items-start">
+            <dl className="grid gap-6 sm:grid-cols-3 sm:gap-8">
+              {GUARDRAILS.map((g) => (
+                <div key={g.t}>
+                  <dt className="font-semibold text-white">{g.t}</dt>
+                  <dd className="mt-1 text-[0.9375rem]">{g.d}</dd>
+                </div>
+              ))}
+            </dl>
+            <Button href="/ike" variant="outline-light">
+              Meet Ike
+            </Button>
+          </div>
+        </Container>
+      </section>
+
       {/* ------------------------------------------------------------ compare */}
       <section className="py-20 sm:py-28">
         <Container>
-          <div className="max-w-2xl">
-            <h2 className="text-h2 font-extrabold">Enterprise power, without the enterprise rollout.</h2>
-            <p className="mt-5 text-lead">
-              Traditional systems take months to install and charge by the seat. The newer AI platforms are
-              built for big operations with big budgets. Harlo gives every fleet and brokerage the same power,
-              live today.
-            </p>
-          </div>
+          <h2 className="max-w-2xl text-h2 font-extrabold">Enterprise power. No enterprise rollout.</h2>
           <div className="mt-12 -mx-5 overflow-x-auto px-5 sm:mx-0 sm:px-0">
             <table className="w-full min-w-[44rem] border-collapse text-left text-[0.9375rem]">
-              <caption className="sr-only">Harlo compared with traditional TMS software and enterprise AI platforms</caption>
+              <caption className="sr-only">Harlo compared with traditional TMS software and enterprise platforms</caption>
               <thead>
                 <tr className="border-b border-ink">
                   <th scope="col" className="w-[22%] py-4">
@@ -381,7 +332,7 @@ export default function Home() {
                     Traditional TMS
                   </th>
                   <th scope="col" className="px-4 py-4 text-lg font-bold text-ink">
-                    Enterprise AI platforms
+                    Enterprise platforms
                   </th>
                 </tr>
               </thead>
@@ -409,13 +360,7 @@ export default function Home() {
       {/* --------------------------------------------------------------- easy */}
       <section className="border-t border-line py-20 sm:py-28">
         <Container>
-          <div className="max-w-2xl">
-            <h2 className="text-h2 font-extrabold">Powerful enough to run on. Easy enough to start today.</h2>
-            <p className="mt-5 text-lead">
-              Most logistics software takes months to roll out and a week of training to use. Harlo takes an
-              afternoon, because the AI does the setup work alongside you.
-            </p>
-          </div>
+          <h2 className="max-w-2xl text-h2 font-extrabold">Live this afternoon.</h2>
           <ol className="mt-14 grid gap-10 md:grid-cols-3 md:gap-8">
             {EASY.map((e, i) => (
               <li key={e.t} className="border-t-2 border-ink pt-5">
@@ -429,7 +374,7 @@ export default function Home() {
           </ol>
           <div className="mt-12 flex flex-col gap-3 sm:flex-row sm:items-center">
             <Button href={LINKS.signup} size="lg">
-              Start my free trial
+              Start free trial
             </Button>
             <p className="text-sm text-muted">{TRIAL_NOTE}</p>
           </div>
@@ -442,16 +387,11 @@ export default function Home() {
           <h2 className="text-h2 font-extrabold">Built by people who&apos;ve moved freight.</h2>
           <div className="grid gap-5 text-lead">
             <p>
-              Harlo started as Loadbar, a system pieced together in Bubble and Airtable to run a small trucking
-              company called Fat Cat Freight. It wasn&apos;t pretty. It worked, because it was built against
-              real problems by the person having them.
-            </p>
-            <p>
-              Fat Cat closed in 2023. What running it taught us about dispatch, driver files, brokers and
-              getting paid is what Harlo is built on.
+              Harlo started as the system behind Fat Cat Freight, a small trucking company. What running it taught
+              us about dispatch, driver files, brokers and getting paid is what Harlo is built on.
             </p>
             <Link href="/about" className="font-semibold text-rust-ink underline-offset-4 hover:underline">
-              Read the whole story
+              Our story
             </Link>
           </div>
         </Container>
@@ -462,11 +402,8 @@ export default function Home() {
         <Container>
           <div className="flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
             <div className="max-w-2xl">
-              <h2 className="text-h2 font-extrabold">Priced for how you move freight. Never per seat.</h2>
-              <p className="mt-5 text-lead">
-                Carriers pay per truck, brokers pay by load volume, and every user is included. The price only
-                moves when your business does.
-              </p>
+              <h2 className="text-h2 font-extrabold">Never priced per seat.</h2>
+              <p className="mt-5 text-lead">Carriers pay per truck. Brokers pay by volume. Every user included.</p>
             </div>
             <Button href="/pricing" variant="secondary">
               See all pricing
@@ -491,23 +428,19 @@ export default function Home() {
       <section className="border-t border-line py-20 sm:py-24">
         <Container className="grid gap-10 lg:grid-cols-[1fr_2fr] lg:gap-20">
           <div>
-            <h2 className="text-h2 font-extrabold">Questions before you start</h2>
+            <h2 className="text-h2 font-extrabold">Questions</h2>
             <p className="mt-4">
-              Anything else, email{" "}
+              Anything else:{" "}
               <a className="font-semibold text-ink underline underline-offset-2" href={LINKS.support}>
                 support@goharlo.com
               </a>
-              .
             </p>
           </div>
           <Faq items={HOME_FAQ} />
         </Container>
       </section>
 
-      <EndCta
-        title="Put Harlo to work on your operation."
-        body="Start free, add your first load, and see what Ike finds. No card, no sales call, no 90-day rollout."
-      />
+      <EndCta title="Start running on Harlo." body="Free to start. No card, no sales call." />
     </main>
   );
 }

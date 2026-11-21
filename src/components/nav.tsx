@@ -11,7 +11,7 @@ const ITEMS = [
   { href: "/carriers", label: "Carriers" },
   { href: "/brokers", label: "Brokers" },
   { href: "/workspaces", label: "Workspaces" },
-  { href: "/ike", label: "Ike AI" },
+  { href: "/ike", label: "Ike" },
   { href: "/apps", label: "Apps" },
   { href: "/pricing", label: "Pricing" },
 ];
@@ -107,14 +107,14 @@ export function Nav() {
             ))}
             <div className="mt-8 grid gap-3">
               <Button href={signup} size="lg">
-                Start my free trial
+                Start free trial
               </Button>
               <Button href={LINKS.login} variant="secondary" size="lg">
                 Log in
               </Button>
             </div>
             <p className="mt-4 text-center text-sm text-muted">
-              Free for 14 days. No card required.
+              Try Pro free for 14 days. No card required.
             </p>
           </Container>
         </div>

@@ -23,9 +23,9 @@ import {
 export type Side = "carrier" | "broker" | "both";
 
 const SIDES: { key: Side; label: string; sub: string }[] = [
-  { key: "carrier", label: "I run trucks", sub: "Carrier, priced per truck" },
-  { key: "broker", label: "I broker freight", sub: "Brokerage, priced by loads" },
-  { key: "both", label: "I do both", sub: "Carrier and brokerage together" },
+  { key: "carrier", label: "Carriers", sub: "Priced per truck" },
+  { key: "broker", label: "Brokers", sub: "Priced by loads" },
+  { key: "both", label: "Both", sub: "Carrier and brokerage" },
 ];
 
 const money = (n: number) => usd(Math.round(n));
@@ -198,7 +198,7 @@ function CarrierCalc({ interval }: { interval: Interval }) {
               </p>
               <div className="mt-6">
                 <Button href={p.cta.href} variant="light" className="w-full sm:w-auto">
-                  Start my free trial
+                  Start free trial
                 </Button>
               </div>
               <p className="mt-4 text-sm text-on-pine-muted">
@@ -260,7 +260,7 @@ function BrokerCalc({ interval }: { interval: Interval }) {
               </p>
               <div className="mt-6">
                 <Button href={LINKS.signupBroker} variant="light" className="w-full sm:w-auto">
-                  Start my free trial
+                  Start free trial
                 </Button>
               </div>
             </>
@@ -323,7 +323,7 @@ function BothCalc({ interval }: { interval: Interval }) {
             </dl>
             <div className="mt-6">
               <Button href={LINKS.signupBoth} variant="light" className="w-full sm:w-auto">
-                Start my free trial
+                Start free trial
               </Button>
             </div>
           </>

@@ -188,10 +188,9 @@ export default function PricingPage() {
       <section className="pt-14 pb-24 sm:pt-20">
         <Container>
           <div className="mb-12 max-w-2xl">
-            <h1 className="text-display font-extrabold">Simple pricing for every side of freight.</h1>
+            <h1 className="text-display font-extrabold">Simple, published pricing.</h1>
             <p className="mt-6 text-lead">
-              Carriers pay per truck. Brokers pay by load volume. Do both and the brokerage is 25% off. Every
-              paid plan includes unlimited users, and every trial is 14 days with no card.
+              Carriers pay per truck. Brokers pay by volume. Do both and save 25% on the brokerage. Every user included.
             </p>
           </div>
           <Pricing

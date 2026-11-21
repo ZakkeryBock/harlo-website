@@ -16,8 +16,16 @@ import {
  * decide who pays when something goes wrong — have a lawyer read those before
  * relying on them.
  *
- * Keep it truthful as the product changes. If billing starts metering
- * something new, section 6 says so in the same PR.
+ * Keep it truthful as the product changes. Section 5 describes the plans and
+ * how they bill (carriers per power unit, brokerages by loads a month with a
+ * per-load charge above the included loads, AI credits) — if billing starts
+ * metering something new, sections 5 and 6 say so in the same PR. Section 7's
+ * closure and deletion promise is enforced by harlo-infra 107 (Settings → Close
+ * workspace, daily account-retention job). Section 17 covers the API, webhooks
+ * and integrations.
+ *
+ * Copied verbatim to harlo-website (src/app/terms) apart from the metadata
+ * title and the absolute /sms-consent link — change both together.
  */
 
 export const metadata: Metadata = {
@@ -33,9 +41,11 @@ export default function TermsPage() {
       intro={
         <p>
           These terms govern use of the Harlo platform provided by {LEGAL_ENTITY} (&ldquo;{COMPANY}
-          &rdquo;, &ldquo;we&rdquo;, &ldquo;us&rdquo;). By signing up, signing in, or using Harlo,
-          the customer and its users agree to them. If you are agreeing on behalf of a company, you
-          confirm you are authorised to bind it. If you do not agree, do not use Harlo.
+          &rdquo;, &ldquo;we&rdquo;, &ldquo;us&rdquo;) — the web application, the Harlo Go and
+          Harlo Driver apps, the API, and the goharlo.com website. By signing up, signing in, or
+          using Harlo, the customer and its users agree to them. If you are agreeing on behalf of a
+          company, you confirm you are authorised to bind it. If you do not agree, do not use
+          Harlo.
         </p>
       }
     >
@@ -62,6 +72,14 @@ export default function TermsPage() {
           operation, interprets it, and surfaces conclusions and exceptions. We provide it as a
           subscription and may improve or change features over time. We will not materially reduce
           core functionality during a paid term without notice.
+        </p>
+        <p>
+          Harlo is available on the web and through the Harlo Go and Harlo Driver apps; those apps
+          and the API are part of the service and covered by these terms. Which features, limits,
+          and AI allowances a customer has depends on its plan, as described on our pricing page.
+          A driver who signs in to Harlo Driver does so as a user of the carrier that invited them,
+          not as a separate customer, and the carrier is responsible for telling its drivers how
+          their information is used in Harlo.
         </p>
         <p>
           Subject to these terms and to payment of fees, we grant the customer a non-exclusive,
@@ -142,24 +160,44 @@ export default function TermsPage() {
 
       <LegalSection title="5. Fees and billing">
         <p>
-          Subscription pricing is set out in the Order and may combine a recurring fee based on fleet
-          size, per-load or per-volume charges, and usage-based allowances for AI-assisted features.
-          Usage above an included allowance is billed as the plan describes.
+          Harlo has a Free plan and paid plans. The current plans, prices, and limits are published
+          on our pricing page and are part of the Order. Carrier plans are priced per truck (power
+          units — tractors and straight trucks, not trailers). Brokerage plans are priced by the
+          loads included each month, with a per-load charge for loads above that number.
+          Enterprise is priced by contract. Paid plans are billed monthly or annually and include a
+          monthly allowance of AI credits. Per-load and AI usage above an allowance is billed after
+          the month ends, as the plan describes. Some plans cap trucks, users, loads, or AI credits; at a cap, creating
+          more may be blocked until the customer upgrades or reduces usage, and existing records
+          stay readable.
         </p>
         <p>
-          Fees are billed in advance, are payable in US dollars, and are non-refundable except where
-          these terms or the law say otherwise — including where the customer stops using Harlo,
-          removes users, or reduces volume mid-term. The customer authorises us and our payment
-          processor to charge the payment method on file for all amounts due, including true-ups
-          under section 6.
+          <strong className="text-foreground">Self-serve subscriptions renew automatically.</strong>{" "}
+          A paid plan bought online is charged to the card on file through our payment processor
+          (Stripe) at the start of each monthly or annual period and renews for another period until
+          cancelled. The customer can cancel at any time in its billing settings, or by emailing{" "}
+          <a className="underline" href={`mailto:${SUPPORT_EMAIL}`}>
+            {SUPPORT_EMAIL}
+          </a>
+          ; cancellation stops the next renewal, and the plan stays active to the end of the period
+          already paid. A free trial does not turn into a paid subscription unless the customer
+          chooses a paid plan; when a trial ends, the account moves to the Free plan.
         </p>
         <p>
-          Invoices are due on receipt unless the Order says otherwise. Overdue amounts accrue
-          interest at 1.5% per month or the maximum the law allows, whichever is lower, and the
-          customer is responsible for the reasonable costs of collection, including attorneys&apos;
-          fees. We may suspend the service on ten days&apos; notice of non-payment. Fees exclude
-          taxes; the customer is responsible for all taxes other than those on our income, and will
-          gross up any amount it is required to withhold.
+          Fees are billed in advance (usage above an allowance in arrears), are payable in US
+          dollars, and are non-refundable except where these terms or the law say otherwise —
+          including where the customer stops using Harlo, removes trucks or users, or reduces
+          volume mid-term. If the customer believes it was charged in error it should tell us within
+          30 days and we will correct it. The customer authorises us and our payment processor to
+          charge the payment method on file for all amounts due, including true-ups under section
+          6.
+        </p>
+        <p>
+          For Enterprise and other invoiced accounts, invoices are due on receipt unless the Order
+          says otherwise. Overdue amounts accrue interest at 1.5% per month or the maximum the law
+          allows, whichever is lower, and the customer is responsible for the reasonable costs of
+          collection, including attorneys&apos; fees. We may suspend the service on ten days&apos;
+          notice of non-payment. Fees exclude taxes; the customer is responsible for all taxes other
+          than those on our income, and will gross up any amount it is required to withhold.
         </p>
         <p>
           Fees may not be set off, withheld, or reduced against any claim the customer has or
@@ -167,16 +205,17 @@ export default function TermsPage() {
           pricing on 30 days&apos; notice, effective at the next renewal.
         </p>
         <p>
-          If the customer&apos;s fleet or usage grows mid-term, the applicable tier applies from the
-          point it is exceeded, prorated for the remainder of the term. Downgrades take effect at
-          renewal.
+          If the customer adds trucks mid-term, the new count is charged from the point it is
+          exceeded, prorated for the remainder of the period. Removing trucks takes effect at
+          renewal, without a credit for the current period. Downgrades take effect at renewal.
         </p>
       </LegalSection>
 
       <LegalSection title="6. Usage measurement, and no circumvention">
         <p>
-          Harlo meters what it bills — fleet size, loads and volume, users, and AI usage. Our
-          measurement records are the authoritative basis for billing, absent demonstrable error.
+          Harlo meters what it bills and what each plan limits — fleet size, users, loads, and AI
+          usage. Our measurement records are the authoritative basis for billing and for plan
+          limits, absent demonstrable error.
         </p>
         <p>
           <strong className="text-foreground">
@@ -191,7 +230,7 @@ export default function TermsPage() {
         </p>
         <LegalList
           items={[
-            "create a load, order, route, or other billable record and then delete, void, or reclassify it in order to avoid or reduce the charge for work that actually happened;",
+            "create a load, order, route, or other metered record and then delete, void, or reclassify it in order to avoid a charge or a plan limit for work that actually happened;",
             "keep real operational activity out of Harlo, or record it in a way designed to escape metering, while otherwise relying on Harlo to run that operation;",
             "under-report fleet size, driver count, or seats, or misrepresent the facts a pricing tier is based on;",
             "split one operation across multiple accounts, or run affiliated entities through a single account, to sit in a lower tier or reuse an allowance;",
@@ -204,8 +243,9 @@ export default function TermsPage() {
         <p>
           <strong className="text-foreground">Audit.</strong> We may verify usage. On ten days&apos;
           notice, and not more than once in twelve months unless a prior check found an
-          understatement, the customer will provide the records we reasonably need — dispatch,
-          settlement, payroll, ELD, or IFTA summaries sufficient to reconcile volume. We will treat
+          understatement, the customer will provide the records we reasonably need — equipment
+          lists, dispatch, payroll, ELD, or IFTA summaries sufficient to reconcile fleet size and
+          usage. We will treat
           them as the customer&apos;s confidential information and use them only to verify usage.
         </p>
         <p>
@@ -218,8 +258,8 @@ export default function TermsPage() {
         </p>
         <p>
           Nothing here stops the customer from correcting a genuine mistake. Fixing a typo, removing
-          a duplicate, cancelling a load that never ran, or reversing a test record is ordinary use —
-          and if metering gets something wrong, tell us at{" "}
+          a duplicate, cancelling a load that never ran, selling a truck, or reversing a test record
+          is ordinary use — and if metering gets something wrong, tell us at{" "}
           <a className="underline" href={`mailto:${SUPPORT_EMAIL}`}>
             {SUPPORT_EMAIL}
           </a>{" "}
@@ -258,8 +298,25 @@ export default function TermsPage() {
           keep are expected and fine.
         </p>
         <p>
-          While the subscription is active the customer can export its Customer Data. On termination
-          we make it available for export for 30 days, after which we may delete it.
+          When a customer sends a rate confirmation or document to another party, books a load to a
+          carrier, links workspaces it controls, connects a third-party service, or points the API
+          or a webhook at a system of its own, it is directing us to share that data, and we share
+          only what that action needs. What the recipient does with it afterwards is between them
+          and the customer.
+        </p>
+        <p>
+          The customer can export its Customer Data at any time through the export tools in the
+          product and the API, and can ask us for an export file at{" "}
+          <a className="underline" href={`mailto:${SUPPORT_EMAIL}`}>
+            {SUPPORT_EMAIL}
+          </a>
+          . An admin can close a workspace in its settings, or ask us to. We then keep the data
+          available for export for 30 days, after which we delete it — records, uploaded files, and
+          logins that belong to no other workspace — and in every case within 90 days of closure,
+          except where we must keep something longer to meet a legal obligation or resolve a
+          dispute. Ending a paid plan does not close a workspace; it moves to the Free plan. Copies
+          in backups age out on our hosting provider&apos;s schedule. Aggregated Data and what our
+          models have learned under sections 8 and 12 are not Customer Data and are not deleted.
         </p>
       </LegalSection>
 
@@ -322,7 +379,9 @@ export default function TermsPage() {
           Messaging is subject to the Telephone Consumer Protection Act, state messaging and
           telemarketing laws, carrier and industry (CTIA and A2P) rules, and our messaging
           provider&apos;s policies. Messages must be operational — no marketing, no third-party
-          content, no prohibited categories. We may suspend messaging for an account we reasonably
+          content, no prohibited categories. Inviting a driver to Harlo Driver sends a one-time
+          sign-in code to the number the customer provided, so the customer must invite only people
+          who work with it and whose number it has the right to use. We may suspend messaging for an account we reasonably
           believe is sending without valid consent, and we may disclose consent records to a
           messaging provider or regulator that requires them.
         </p>
@@ -337,7 +396,8 @@ export default function TermsPage() {
           We aim to keep Harlo available and will use commercially reasonable efforts to do so, but
           we do not commit to an uptime percentage unless a separate service level agreement says so.
           Planned maintenance, emergency maintenance, and outages at a provider we depend on will
-          happen. Support is provided by email during US business hours at{" "}
+          happen. Support is provided by email during US business hours, on a best-efforts basis for
+          the Free plan and trials, at{" "}
           <a className="underline" href={`mailto:${SUPPORT_EMAIL}`}>
             {SUPPORT_EMAIL}
           </a>
@@ -373,6 +433,13 @@ export default function TermsPage() {
           user approves it, and the approval is logged. The person who approves it is accountable for
           it.
         </p>
+        <p>
+          To produce this analysis, Customer Data is processed by models we host and by third-party
+          model providers we contract with, which are bound to use it only to return a result to us
+          and not to train their own models. The customer must not use Harlo&apos;s analysis, or
+          the assistant, to make a decision about a person that the law reserves for a human or
+          that requires a notice or process Harlo does not provide.
+        </p>
       </LegalSection>
 
       <LegalSection title="13. Acceptable use">
@@ -395,6 +462,16 @@ export default function TermsPage() {
           We may investigate suspected misuse and cooperate with law enforcement. We do not routinely
           monitor Customer Data, but we may act on what we learn.
         </p>
+        <p>
+          If you find a security vulnerability, please tell us at{" "}
+          <a className="underline" href={`mailto:${SUPPORT_EMAIL}`}>
+            {SUPPORT_EMAIL}
+          </a>{" "}
+          and give us reasonable time to fix it before you disclose it. We will not treat good-faith
+          research as a breach of this section if it stays within your own account, does not access
+          or change anyone else&apos;s data, does not degrade the service, and is reported to us
+          promptly.
+        </p>
       </LegalSection>
 
       <LegalSection title="14. Trials and beta features">
@@ -404,6 +481,12 @@ export default function TermsPage() {
           warranty, support commitment, or indemnity, and are excluded from any service level. Data
           entered in a trial or a beta feature may be deleted when it ends. We may set usage limits
           on them, and section 6 applies to their use.
+        </p>
+        <p>
+          The Free plan is provided on the same footing: the rest of these terms apply to it, but
+          we may change its limits or features, and may close a Free account that has been inactive
+          for twelve months after 30 days&apos; notice by email. Going past the Free plan&apos;s
+          limits needs a paid plan.
         </p>
       </LegalSection>
 
@@ -426,8 +509,10 @@ export default function TermsPage() {
       <LegalSection title="16. Security">
         <p>
           We maintain administrative, technical, and physical safeguards designed to protect Customer
-          Data, including tenant isolation enforced at the database level, encryption in transit,
-          role-based access, and an audit trail of changes. No system is perfectly secure.
+          Data, including tenant isolation enforced at the database level, encryption in transit and
+          at rest, role-based access, and an audit trail of changes. When our staff sign in to a
+          customer&apos;s account to support it, that access is recorded in the customer&apos;s own
+          audit trail. No system is perfectly secure.
         </p>
         <p>
           We will notify the customer without undue delay after confirming a security incident
@@ -437,7 +522,7 @@ export default function TermsPage() {
         </p>
       </LegalSection>
 
-      <LegalSection title="17. Third-party services">
+      <LegalSection title="17. Third-party services, integrations, and the API">
         <p>
           Harlo relies on third parties — hosting, messaging, mapping, model providers, payments.
           Their availability is outside our control, and their own terms may apply to the parts of
@@ -445,13 +530,34 @@ export default function TermsPage() {
           own, it authorises the resulting exchange of data, and we are not responsible for what that
           service does with it.
         </p>
+        <p>
+          <strong className="text-foreground">Integrations.</strong> A customer connects its own
+          account with a vendor (a telematics or data provider, for example) and must have the right
+          to do so. We store the access credential in encrypted form, use it only to exchange the
+          data the customer asked for, and stop when the customer disconnects the integration.
+          Vendors may change or withdraw their interfaces, and an integration may stop working when
+          they do.
+        </p>
+        <p>
+          <strong className="text-foreground">API and webhooks.</strong> On plans that include it,
+          the customer may create API keys and webhooks, subject to our documentation and rate
+          limits. A key is a secret: the customer is responsible for keeping it safe and for
+          everything done with it, and should revoke it if it leaks. A webhook sends data to a
+          web address the customer chooses; the customer is responsible for that system&apos;s
+          security and for the data once it is delivered. We may throttle, suspend, or revoke a key
+          or webhook that exceeds limits, threatens the service, or breaches section 13, and we may
+          change the API, giving notice of changes that would break a documented behaviour.
+        </p>
       </LegalSection>
 
       <LegalSection title="18. Term, suspension, and termination">
         <p>
           The subscription runs for the term in the Order and renews for successive terms of the same
-          length unless either party gives notice of non-renewal before the renewal date. Either
-          party may terminate for a material breach the other has not cured within 30 days of notice.
+          length unless either party gives notice of non-renewal before the renewal date; for
+          self-serve plans the term is the monthly or annual billing period and the customer can
+          cancel at any time as section 5 describes. A customer can close a Free account at any
+          time. Either party may terminate for a material breach the other has not cured within 30
+          days of notice.
         </p>
         <p>
           We may suspend an account immediately — with notice as soon as practicable — for
@@ -501,14 +607,20 @@ export default function TermsPage() {
         <p>
           Each party&apos;s total aggregate liability arising out of or relating to this agreement is
           limited to the fees the customer paid or owed to us in the 12 months before the event
-          giving rise to the claim.
+          giving rise to the claim, or US$100 if that is greater.
+        </p>
+        <p>
+          If a security incident affecting Customer Data is caused by our breach of section 16, our
+          total aggregate liability for it is limited to twice the amount in the previous paragraph
+          (not in addition to it). A security incident is not a breach of confidentiality for the
+          purposes of the next paragraph.
         </p>
         <p>
           These limits do not apply to the customer&apos;s payment obligations, to either
-          party&apos;s indemnity obligations, to a breach of confidentiality, to the customer&apos;s
-          breach of section 6 or section 13, or to liability that cannot lawfully be limited. They
-          apply in the aggregate across all claims and are an essential basis of the bargain: the
-          pricing reflects them.
+          party&apos;s indemnity obligations, to a party&apos;s deliberate disclosure of the
+          other&apos;s confidential information, to the customer&apos;s breach of section 6 or
+          section 13, or to liability that cannot lawfully be limited. They apply in the aggregate
+          across all claims and are an essential basis of the bargain: the pricing reflects them.
         </p>
         <p>
           <strong className="text-foreground">
@@ -524,8 +636,8 @@ export default function TermsPage() {
       <LegalSection title="21. Indemnity">
         <p>
           The customer will defend and indemnify us against third-party claims arising from its
-          Customer Data, its use of the service in breach of this agreement, its messaging to
-          drivers, its transportation operations, an employment or contractor claim by one of its
+          Customer Data, its use of the service in breach of this agreement, its use of the API,
+          webhooks, and integrations, its messaging to drivers, its transportation operations, an employment or contractor claim by one of its
           drivers or staff, or its failure to meet a regulatory obligation.
         </p>
         <p>
@@ -570,6 +682,11 @@ export default function TermsPage() {
           any right to a jury trial.
         </p>
         <p>
+          Either party may instead bring an individual claim in small-claims court in{" "}
+          {GOVERNING_VENUE} if it qualifies, and nothing here stops a party from reporting a
+          concern to a regulator.
+        </p>
+        <p>
           Either party may bring an action in the courts of {GOVERNING_VENUE} for injunctive or
           equitable relief to protect intellectual property or confidential information, and we may
           sue there to collect unpaid fees. The parties consent to that jurisdiction and venue.
@@ -595,8 +712,9 @@ export default function TermsPage() {
 
       <LegalSection title="24. Changes to these terms">
         <p>
-          We may update these terms. For material changes we will give account administrators notice
-          before they take effect, and continued use after that date is acceptance. If the customer
+          We may update these terms, and the effective date at the top shows when. For material
+          changes we will give account administrators notice by email or in the product before they
+          take effect, and continued use after that date is acceptance. If the customer
           does not accept a material change, it may terminate before the change takes effect and
           receive a pro-rata refund of prepaid fees for the unused term. Changes required by law, or
           by a provider we depend on, may take effect immediately.

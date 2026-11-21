@@ -40,8 +40,7 @@ export default function PartnersPage() {
         <Container className="relative">
           <h1 className="max-w-[18ch] text-display font-extrabold">Build what carriers need, with us.</h1>
           <p className="mt-6 max-w-2xl text-lead">
-            Harlo runs loads, dispatch, compliance and billing for carriers and brokers. If your product or service makes
-            that work easier, we want to hear from you. Messages go to the people who build Harlo.
+            Harlo runs loads, dispatch, compliance and billing for carriers and brokers. If you make that work easier, let&apos;s talk.
           </p>
         </Container>
       </section>
