@@ -1,0 +1,6 @@
+1:"$Sreact.fragment"
+2:I[24007,["/_next/static/chunks/13ojielvibok0.js","/_next/static/chunks/0stpmdfobtb_t.js"],"PrivacyChoices"]
+3:I[97367,["/_next/static/chunks/05-c3ty_6dwfk.js","/_next/static/chunks/14mrh2-p_w84d.js"],"OutletBoundary"]
+4:"$Sreact.suspense"
+0:{"rsc":["$","$1","c",{"children":[["$","main",null,{"children":["$","div",null,{"className":"mx-auto w-full max-w-[76rem] px-5 sm:px-8 max-w-2xl py-16 sm:py-24","children":[["$","h1",null,{"className":"text-h2 font-extrabold","children":"Your privacy choices"}],["$","p",null,{"className":"mt-5 text-lead","children":"goharlo.com may use advertising cookies from Google, Meta and LinkedIn to measure our ads. The Harlo apps never do. Turn them off here."}],["$","$L2",null,{}],["$","p",null,{"className":"mt-8 text-sm text-muted","children":["Your choice is saved in this browser. A Global Privacy Control signal always turns them off. Details in our"," ",["$","a",null,{"className":"font-semibold text-ink underline underline-offset-2","href":"/privacy","children":"Privacy Policy"}],"."]}]]}]}],[["$","script","script-0",{"src":"/_next/static/chunks/0stpmdfobtb_t.js","async":true}]],["$","$L3",null,{"children":["$","$4",null,{"name":"Next.MetadataOutlet","children":"$@5"}]}]]}],"isPartial":false,"staleTime":300,"varyParams":null,"buildId":"DaNTndvefxDTG6xLbCeqD"}
+5:null
