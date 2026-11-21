@@ -29,7 +29,7 @@ const APPS = [
     title: "Your operation, in your pocket.",
     body: "Approve what Ike flagged, check any load, snap paperwork, and see what you made this week. For a one-truck carrier, it's all you need to run the business.",
     points: ["Ike's brief, alerts and one-tap approvals", "Every load, document and dollar", "Snap a rate con or BOL with the camera"],
-    visual: <Phone className="max-w-[17rem]" />,
+    visual: <Phone size="mx-auto w-full max-w-[17rem]" />,
   },
   {
     key: "driver",
@@ -121,7 +121,7 @@ export default function AppsPage() {
           </div>
           <div className="relative mt-16 grid items-end gap-6 lg:grid-cols-[1.6fr_1fr_1.2fr]">
             <DesktopScreen />
-            <Phone className="max-w-[15rem]" />
+            <Phone size="mx-auto w-full max-w-[15rem]" />
             <DriverTablet className="hidden lg:block" />
           </div>
         </Container>

@@ -3,7 +3,7 @@ import { OpsBoard } from "@/components/ops-board";
 import { Faq, FAQ_TRIAL, type QA } from "@/components/faq";
 import { EndCta } from "@/components/end-cta";
 import { WorkspaceSwitcher } from "@/components/workspaces";
-import { DesktopScreen, DriverTablet, Phone } from "@/components/devices";
+import { DeviceStage } from "@/components/devices";
 import { Button, Check, Container } from "@/components/ui";
 import { BUNDLE_BROKER_DISCOUNT, LINKS, brokerPlan, plan, usd } from "@/lib/site";
 import { GUARDRAILS, TRIAL_NOTE } from "@/lib/content";
@@ -233,27 +233,10 @@ export default function Home() {
               three.
             </p>
           </div>
-          <div className="mt-14 grid items-end gap-8 md:grid-cols-[1.5fr_1fr] lg:grid-cols-[1.6fr_0.9fr_1.3fr]">
-            <figure>
-              <DesktopScreen />
-              <figcaption className="mt-4">
-                <span className="font-semibold text-white">Harlo.</span> The command center.
-              </figcaption>
-            </figure>
-            <figure>
-              <Phone className="max-w-[14rem]" />
-              <figcaption className="mt-4 text-center md:text-left">
-                <span className="font-semibold text-white">Harlo Go.</span> In your pocket.
-              </figcaption>
-            </figure>
-            <figure className="md:col-span-2 lg:col-span-1">
-              <DriverTablet />
-              <figcaption className="mt-4">
-                <span className="font-semibold text-white">Harlo Driver.</span> In every cab.
-              </figcaption>
-            </figure>
+          <div className="mt-16">
+            <DeviceStage />
           </div>
-          <div className="mt-12">
+          <div className="mt-10">
             <Button href="/apps" variant="outline-light">
               See the apps
             </Button>

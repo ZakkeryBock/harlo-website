@@ -4,60 +4,101 @@ import { Check } from "./ui";
  * The three Harlo surfaces, drawn as product screens: the desktop command
  * center, Harlo Go on a phone, and Harlo Driver on a truck tablet. One account
  * and one set of records behind all three. All names and numbers are made up.
+ *
+ * DeviceStage layers all three into one picture (desktop behind, tablet and
+ * phone in front of its corners) for dark sections; on small screens they stack.
  */
 
 /* ----------------------------------------------------------------- desktop */
 
 const BOARD = [
-  { id: "NL-88412", lane: "Joliet, IL to Columbus, OH", who: "Unit 118, M. Reyes", state: "At pickup", tone: "go" },
-  { id: "NL-88430", lane: "Gary, IN to Louisville, KY", who: "Unit 122, L. Ortega", state: "In transit", tone: "go" },
-  { id: "HB-20417", lane: "Elk Grove, IL to Nashville, TN", who: "Lakeshore Transport", state: "Running late", tone: "warn" },
-  { id: "NL-88441", lane: "Aurora, IL to St. Louis, MO", who: "Unassigned", state: "Needs a truck", tone: "stop" },
+  { id: "NL-88412", lane: "Joliet, IL → Columbus, OH", who: "Unit 118, M. Reyes", state: "At pickup", tone: "go" },
+  { id: "NL-88430", lane: "Gary, IN → Louisville, KY", who: "Unit 122, L. Ortega", state: "In transit", tone: "go" },
+  { id: "HB-20417", lane: "Elk Grove, IL → Nashville, TN", who: "Lakeshore Transport", state: "Running late", tone: "warn" },
+  { id: "NL-88441", lane: "Aurora, IL → St. Louis, MO", who: "Unassigned", state: "Needs a truck", tone: "stop" },
+  { id: "NL-88452", lane: "Rockford, IL → Detroit, MI", who: "Unit 131, D. Whitfield", state: "Delivered", tone: "go" },
+  { id: "NL-88457", lane: "Joliet, IL → Indianapolis, IN", who: "Unit 109, A. Kowalski", state: "Dispatched", tone: "go" },
 ] as const;
 
 const toneText = { go: "text-go", warn: "text-warn", stop: "text-stop" } as const;
+const tonePill = {
+  go: "bg-go-soft text-go",
+  warn: "bg-warn-soft text-warn",
+  stop: "bg-stop-soft text-stop",
+} as const;
 
-export function DesktopScreen({ className = "" }: { className?: string }) {
+const KPIS = [
+  { k: "Moving", v: "18" },
+  { k: "Running late", v: "1" },
+  { k: "Need a truck", v: "1" },
+  { k: "Delivered this week", v: "$24,310" },
+];
+
+export function DesktopScreen({ className = "", large = false }: { className?: string; large?: boolean }) {
+  const rows = large ? BOARD : BOARD.slice(0, 4);
   return (
     <div
       className={`overflow-hidden rounded-xl border border-line bg-paper shadow-[0_24px_60px_-28px_rgb(28_34_30/0.4)] ${className}`}
       role="img"
-      aria-label="Harlo on desktop: the dispatch board with four loads, a sidebar of modules, and Ike's summary of what needs attention."
+      aria-label="Harlo on desktop: the dispatch board with its loads, a sidebar of modules, and a summary of what needs attention."
     >
       <div aria-hidden="true">
         <div className="flex items-center gap-1.5 border-b border-line bg-mist px-3 py-2">
-          <span className="size-2 rounded-full bg-line" />
-          <span className="size-2 rounded-full bg-line" />
-          <span className="size-2 rounded-full bg-line" />
+          <span className="size-2.5 rounded-full bg-line" />
+          <span className="size-2.5 rounded-full bg-line" />
+          <span className="size-2.5 rounded-full bg-line" />
           <span className="ml-3 truncate rounded bg-paper px-2 py-0.5 text-[0.625rem] text-muted">app.goharlo.com/dispatch</span>
         </div>
-        <div className="grid grid-cols-[5.5rem_1fr] sm:grid-cols-[7rem_1fr]">
-          <div className="border-r border-line bg-mist/60 p-2.5 text-[0.625rem] leading-6 text-body">
+        <div className={`grid ${large ? "grid-cols-[8.5rem_1fr]" : "grid-cols-[5.5rem_1fr] sm:grid-cols-[7rem_1fr]"}`}>
+          <div className={`border-r border-line bg-mist/60 p-2.5 text-body ${large ? "text-xs leading-7" : "text-[0.625rem] leading-6"}`}>
             {["Dashboard", "Dispatch", "Loads", "Drivers", "Equipment", "Customers", "Money"].map((x) => (
-              <p key={x} className={x === "Dispatch" ? "rounded bg-paper px-1.5 font-semibold text-ink" : "px-1.5"}>
+              <p key={x} className={x === "Dispatch" ? "rounded bg-paper px-2 font-semibold text-ink" : "px-2"}>
                 {x}
               </p>
             ))}
           </div>
-          <div className="min-w-0 p-3">
+          <div className={`min-w-0 ${large ? "p-5" : "p-3"}`}>
             <div className="flex items-center justify-between gap-2">
-              <p className="text-xs font-bold text-ink">Dispatch board</p>
-              <p className="rounded bg-rust-soft px-1.5 py-0.5 text-[0.625rem] font-semibold text-rust-deep">
-                Ike: 2 need you
+              <p className={`font-bold text-ink ${large ? "text-base" : "text-xs"}`}>Dispatch board</p>
+              <p className={`rounded bg-rust-soft px-1.5 py-0.5 font-semibold text-rust-deep ${large ? "text-xs" : "text-[0.625rem]"}`}>
+                2 need you
               </p>
             </div>
-            <div className="mt-2 divide-y divide-line rounded-md border border-line">
-              {BOARD.map((b) => (
-                <div key={b.id} className="grid grid-cols-[1fr_auto] gap-2 px-2 py-1.5">
-                  <div className="min-w-0">
-                    <p className="truncate text-[0.6875rem] font-semibold text-ink">
-                      {b.id} <span className="font-normal text-body">{b.lane}</span>
-                    </p>
-                    <p className="truncate text-[0.625rem] text-muted">{b.who}</p>
+
+            {large && (
+              <div className="mt-4 grid grid-cols-4 gap-2.5">
+                {KPIS.map((s) => (
+                  <div key={s.k} className="rounded-lg border border-line px-3 py-2">
+                    <p className="text-[0.6875rem] text-muted">{s.k}</p>
+                    <p className="text-lg font-bold text-ink tabular-nums">{s.v}</p>
                   </div>
-                  <p className={`self-center text-[0.625rem] font-semibold whitespace-nowrap ${toneText[b.tone]}`}>{b.state}</p>
-                </div>
-              ))}
+                ))}
+              </div>
+            )}
+
+            <div className={`divide-y divide-line rounded-md border border-line ${large ? "mt-4" : "mt-2"}`}>
+              {rows.map((b) =>
+                large ? (
+                  <div key={b.id} className="grid grid-cols-[5.5rem_1fr_10rem_6.5rem] items-center gap-3 px-3 py-2.5 text-xs">
+                    <p className="font-semibold text-ink">{b.id}</p>
+                    <p className="truncate text-body">{b.lane}</p>
+                    <p className="truncate text-muted">{b.who}</p>
+                    <p className={`rounded-full px-2 py-0.5 text-center text-[0.6875rem] font-semibold ${tonePill[b.tone]}`}>
+                      {b.state}
+                    </p>
+                  </div>
+                ) : (
+                  <div key={b.id} className="grid grid-cols-[1fr_auto] gap-2 px-2 py-1.5">
+                    <div className="min-w-0">
+                      <p className="truncate text-[0.6875rem] font-semibold text-ink">
+                        {b.id} <span className="font-normal text-body">{b.lane}</span>
+                      </p>
+                      <p className="truncate text-[0.625rem] text-muted">{b.who}</p>
+                    </div>
+                    <p className={`self-center text-[0.625rem] font-semibold whitespace-nowrap ${toneText[b.tone]}`}>{b.state}</p>
+                  </div>
+                ),
+              )}
             </div>
           </div>
         </div>
@@ -74,12 +115,25 @@ const LOADS = [
   { lane: "Elk Grove, IL to Detroit, MI", when: "Delivered Tue", rate: "$1,040", state: "Delivered" },
 ];
 
-export function Phone({ className = "" }: { className?: string }) {
+/**
+ * frame: the bezel colour (use a lighter one on a dark section so the device reads).
+ * size: width and placement, replaced whole — two width utilities on one element
+ * fight, and Tailwind decides the winner, not the order of the classes.
+ */
+export function Phone({
+  className = "",
+  frame = "bg-pine",
+  size = "mx-auto w-full max-w-[20rem]",
+}: {
+  className?: string;
+  frame?: string;
+  size?: string;
+}) {
   return (
     <div
-      className={`mx-auto w-full max-w-[20rem] rounded-[2.6rem] bg-pine p-2.5 shadow-[0_40px_80px_-40px_rgb(28_34_30/0.6)] ${className}`}
+      className={`rounded-[2.6rem] p-2.5 shadow-[0_40px_80px_-40px_rgb(0_0_0/0.7)] ${size} ${frame} ${className}`}
       role="img"
-      aria-label="Harlo Go on a phone: Ike's note about what needs attention, this week's delivered total, and three loads."
+      aria-label="Harlo Go on a phone: a note about what needs attention, this week's delivered total, and three loads."
     >
       <div aria-hidden="true" className="overflow-hidden rounded-[2.1rem] bg-mist">
         <div className="flex justify-center pt-2.5">
@@ -90,7 +144,7 @@ export function Phone({ className = "" }: { className?: string }) {
           <p className="text-xl font-extrabold tracking-tight text-ink">Reyes Trucking</p>
 
           <div className="mt-4 rounded-2xl bg-paper p-3.5">
-            <p className="text-[0.6875rem] font-semibold text-rust-deep">Ike</p>
+            <p className="text-[0.6875rem] font-semibold text-rust-deep">Needs you</p>
             <p className="mt-0.5 text-[0.8125rem] leading-snug text-ink">
               Unit 204&apos;s inspection lapses before Thursday. Swap to Unit 118?
             </p>
@@ -102,22 +156,22 @@ export function Phone({ className = "" }: { className?: string }) {
 
           <div className="mt-3 grid grid-cols-2 gap-2">
             <div className="rounded-xl bg-paper p-3">
-              <p className="text-[0.6875rem] text-muted">Delivered this week</p>
+              <p className="text-[0.6875rem] text-muted">This week</p>
               <p className="text-lg font-extrabold text-ink tabular-nums">$4,820</p>
             </div>
             <div className="rounded-xl bg-paper p-3">
               <p className="text-[0.6875rem] text-muted">On the road</p>
-              <p className="text-lg font-extrabold text-ink tabular-nums">2 loads</p>
+              <p className="text-lg font-extrabold whitespace-nowrap text-ink tabular-nums">2 loads</p>
             </div>
           </div>
 
           <p className="mt-5 mb-2 text-sm font-bold text-ink">Loads</p>
           <div className="grid gap-2">
             {LOADS.map((l) => (
-              <div key={l.lane} className="rounded-xl bg-paper p-3">
+              <div key={l.lane} className="min-w-0 rounded-xl bg-paper p-3">
                 <div className="flex items-baseline justify-between gap-2">
-                  <p className="truncate text-[0.8125rem] font-semibold text-ink">{l.lane}</p>
-                  <p className="text-[0.8125rem] font-bold text-ink tabular-nums">{l.rate}</p>
+                  <p className="min-w-0 truncate text-[0.8125rem] font-semibold text-ink">{l.lane}</p>
+                  <p className="shrink-0 text-[0.8125rem] font-bold text-ink tabular-nums">{l.rate}</p>
                 </div>
                 <div className="mt-0.5 flex justify-between text-[0.6875rem] text-muted">
                   <span>{l.when}</span>
@@ -134,12 +188,12 @@ export function Phone({ className = "" }: { className?: string }) {
 
 /* ------------------------------------------------------------ truck tablet */
 
-export function DriverTablet({ className = "" }: { className?: string }) {
+export function DriverTablet({ className = "", frame = "bg-pine" }: { className?: string; frame?: string }) {
   return (
     <div
-      className={`rounded-[1.6rem] bg-pine p-2.5 shadow-[0_40px_80px_-40px_rgb(28_34_30/0.6)] ${className}`}
+      className={`rounded-[1.6rem] p-2.5 shadow-[0_40px_80px_-40px_rgb(0_0_0/0.7)] ${frame} ${className}`}
       role="img"
-      aria-label="Harlo Driver on a truck tablet: the current load and next stop, a message from dispatch, the documents to capture, and a large Arrived button."
+      aria-label="Harlo Driver on a truck tablet: the next stop, a message from dispatch, the documents to capture, and a large Arrived button."
     >
       <div aria-hidden="true" className="overflow-hidden rounded-[1.15rem] bg-mist">
         <div className="flex items-center justify-between bg-paper px-4 py-2.5">
@@ -164,7 +218,7 @@ export function DriverTablet({ className = "" }: { className?: string }) {
           <div className="grid content-start gap-3">
             <div className="rounded-xl bg-paper p-3">
               <p className="text-[0.6875rem] font-semibold text-ink">Dispatch</p>
-              <p className="mt-0.5 text-xs leading-snug text-body">Receiver asks for check-in at the guard shack. Thanks Marcus.</p>
+              <p className="mt-0.5 text-xs leading-snug text-body">Check in at the guard shack. Thanks Marcus.</p>
             </div>
             <div className="rounded-xl bg-paper p-3 text-xs">
               <p className="text-[0.6875rem] font-semibold text-ink">Paperwork</p>
@@ -176,6 +230,47 @@ export function DriverTablet({ className = "" }: { className?: string }) {
           </div>
         </div>
       </div>
+    </div>
+  );
+}
+
+/* ------------------------------------------------------------------- stage */
+
+const SURFACES = [
+  { name: "Harlo", what: "The command center for the office.", plan: "Desktop, every plan" },
+  { name: "Harlo Go", what: "Your operation in your pocket.", plan: "Phone, every plan" },
+  { name: "Harlo Driver", what: "A dedicated screen in every cab.", plan: "Phone or tablet, Pro and up" },
+];
+
+/** All three surfaces in one picture, plus a caption row. For dark (on-pine) sections. */
+export function DeviceStage() {
+  const frame = "bg-[#3a443d] ring-1 ring-white/10";
+  return (
+    <div>
+      {/* lg: one layered picture */}
+      <div className="relative isolate mx-auto hidden max-w-[68rem] pt-28 pb-20 lg:block">
+        <div className="pointer-events-none absolute inset-x-[20%] top-[10%] -z-10 h-[60%] rounded-full bg-rust/20 blur-3xl" />
+        <DesktopScreen large className="ml-[7%] w-[73%] border-white/10" />
+        <DriverTablet frame={frame} className="absolute bottom-2 left-0 w-[36%]" />
+        <Phone frame={frame} size="absolute right-0 bottom-0 w-[22%]" />
+      </div>
+
+      {/* small screens: stacked */}
+      <div className="grid gap-8 lg:hidden">
+        <DesktopScreen />
+        <Phone frame={frame} size="mx-auto w-full max-w-[16rem]" />
+        <DriverTablet frame={frame} />
+      </div>
+
+      <dl className="mt-14 grid gap-8 border-t border-pine-3 pt-8 sm:grid-cols-3">
+        {SURFACES.map((s) => (
+          <div key={s.name}>
+            <dt className="text-lg font-bold text-white">{s.name}</dt>
+            <dd className="mt-1">{s.what}</dd>
+            <dd className="mt-2 text-sm text-on-pine-muted/80">{s.plan}</dd>
+          </div>
+        ))}
+      </dl>
     </div>
   );
 }
