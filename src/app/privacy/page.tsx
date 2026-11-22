@@ -154,7 +154,10 @@ export default function PrivacyPage() {
           templates, no retina or iris scans — and does not use facial recognition. We do not run
           background checks, pull motor vehicle records, or act as a consumer reporting agency. We do
           not collect government identifiers beyond what a carrier enters for its own DOT
-          recordkeeping, and we do not track a driver&apos;s personal device location.
+          recordkeeping. We do not track a driver&apos;s personal device location unless the driver
+          turns on &ldquo;Share my location&rdquo; in Harlo Driver. Then the phone sends its position
+          only while the app is open, Harlo keeps only the latest one, only that driver&apos;s own
+          fleet sees it, and turning sharing off deletes it.
         </p>
         <p>
           We do not knowingly collect information from anyone under 16. Harlo is business software and
