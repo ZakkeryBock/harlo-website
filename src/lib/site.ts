@@ -49,7 +49,11 @@ export const TRIAL_DAYS = 14;
 
 export type Interval = "month" | "year";
 
-export type PlanCode = "free" | "go_plus" | "pro" | "fleet" | "enterprise";
+/**
+ * The plans the site sells. Go+ ($30, 1-2 trucks) exists in billing_plan but is
+ * offered only inside Harlo and Harlo Go, as the step up from Free.
+ */
+export type PlanCode = "free" | "pro" | "fleet" | "enterprise";
 
 /**
  * Launch pricing (billing_offer 'launch_2026', billing_plan.intro_*): about
@@ -89,6 +93,8 @@ export interface Plan {
   ai: string;
   includes: string[];
   cta: { label: string; href: string };
+  /** A second, quieter link on the card. */
+  more?: { label: string; href: string };
 }
 
 export const PLANS: Plan[] = [
@@ -107,28 +113,7 @@ export const PLANS: Plan[] = [
     ai: "25 AI credits a month",
     includes: ["Harlo on desktop and Harlo Go on your phone", "Loads, dispatch and drivers", "Compliance tracking"],
     cta: { label: "Start free", href: LINKS.signupCarrier },
-  },
-  {
-    code: "go_plus",
-    name: "Go+",
-    band: "1 or 2 trucks, owner-operators",
-    month: 30,
-    year: 300,
-    perTruck: false,
-    minTrucks: 1,
-    maxTrucks: 2,
-    intro: false,
-    users: "Up to 3 users",
-    loads: "Unlimited loads",
-    ai: "150 AI credits a month",
-    includes: [
-      "Everything in Free",
-      "AI automation with Ike",
-      "Automatic stop tracking and detention",
-      "Rate insights and routed miles",
-      "Driver texting",
-    ],
-    cta: { label: "Start free trial", href: LINKS.goSignup },
+    more: { label: "Check out Harlo Go", href: "/go" },
   },
   {
     code: "pro",
@@ -144,7 +129,8 @@ export const PLANS: Plan[] = [
     loads: "Unlimited loads",
     ai: "75 AI credits per truck",
     includes: [
-      "Everything in Go+",
+      "Everything in Free",
+      "Ike: brief, suggestions and answers",
       "Harlo Driver app for every driver",
       "Teams, custom roles and permissions",
       "ELD connections, API and Away mode",
@@ -213,8 +199,8 @@ export function launchCost(p: Plan, trucks: number, interval: Interval): number 
 }
 
 /**
- * The plan we'd tell a carrier to buy: Free up to 2 trucks (Go+ is the step
- * up for the smart parts), Pro from 3, Fleet from 26, a contract past 100.
+ * The plan we'd tell a carrier to buy: Free up to 2 trucks, Pro from 3, Fleet
+ * from 26, a contract past 100.
  */
 export function recommend(trucks: number, interval: Interval): { plan: Plan; cost: number | null } {
   const code: PlanCode = trucks > 100 ? "enterprise" : trucks >= 26 ? "fleet" : trucks >= 3 ? "pro" : "free";

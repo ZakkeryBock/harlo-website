@@ -63,7 +63,7 @@ const TEASER = [
     who: "Carriers",
     price: usd(introPrice(plan("pro").month!)),
     unit: "per truck / mo at launch",
-    note: `Free up to 2 trucks. Go+ ${usd(plan("go_plus").month!)} / mo.`,
+    note: "Free up to 2 trucks",
     href: "/pricing#carrier",
   },
   {

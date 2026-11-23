@@ -15,7 +15,7 @@ export const FAQ_TRIAL: QA[] = [
   },
   {
     q: "What's an AI credit?",
-    a: "One task for Ike, like reading a document or answering a question. Every plan includes a monthly allowance. Free and Go+ stop at theirs; Pro and up can go over at 5¢ a credit (4¢ on Fleet), up to a hard ceiling. Now and then we raise every allowance for a while, at no charge.",
+    a: "One task for Ike, like reading a document or answering a question. Every plan includes a monthly allowance. Free stops at its allowance; Pro and up can go over at 5¢ a credit (4¢ on Fleet), up to a hard ceiling. Now and then we raise every allowance for a while, at no charge.",
   },
   {
     q: "Can I pay yearly?",
@@ -54,12 +54,8 @@ export const FAQ_BILLING: QA[] = [
     a: "No. Every plan includes desktop and Harlo Go. Pro and up add Harlo Driver.",
   },
   {
-    q: "What's Go+?",
-    a: "For owner-operators with 1 or 2 trucks: $30 a month adds Ike, auto check-in from your phone, detention called out and billed in one tap, rate checks and unlimited loads. A third truck moves you to Pro.",
-  },
-  {
     q: "What's launch pricing?",
-    a: "Start Pro, Fleet, Broker or Broker Scale before March 1, 2027 and pay the launch price for your first 12 months: $39 a truck instead of $49 on Pro, $32 instead of $40 from truck 26, $399 instead of $499 on Broker, $999 instead of $1,249 on Broker Scale. Yearly plans too. Moving up a plan keeps it. Go+ is $30 flat.",
+    a: "Start Pro, Fleet, Broker or Broker Scale before March 1, 2027 and pay the launch price for your first 12 months: $39 a truck instead of $49 on Pro, $32 instead of $40 from truck 26, $399 instead of $499 on Broker, $999 instead of $1,249 on Broker Scale. Yearly plans too. Moving up a plan keeps it.",
   },
   {
     q: "What counts as a load for a brokerage?",

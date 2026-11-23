@@ -29,7 +29,7 @@ const FLEETS = [
     n: "1–2",
     who: "Owner-operators running from the cab.",
     plan: "Free",
-    sub: "or Go+ at $30 a month, with Ike and detention",
+    sub: "No time limit, with Harlo Go",
     href: "/go",
     cta: "See Harlo Go",
     dark: false,

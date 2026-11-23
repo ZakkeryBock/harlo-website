@@ -798,3 +798,114 @@
     opacity: 0;
   }
 }
+
+/* ---- ike page: sources flow in, proposals flow out, paperwork reads ------ */
+
+.ike-wire,
+.ike-flow {
+  background: linear-gradient(90deg, rgb(255 255 255 / 0.08), rgb(224 138 99 / 0.9), rgb(255 255 255 / 0.08)) 0 0 / 200% 100%;
+}
+.ike-scan {
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .ike-wire,
+  .ike-flow {
+    animation: ike-flow 2.4s linear infinite;
+  }
+  .ike-src {
+    animation: ike-rise 600ms var(--ease-out-soft) both;
+    animation-delay: calc(var(--i) * 90ms);
+  }
+  .ike-out {
+    animation: ike-rise 700ms var(--ease-out-soft) both;
+    animation-delay: calc(600ms + var(--i) * 260ms);
+  }
+  .ike-scan {
+    animation: ike-scan 3.6s ease-in-out infinite;
+  }
+  .ike-fill {
+    animation: ike-fill 3.6s ease-out infinite;
+    animation-delay: calc(var(--i) * 220ms);
+  }
+  .ike-bar {
+    transform-origin: left;
+    animation: ike-bar 900ms var(--ease-out-soft) both;
+    animation-delay: calc(200ms + var(--i) * 140ms);
+  }
+  .ike-live {
+    animation: ike-pulse 1.6s ease-in-out infinite;
+  }
+}
+
+@keyframes ike-flow {
+  from {
+    background-position: 100% 0;
+  }
+  to {
+    background-position: -100% 0;
+  }
+}
+@keyframes ike-rise {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+}
+@keyframes ike-scan {
+  0% {
+    opacity: 0;
+    transform: translateY(-100%);
+  }
+  15% {
+    opacity: 1;
+  }
+  70% {
+    opacity: 1;
+    transform: translateY(520%);
+  }
+  80%,
+  100% {
+    opacity: 0;
+    transform: translateY(520%);
+  }
+}
+@keyframes ike-fill {
+  0%,
+  6% {
+    opacity: 0;
+    transform: translateX(-6px);
+  }
+  18%,
+  100% {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes ike-bar {
+  from {
+    transform: scaleX(0);
+  }
+}
+
+/* ---- workspaces: the company map draws its lines, then the cards land ---- */
+
+.ws-line {
+  color: rgb(181 83 46 / 0.55);
+  stroke-dasharray: 4 5;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .ws-line {
+    animation: ws-march 1.6s linear infinite;
+  }
+  .ws-card {
+    animation: ike-rise 650ms var(--ease-out-soft) both;
+    animation-delay: calc(250ms + var(--i) * 140ms);
+  }
+}
+@keyframes ws-march {
+  to {
+    stroke-dashoffset: -18;
+  }
+}

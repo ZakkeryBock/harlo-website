@@ -82,7 +82,6 @@ const MATRIX: [string, Cell, Cell, Cell][] = [
 
 const PLANS: { plan: string; apps: string }[] = [
   { plan: "Free", apps: "Desktop and Harlo Go, within Free's limits" },
-  { plan: "Go+", apps: "Desktop and Harlo Go, with Ike, auto check-in from your phone and detention" },
   { plan: "Pro and Fleet", apps: "Desktop, Harlo Go as your companion, and Harlo Driver for every driver" },
   { plan: "Enterprise", apps: "Everything, plus help rolling Harlo Driver out to your truck tablets" },
 ];

@@ -172,7 +172,6 @@ function CarrierCalc({ interval }: { interval: Interval }) {
   const list = monthlyCost(p, trucks, interval);
   const listMonthly = monthlyCost(p, trucks, "month");
   const saved = interval === "year" && listMonthly != null && list != null ? (listMonthly - list) * 12 : 0;
-  const goPlus = plan("go_plus");
 
   return (
     <CalcShell
@@ -208,8 +207,11 @@ function CarrierCalc({ interval }: { interval: Interval }) {
               </div>
               {p.code === "free" && (
                 <p className="mt-4 text-sm text-on-pine">
-                  Or {goPlus.name} for {usd(interval === "year" ? goPlus.year! / 12 : goPlus.month!)} a month: Ike,
-                  auto check-in and detention billing, on your phone.
+                  Running from the cab?{" "}
+                  <a href="/go" className="font-semibold text-white underline underline-offset-4">
+                    See Harlo Go
+                  </a>
+                  , Harlo on your phone.
                 </p>
               )}
               <p className="mt-4 text-sm text-on-pine-muted">
@@ -359,6 +361,7 @@ function Card({
   featured,
   badge,
   was,
+  more,
 }: {
   name: string;
   band: string;
@@ -371,6 +374,7 @@ function Card({
   badge?: string;
   /** The list price, struck through beside a launch price. */
   was?: string;
+  more?: { label: string; href: string };
 }) {
   return (
     <div
@@ -394,6 +398,14 @@ function Card({
       <Button href={cta.href} variant={featured ? "primary" : "secondary"} className="mt-6 w-full">
         {cta.label}
       </Button>
+      {more && (
+        <a
+          href={more.href}
+          className="mt-3 text-center text-sm font-semibold text-rust-ink underline-offset-4 hover:underline"
+        >
+          {more.label} →
+        </a>
+      )}
       <ul className="mt-6 grid gap-2.5 border-t border-line pt-6 text-[0.9375rem]">
         {features.map((f) => (
           <li key={f} className="flex gap-2.5">
@@ -432,14 +444,13 @@ function carrierCard(p: Plan, interval: Interval) {
               ? `Launch price for your first ${INTRO.months} months. Minimum ${p.minTrucks} trucks.`
               : p.code === "free"
                 ? "No time limit"
-                : p.code === "go_plus"
-                  ? "Up to 2 trucks. Cancel any time."
-                  : ""
+                : ""
       }
       features={[p.users, p.loads, p.ai, ...p.includes]}
       cta={p.cta}
+      more={p.more}
       featured={p.code === "pro"}
-      badge={p.code === "pro" ? "Your 14-day trial" : p.code === "go_plus" ? "New" : undefined}
+      badge={p.code === "pro" ? "Your 14-day trial" : undefined}
     />
   );
 }
@@ -524,7 +535,7 @@ export function Pricing({ extra }: { extra?: Partial<Record<Side, React.ReactNod
       {side === "carrier" && (
         <>
           <CarrierCalc interval={interval} />
-          <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
+          <div className="grid gap-4 md:grid-cols-3">
             {PLANS.filter((p) => p.code !== "enterprise").map((p) => carrierCard(p, interval))}
           </div>
           <EnterpriseRow body="More than 100 trucks. Contract pricing and invoicing, a custom AI allowance, onboarding and data migration." />
