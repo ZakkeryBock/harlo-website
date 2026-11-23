@@ -2,7 +2,7 @@ import Link from "next/link";
 import { Wordmark } from "./logo";
 import { Container } from "./ui";
 import { LINKS } from "@/lib/site";
-import { ADDRESS, LEGAL_ENTITY, SUPPORT_EMAIL } from "@/lib/legal";
+import { LEGAL_ENTITY, SUPPORT_EMAIL } from "@/lib/legal";
 
 const COLUMNS = [
   {
@@ -45,8 +45,8 @@ export function Footer() {
       <Container className="grid gap-12 py-16 md:grid-cols-[1.4fr_repeat(3,1fr)]">
         <div className="max-w-xs">
           <Wordmark className="h-5 w-auto text-cream" />
-          <p className="mt-5 text-[0.9375rem] leading-relaxed">
-            The TMS for carriers and brokers, built by people who ran a trucking company.
+          <p className="mt-6 text-[1.75rem] leading-none font-extrabold tracking-[-0.03em] text-white">
+            Logistics, <span className="text-rust-light">redefined.</span>
           </p>
           <div className="mt-6 flex flex-wrap gap-x-5 gap-y-2 text-sm">
             <a className="text-on-pine hover:text-white" href={LINKS.login}>
@@ -81,7 +81,7 @@ export function Footer() {
       <div className="border-t border-pine-3">
         <Container className="flex flex-col gap-2 py-6 text-sm sm:flex-row sm:justify-between">
           <p>
-            &copy; {new Date().getFullYear()} {LEGAL_ENTITY}, {ADDRESS}
+            &copy; {new Date().getFullYear()} {LEGAL_ENTITY}
           </p>
           <a className="hover:text-white" href={`mailto:${SUPPORT_EMAIL}`}>
             {SUPPORT_EMAIL}

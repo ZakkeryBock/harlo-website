@@ -68,11 +68,12 @@ export const FAQ_BILLING: QA[] = [
   ...FAQ_TRIAL.slice(3),
 ];
 
+/** One answer open at a time: <details> sharing a name close each other. */
 export function Faq({ items }: { items: QA[] }) {
   return (
     <div className="divide-y divide-line border-y border-line">
       {items.map((i) => (
-        <details key={i.q} className="group">
+        <details key={i.q} name="faq" className="group">
           <summary className="flex cursor-pointer items-center justify-between gap-6 py-5 text-lg font-semibold text-ink">
             {i.q}
             <svg

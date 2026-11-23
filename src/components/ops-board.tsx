@@ -43,17 +43,10 @@ export function OpsBoard() {
     >
       <div aria-hidden="true">
         {/* window bar */}
-        <div className="flex items-center justify-between gap-3 border-b border-line px-4 py-2.5">
-          <div className="flex items-center gap-1.5">
-            <span className="size-2.5 rounded-full bg-mist-2" />
-            <span className="size-2.5 rounded-full bg-mist-2" />
-            <span className="size-2.5 rounded-full bg-mist-2" />
-            <span className="ml-3 text-xs font-semibold text-ink">Reyes Logistics</span>
-          </div>
-          <span className="flex items-center gap-1.5 text-xs font-medium text-muted">
-            <span className="ops-live size-1.5 rounded-full bg-go" />
-            Live
-          </span>
+        <div className="flex items-center gap-1.5 border-b border-line px-4 py-3">
+          <span className="size-2.5 rounded-full bg-mist-2" />
+          <span className="size-2.5 rounded-full bg-mist-2" />
+          <span className="size-2.5 rounded-full bg-mist-2" />
         </div>
 
         <div className="flex">

@@ -4,9 +4,6 @@ import { Check } from "./ui";
  * The three Harlo surfaces, drawn as product screens: the desktop command
  * center, Harlo Go on a phone, and Harlo Driver on a truck tablet. One account
  * and one set of records behind all three. All names and numbers are made up.
- *
- * DeviceStage layers all three into one picture (desktop behind, tablet and
- * phone in front of its corners) for dark sections; on small screens they stack.
  */
 
 /* ----------------------------------------------------------------- desktop */
@@ -245,47 +242,6 @@ export function DriverTablet({ className = "", frame = "bg-pine" }: { className?
           </div>
         </div>
       </div>
-    </div>
-  );
-}
-
-/* ------------------------------------------------------------------- stage */
-
-const SURFACES = [
-  { name: "Harlo", what: "The command center for the office.", plan: "Desktop, every plan" },
-  { name: "Harlo Go", what: "Your operation in your pocket.", plan: "Phone, every plan" },
-  { name: "Harlo Driver", what: "A dedicated screen in every cab.", plan: "Phone or tablet, Pro and up" },
-];
-
-/** All three surfaces in one picture, plus a caption row. For dark (on-pine) sections. */
-export function DeviceStage() {
-  const frame = "bg-[#3a443d] ring-1 ring-white/10";
-  return (
-    <div>
-      {/* lg: one layered picture */}
-      <div className="relative isolate mx-auto hidden max-w-[68rem] pt-16 pb-16 lg:block">
-        <div className="pointer-events-none absolute inset-x-[20%] top-[10%] -z-10 h-[60%] rounded-full bg-rust/20 blur-3xl" />
-        <DesktopScreen large className="ml-[8%] w-[76%] border-white/10" />
-        <DriverTablet frame={frame} className="absolute bottom-2 left-0 w-[36%]" />
-        <Phone frame={frame} compact size="absolute right-[3%] bottom-0 w-[17%]" />
-      </div>
-
-      {/* small screens: stacked */}
-      <div className="grid gap-8 lg:hidden">
-        <DesktopScreen />
-        <Phone frame={frame} size="mx-auto w-full max-w-[16rem]" />
-        <DriverTablet frame={frame} />
-      </div>
-
-      <dl className="mt-14 grid gap-8 border-t border-pine-3 pt-8 sm:grid-cols-3">
-        {SURFACES.map((s) => (
-          <div key={s.name}>
-            <dt className="text-lg font-bold text-white">{s.name}</dt>
-            <dd className="mt-1">{s.what}</dd>
-            <dd className="mt-2 text-sm text-on-pine-muted/80">{s.plan}</dd>
-          </div>
-        ))}
-      </dl>
     </div>
   );
 }

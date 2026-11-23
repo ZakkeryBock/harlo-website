@@ -337,3 +337,464 @@
     opacity: 0.35;
   }
 }
+
+/* ---- home hero: scraps drift, the rust line draws once ------------------ */
+
+@media (prefers-reduced-motion: no-preference) {
+  .hero-scrap {
+    animation: hero-drift 7s ease-in-out infinite;
+  }
+  .hero-line {
+    stroke-dasharray: 100;
+    stroke-dashoffset: 100;
+    animation: hero-line 1.1s var(--ease-out-soft) 0.35s forwards;
+  }
+}
+
+@keyframes hero-drift {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-9px);
+  }
+}
+
+@keyframes hero-line {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+/* ---- home Ike section: dot field, halo, orb, typing ---------------------- */
+
+.ike-field {
+  background-image: radial-gradient(rgb(255 255 255 / 0.09) 1px, transparent 1px);
+  background-size: 22px 22px;
+  mask-image: radial-gradient(ellipse 70% 60% at 50% 45%, #000 30%, transparent 75%);
+}
+
+.ike-halo {
+  background: conic-gradient(from var(--ike-a, 0deg), transparent 0 60%, rgb(224 138 99 / 0.75) 75%, transparent 90%);
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  padding: 1px;
+}
+
+@property --ike-a {
+  syntax: "<angle>";
+  inherits: true;
+  initial-value: 0deg;
+}
+
+.ike-orb::before {
+  content: "";
+  position: absolute;
+  inset: -6px;
+  border-radius: 9999px;
+  background: radial-gradient(circle, rgb(224 138 99 / 0.55), transparent 70%);
+  opacity: 0.5;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .ike-halo {
+    animation: ike-spin 6s linear infinite;
+  }
+  .ike-orb.is-thinking::before {
+    animation: ike-pulse 1.1s ease-in-out infinite;
+  }
+  .ike-caret {
+    animation: ike-blink 0.9s steps(1) infinite;
+  }
+  .ike-dot {
+    animation: ike-bounce 0.9s ease-in-out infinite;
+  }
+  .ike-word {
+    animation: ike-word 320ms var(--ease-out-soft) both;
+  }
+  .ike-glow {
+    animation: ike-drift 14s ease-in-out infinite alternate;
+  }
+}
+
+@keyframes ike-spin {
+  to {
+    --ike-a: 360deg;
+  }
+}
+@keyframes ike-pulse {
+  50% {
+    opacity: 1;
+    transform: scale(1.35);
+  }
+}
+@keyframes ike-blink {
+  50% {
+    opacity: 0;
+  }
+}
+@keyframes ike-bounce {
+  0%,
+  100% {
+    opacity: 0.35;
+    transform: translateY(0);
+  }
+  50% {
+    opacity: 1;
+    transform: translateY(-3px);
+  }
+}
+@keyframes ike-word {
+  from {
+    opacity: 0;
+    filter: blur(4px);
+  }
+  to {
+    opacity: 1;
+    filter: none;
+  }
+}
+@keyframes ike-drift {
+  to {
+    transform: translate(8%, 6%) scale(1.1);
+  }
+}
+
+/* ---- carriers: the dispatch check sweeps its rows ----------------------- */
+
+@media (prefers-reduced-motion: no-preference) {
+  .gate-scan {
+    animation: gate-scan 4.5s ease-in-out infinite;
+  }
+}
+
+@keyframes gate-scan {
+  0% {
+    transform: translateY(-6rem);
+  }
+  100% {
+    transform: translateY(28rem);
+  }
+}
+
+/* ---- home Ike card: soft blobs drifting behind frosted glass ------------- */
+
+.blob-field {
+  overflow: hidden;
+  border-radius: inherit;
+  filter: blur(42px) saturate(1.2);
+  opacity: 0.9;
+  transition: opacity 600ms var(--ease-out-soft);
+}
+.group:hover .blob-field {
+  opacity: 1;
+}
+
+.blob {
+  position: absolute;
+  border-radius: 9999px;
+  mix-blend-mode: screen;
+}
+.blob-a {
+  width: 62%;
+  aspect-ratio: 1;
+  top: -18%;
+  right: -16%;
+  background: rgb(202 107 68 / 0.75);
+}
+.blob-b {
+  width: 48%;
+  aspect-ratio: 1;
+  top: 22%;
+  left: -18%;
+  background: rgb(224 138 99 / 0.45);
+}
+.blob-c {
+  width: 44%;
+  aspect-ratio: 1;
+  bottom: -12%;
+  right: 8%;
+  background: rgb(150 66 31 / 0.7);
+}
+.blob-d {
+  width: 34%;
+  aspect-ratio: 1;
+  top: 8%;
+  left: 30%;
+  background: rgb(244 240 223 / 0.16);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .blob-a {
+    animation: blob-a 16s ease-in-out infinite alternate;
+  }
+  .blob-b {
+    animation: blob-b 19s ease-in-out infinite alternate;
+  }
+  .blob-c {
+    animation: blob-c 14s ease-in-out infinite alternate;
+  }
+  .blob-d {
+    animation: blob-d 22s ease-in-out infinite alternate;
+  }
+}
+
+@keyframes blob-a {
+  33% {
+    transform: translate(-30%, 25%) scale(1.15);
+    border-radius: 42% 58% 60% 40%;
+  }
+  66% {
+    transform: translate(-10%, 55%) scale(0.9);
+  }
+  100% {
+    transform: translate(-45%, 10%) scale(1.1);
+    border-radius: 58% 42% 38% 62%;
+  }
+}
+@keyframes blob-b {
+  50% {
+    transform: translate(55%, -25%) scale(1.25);
+    border-radius: 60% 40% 45% 55%;
+  }
+  100% {
+    transform: translate(85%, 40%) scale(0.95);
+  }
+}
+@keyframes blob-c {
+  50% {
+    transform: translate(-70%, -45%) scale(1.2);
+  }
+  100% {
+    transform: translate(-20%, -90%) scale(1);
+    border-radius: 45% 55% 62% 38%;
+  }
+}
+@keyframes blob-d {
+  50% {
+    transform: translate(60%, 120%) scale(1.4);
+  }
+  100% {
+    transform: translate(-40%, 160%) scale(1);
+  }
+}
+
+/* ---- Ike console: the ring follows the cursor ---------------------------- */
+
+.ike-spot {
+  opacity: 0;
+  background: radial-gradient(260px circle at var(--ike-x, 50%) var(--ike-y, 50%), rgb(224 138 99 / 0.09), transparent 70%);
+  transition: opacity 400ms var(--ease-out-soft);
+}
+
+.ike-ring.is-tracking .ike-spot {
+  opacity: 1;
+}
+
+.ike-ring.is-tracking .ike-halo {
+  animation: none;
+  transition: --ike-a 180ms linear;
+  background: conic-gradient(from var(--ike-a, 0deg), transparent 0 55%, rgb(240 179 148 / 0.95) 75%, transparent 95%);
+  padding: 1.5px;
+}
+
+/* ---- carriers: the load journey ----------------------------------------- */
+
+.lj.is-paused * {
+  animation-play-state: paused !important;
+}
+
+.lj-timer {
+  transform: scaleX(0);
+  animation: lj-timer 7s linear forwards;
+}
+
+.lj-fill {
+  width: 0;
+  animation: lj-fill 1.3s var(--ease-out-soft) 1.2s forwards;
+}
+
+.lj-route {
+  width: 0;
+  animation: lj-route 4s var(--ease-out-soft) 0.4s forwards;
+}
+
+.lj-truck {
+  left: 0;
+  animation: lj-truck 4s var(--ease-out-soft) 0.4s forwards;
+}
+
+.lj-from-left {
+  animation: lj-from-left 700ms var(--ease-out-soft) both;
+}
+.lj-from-right {
+  animation: lj-from-right 700ms var(--ease-out-soft) both;
+}
+
+.demo .lj-stamp[data-step] {
+  animation-name: lj-stamp;
+  animation-duration: 450ms;
+}
+
+.demo .lj-flash[data-step] {
+  animation:
+    demo-in 420ms var(--ease-out-soft) forwards,
+    lj-flash 1.6s ease-out forwards;
+  animation-delay: calc(var(--d, 0) * 1ms), calc(var(--d, 0) * 1ms);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .lj-scan {
+    animation: lj-scan 1.8s ease-in-out infinite;
+  }
+  .lj-token::after {
+    content: "";
+    position: absolute;
+    inset: -6px;
+    border-radius: 9999px;
+    border: 2px solid rgb(202 107 68 / 0.5);
+    animation: lj-ping 1.8s ease-out infinite;
+  }
+}
+
+@keyframes lj-timer {
+  to {
+    transform: scaleX(1);
+  }
+}
+@keyframes lj-fill {
+  to {
+    width: 100%;
+  }
+}
+@keyframes lj-route {
+  to {
+    width: 78%;
+  }
+}
+@keyframes lj-truck {
+  to {
+    left: 78%;
+  }
+}
+@keyframes lj-from-left {
+  from {
+    opacity: 0;
+    transform: translateX(-60px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes lj-from-right {
+  from {
+    opacity: 0;
+    transform: translateX(60px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes lj-stamp {
+  from {
+    opacity: 0;
+    transform: scale(1.5) rotate(-4deg);
+  }
+  70% {
+    opacity: 1;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes lj-flash {
+  0%,
+  30% {
+    background: rgb(202 107 68 / 0.18);
+  }
+  to {
+    background: transparent;
+  }
+}
+@keyframes lj-scan {
+  0% {
+    transform: translateY(-2.5rem);
+  }
+  100% {
+    transform: translateY(10rem);
+  }
+}
+@keyframes lj-ping {
+  from {
+    opacity: 1;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 0;
+    transform: scale(1.35);
+  }
+}
+
+/* ---- brokers journey: the picked carrier glows, the update gets sent ----- */
+
+.demo .lj-pick[data-step] {
+  animation:
+    demo-in 420ms var(--ease-out-soft) forwards,
+    lj-pick 600ms var(--ease-out-soft) 2.1s forwards;
+  animation-delay: calc(var(--d, 0) * 1ms), 2.1s;
+}
+
+.lj-send-b {
+  opacity: 0;
+  animation: lj-show 300ms var(--ease-out-soft) 4.1s forwards;
+}
+
+@keyframes lj-pick {
+  to {
+    border-color: var(--color-rust);
+    box-shadow: 0 0 0 3px rgb(202 107 68 / 0.18);
+  }
+}
+@keyframes lj-show {
+  from {
+    opacity: 0;
+    transform: scale(0.85);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* ---- home: "Both sides of the load" cards ------------------------------ */
+
+.side-card {
+  transition:
+    transform 300ms var(--ease-out-soft, ease-out),
+    box-shadow 300ms var(--ease-out-soft, ease-out);
+}
+@media (hover: hover) {
+  .side-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 24px 48px -20px rgb(20 40 34 / 0.35);
+  }
+}
+
+/* ---- page changes fade in (template.tsx) --------------------------------- */
+
+.page-fade {
+  animation: page-fade-in 320ms ease-out backwards;
+}
+@keyframes page-fade-in {
+  from {
+    opacity: 0;
+  }
+}
