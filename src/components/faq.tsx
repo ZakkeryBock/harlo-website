@@ -7,7 +7,7 @@ export const FAQ_TRIAL: QA[] = [
   },
   {
     q: "What happens when the 14 days are up?",
-    a: "Your workspace moves to Free and nothing is deleted. Over Free's limits, everything stays readable, but adding loads, trucks or users needs a paid plan.",
+    a: "Your workspace moves to Free and nothing is deleted. Over Free's limits, everything stays readable and exportable, but adding loads, trucks or users needs a paid plan.",
   },
   {
     q: "What counts as a truck?",
@@ -15,7 +15,7 @@ export const FAQ_TRIAL: QA[] = [
   },
   {
     q: "What's an AI credit?",
-    a: "One task for Ike, like reading a document or answering a question. Every plan includes a monthly allowance. Paid plans can go over at 5¢ a credit (4¢ on Fleet), up to a hard ceiling.",
+    a: "One task for Ike, like reading a document or answering a question. Every plan includes a monthly allowance. Free and Go+ stop at theirs; Pro and up can go over at 5¢ a credit (4¢ on Fleet), up to a hard ceiling. Now and then we raise every allowance for a while, at no charge.",
   },
   {
     q: "Can I pay yearly?",
@@ -54,16 +54,24 @@ export const FAQ_BILLING: QA[] = [
     a: "No. Every plan includes desktop and Harlo Go. Pro and up add Harlo Driver.",
   },
   {
+    q: "What's Go+?",
+    a: "For owner-operators with 1 or 2 trucks: $30 a month adds Ike, auto check-in from your phone, detention called out and billed in one tap, rate checks and unlimited loads. A third truck moves you to Pro.",
+  },
+  {
+    q: "What's launch pricing?",
+    a: "Start Pro, Fleet, Broker or Broker Scale before March 1, 2027 and pay the launch price for your first 12 months: $39 a truck instead of $49 on Pro, $32 instead of $40 from truck 26, $399 instead of $499 on Broker, $999 instead of $1,249 on Broker Scale. Yearly plans too. Moving up a plan keeps it. Go+ is $30 flat.",
+  },
+  {
     q: "What counts as a load for a brokerage?",
     a: "A brokered load covered by a carrier during the month. Quotes, cancelled loads, and loads covered by your own fleet on Carrier + Broker don't count.",
   },
   {
     q: "What if my brokerage goes over its included loads?",
-    a: "Nothing stops. Extra loads bill at $1.75 on Broker or $1.25 on Broker Scale. Above about 460 loads a month, Scale is cheaper.",
+    a: "Nothing stops. Extra loads bill at $2.00 on Broker or $1.50 on Broker Scale. Above about 500 loads a month, Scale is cheaper.",
   },
   {
     q: "How is the Carrier + Broker plan priced?",
-    a: "Carrier side: $39 a truck ($32 from 26 trucks), no minimum. Brokerage side: the broker plan that fits your volume, 25% off. One login, one bill.",
+    a: "Carrier side: $49 a truck ($40 from truck 26), or $39 ($32) at launch for your first year, no minimum. Brokerage side: the broker plan that fits your volume, 25% off. One login, one bill.",
   },
   ...FAQ_TRIAL.slice(3),
 ];

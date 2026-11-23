@@ -6,6 +6,7 @@ import {
   BROKER_MAX_LOADS,
   BROKER_PLANS,
   BUNDLE_BROKER_DISCOUNT,
+  INTRO,
   type BrokerPlan,
   type Interval,
   LINKS,
@@ -13,6 +14,7 @@ import {
   type Plan,
   brokerPlan,
   bundleCost,
+  introPrice,
   monthlyCost,
   plan,
   recommend,
@@ -167,9 +169,10 @@ function CarrierCalc({ interval }: { interval: Interval }) {
   const rec = recommend(trucks, interval);
   const p = rec.plan;
   const billed = p.perTruck ? Math.max(trucks, p.minTrucks) : null;
-  const monthlyEquivalent = monthlyCost(p, trucks, "month");
-  const saved =
-    interval === "year" && monthlyEquivalent != null && rec.cost != null ? (monthlyEquivalent - rec.cost) * 12 : 0;
+  const list = monthlyCost(p, trucks, interval);
+  const listMonthly = monthlyCost(p, trucks, "month");
+  const saved = interval === "year" && listMonthly != null && list != null ? (listMonthly - list) * 12 : 0;
+  const goPlus = plan("go_plus");
 
   return (
     <CalcShell
@@ -190,17 +193,25 @@ function CarrierCalc({ interval }: { interval: Interval }) {
               <Price value={rec.cost} />
               <p className="mt-2 text-sm text-on-pine-muted">
                 {billed != null
-                  ? `${usd(interval === "year" ? p.year! / 12 : p.month!)} × ${billed} trucks${
-                      billed > trucks ? `, billed on the ${p.minTrucks}-truck minimum` : ""
-                    }`
+                  ? p.graduated && billed > p.graduated.upto
+                    ? `${p.graduated.upto} trucks at the Pro rate, ${billed - p.graduated.upto} at the Fleet rate`
+                    : `${billed} trucks${billed > trucks ? `, billed on the ${p.minTrucks}-truck minimum` : ""}`
                   : "Up to 2 trucks, 3 users and 30 loads a month, with no time limit"}
-                {interval === "year" && saved > 0 && `. You save ${money(saved)} a year.`}
+                {p.intro && list != null &&
+                  `. Launch price for your first ${INTRO.months} months, then ${money(list)}`}
+                {interval === "year" && saved > 0 && `. Yearly saves ${money(saved)} on list.`}
               </p>
               <div className="mt-6">
                 <Button href={p.cta.href} variant="light" className="w-full sm:w-auto">
-                  Start free trial
+                  {p.code === "free" ? "Start free" : "Start free trial"}
                 </Button>
               </div>
+              {p.code === "free" && (
+                <p className="mt-4 text-sm text-on-pine">
+                  Or {goPlus.name} for {usd(interval === "year" ? goPlus.year! / 12 : goPlus.month!)} a month: Ike,
+                  auto check-in and detention billing, on your phone.
+                </p>
+              )}
               <p className="mt-4 text-sm text-on-pine-muted">
                 Every plan includes Harlo on desktop and the Harlo Go phone app.
               </p>
@@ -347,6 +358,7 @@ function Card({
   cta,
   featured,
   badge,
+  was,
 }: {
   name: string;
   band: string;
@@ -357,6 +369,8 @@ function Card({
   cta: { label: string; href: string };
   featured?: boolean;
   badge?: string;
+  /** The list price, struck through beside a launch price. */
+  was?: string;
 }) {
   return (
     <div
@@ -373,6 +387,7 @@ function Card({
       <p className="mt-1 text-sm text-muted">{band}</p>
       <p className="mt-6 flex items-baseline gap-1.5">
         <span className="text-4xl font-extrabold tracking-tight text-ink tabular-nums">{amount}</span>
+        {was && <s className="text-lg font-semibold text-muted tabular-nums">{was}</s>}
         <span className="text-sm text-muted">{unit}</span>
       </p>
       <p className="mt-1 min-h-5 text-sm text-muted">{note}</p>
@@ -393,41 +408,60 @@ function Card({
 
 function carrierCard(p: Plan, interval: Interval) {
   const custom = p.month == null;
-  const v = custom || p.month === 0 ? 0 : interval === "year" ? p.year! / 12 : p.month!;
+  const per = interval === "year" ? 12 : 1;
+  const listRaw = custom || p.month === 0 ? 0 : interval === "year" ? p.year! : p.month!;
+  const list = listRaw / per;
+  const v = (p.intro ? introPrice(listRaw, interval) : listRaw) / per;
+  const cents = (n: number) => usd(Math.round(n * 100) / 100);
+  const firstRaw = p.graduated ? (interval === "year" ? p.graduated.year : p.graduated.month) : null;
+  const firstRate = firstRaw == null ? null : (p.intro ? introPrice(firstRaw, interval) : firstRaw) / per;
   return (
     <Card
       key={p.code}
       name={p.name}
       band={p.band}
-      amount={custom ? "Custom" : p.month === 0 ? "$0" : usd(Math.round(v * 100) / 100)}
+      amount={custom ? "Custom" : p.month === 0 ? "$0" : cents(v)}
+      was={p.intro && !custom ? cents(list) : undefined}
       unit={custom ? "" : p.month === 0 ? "forever" : p.perTruck ? "per truck / mo" : "/ mo"}
       note={
         custom
           ? "Contract pricing"
-          : p.minTrucks > 1 && p.perTruck
-            ? `Minimum ${p.minTrucks} trucks`
-            : p.code === "free"
-              ? "No time limit"
-              : ""
+          : p.graduated && firstRate != null
+            ? `From truck ${p.graduated.upto + 1}. Trucks 1–${p.graduated.upto} at ${cents(firstRate)}.`
+            : p.intro
+              ? `Launch price for your first ${INTRO.months} months. Minimum ${p.minTrucks} trucks.`
+              : p.code === "free"
+                ? "No time limit"
+                : p.code === "go_plus"
+                  ? "Up to 2 trucks. Cancel any time."
+                  : ""
       }
       features={[p.users, p.loads, p.ai, ...p.includes]}
       cta={p.cta}
       featured={p.code === "pro"}
-      badge={p.code === "pro" ? "Your 14-day trial" : undefined}
+      badge={p.code === "pro" ? "Your 14-day trial" : p.code === "go_plus" ? "New" : undefined}
     />
   );
 }
 
 function brokerCard(p: BrokerPlan, interval: Interval) {
-  const v = p.month === 0 ? 0 : interval === "year" ? p.year! / 12 : p.month!;
+  const per = interval === "year" ? 12 : 1;
+  const listRaw = p.month === 0 ? 0 : interval === "year" ? p.year! : p.month!;
+  const list = listRaw / per;
+  const v = (p.intro ? introPrice(listRaw, interval) : listRaw) / per;
   return (
     <Card
       key={p.code}
       name={p.name}
       band={p.band}
       amount={p.month === 0 ? "$0" : usd(Math.round(v))}
+      was={p.intro ? usd(Math.round(list)) : undefined}
       unit={p.month === 0 ? "forever" : "/ mo"}
-      note={p.overage ? `Then ${usd(p.overage)} a load` : "No time limit"}
+      note={
+        p.overage
+          ? `Then ${usd(p.overage)} a load.${p.intro ? ` Launch price for ${INTRO.months} months.` : ""}`
+          : "No time limit"
+      }
       features={[p.users, `${p.loads} loads a month included`, p.ai, ...p.includes]}
       cta={p.cta}
       featured={p.code === "broker"}
@@ -491,8 +525,13 @@ export function Pricing({ extra }: { extra?: Partial<Record<Side, React.ReactNod
         <>
           <CarrierCalc interval={interval} />
           <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-4">
-            {PLANS.map((p) => carrierCard(p, interval))}
+            {PLANS.filter((p) => p.code !== "enterprise").map((p) => carrierCard(p, interval))}
           </div>
+          <EnterpriseRow body="More than 100 trucks. Contract pricing and invoicing, a custom AI allowance, onboarding and data migration." />
+          <p className="text-sm text-muted">
+            Launch pricing: about {INTRO.percent}% off list for your first {INTRO.months} months on Pro, Fleet, Broker
+            and Broker Scale when you start before {INTRO.endsLabel}. Then list price, with 60 days&apos; notice.
+          </p>
         </>
       )}
 
@@ -519,7 +558,7 @@ export function Pricing({ extra }: { extra?: Partial<Record<Side, React.ReactNod
                 feature of its plan, and the two work together.
               </p>
               <p className="mt-5 text-sm text-muted">
-                From {usd(plan("pro").month!)} per truck, plus{" "}
+                From {usd(introPrice(plan("pro").month!))} per truck at launch, plus{" "}
                 {usd(brokerPlan("broker").month! * (1 - BUNDLE_BROKER_DISCOUNT))} a month for the brokerage.
               </p>
             </div>

@@ -7,68 +7,73 @@ import { Container } from "@/components/ui";
 export const metadata: Metadata = {
   title: "Pricing",
   description:
-    "Carriers pay per truck, brokers pay by load volume, and companies that do both save 25% on the brokerage. Free plans for both, unlimited users on every paid plan, and every plan includes the desktop and the Harlo Go phone app.",
+    "Carriers pay per truck, owner-operators can add Go+ for $30 a month, brokers pay by load volume, and companies that do both save 25% on the brokerage. Free plans for both, 20% off for the first year at launch, and every plan includes the desktop and the Harlo Go phone app.",
   alternates: { canonical: "/pricing" },
 };
 
 type Cell = boolean | string;
 
-const COMPARE: { group: string; rows: [string, Cell, Cell, Cell, Cell][] }[] = [
+const COMPARE: { group: string; rows: [string, Cell, Cell, Cell, Cell, Cell][] }[] = [
   {
     group: "Limits",
     rows: [
-      ["Trucks", "Up to 2", "4 to 25", "26 to 100", "More than 100"],
-      ["Users", "Up to 3", "Unlimited", "Unlimited", "Unlimited"],
-      ["Loads", "30 a month", "Unlimited", "Unlimited", "Unlimited"],
-      ["AI credits included", "25 a month", "75 per truck", "100 per truck", "Custom"],
-      ["Extra AI credits", false, "5¢ each", "4¢ each", "Contract"],
+      ["Trucks", "Up to 2", "Up to 2", "3 to 25", "26 to 100", "More than 100"],
+      ["Users", "Up to 3", "Up to 3", "Unlimited", "Unlimited", "Unlimited"],
+      ["Loads", "30 a month", "Unlimited", "Unlimited", "Unlimited", "Unlimited"],
+      ["AI credits included", "25 a month", "150 a month", "75 per truck", "100 per truck", "Custom"],
+      ["Extra AI credits", false, false, "5¢ each", "4¢ each", "Contract"],
     ],
   },
   {
     group: "Operations",
     rows: [
-      ["Loads, stops and documents", true, true, true, true],
-      ["Dispatch with driver, truck and trailer", true, true, true, true],
-      ["CDL, medical card and registration tracking", true, true, true, true],
-      ["Maintenance and out-of-service records", true, true, true, true],
-      ["Margin, driver pay and advances per load", true, true, true, true],
-      ["Truck-routed miles", false, true, true, true],
-      ["Driver text messages", false, true, true, true],
+      ["Loads, stops and documents", true, true, true, true, true],
+      ["Dispatch with driver, truck and trailer", true, true, true, true, true],
+      ["CDL, medical card and registration tracking", true, true, true, true, true],
+      ["Maintenance and out-of-service records", true, true, true, true, true],
+      ["Margin, driver pay and advances per load", true, true, true, true, true],
+      ["Auto check-in at every stop", false, "From your phone", true, true, true],
+      ["Detention called out and billed in one tap", false, true, true, true, true],
+      ["Rate check and truck-routed miles", false, true, true, true, true],
+      ["Driver text messages", false, true, true, true, true],
+      ["ELD connections and the Harlo API", false, false, true, true, true],
     ],
   },
   {
     group: "Apps",
     rows: [
-      ["Harlo on desktop", true, true, true, true],
-      ["Harlo Go phone app", true, true, true, true],
-      ["Harlo Driver app for your drivers", false, true, true, true],
+      ["Harlo on desktop", true, true, true, true, true],
+      ["Harlo Go phone app", true, true, "Companion", "Companion", "Companion"],
+      ["Harlo Driver app for your drivers", false, false, true, true, true],
+      ["Away mode: alerts follow you to your phone", false, false, true, true, true],
     ],
   },
   {
     group: "Ike",
     rows: [
-      ["Reads rate confirmations, BOLs and PODs", true, true, true, true],
-      ["Ask Ike about your operation", false, true, true, true],
+      ["Reads rate confirmations", true, true, true, true, true],
+      ["Reads BOLs and PODs", true, true, true, true, true],
+      ["Morning brief, suggestions and Ask Ike", false, true, true, true, true],
     ],
   },
   {
     group: "Team and security",
     rows: [
-      ["Audit log", true, true, true, true],
-      ["Custom roles and permissions", false, true, true, true],
-      ["Single sign-on", false, false, true, true],
+      ["Audit log", true, true, true, true, true],
+      ["Teams, custom roles and permissions", false, false, true, true, true],
+      ["Single sign-on", false, false, false, true, true],
     ],
   },
 ];
 
-const HEAD = ["Free", "Pro", "Fleet", "Enterprise"];
+const HEAD = ["Free", "Go+", "Pro", "Fleet", "Enterprise"];
 
 const BROKER_COMPARE: { group: string; rows: [string, Cell, Cell, Cell][] }[] = [
   {
     group: "Limits",
     rows: [
       ["Loads included a month", "25", "200", "750"],
-      ["Each extra load", false, "$1.75", "$1.25"],
+      ["Each extra load", false, "$2.00", "$1.50"],
       ["Users", "Up to 3", "Unlimited", "Unlimited"],
       ["AI credits included", "25 a month", "400 a month", "1,500 a month"],
       ["Extra AI credits", false, "5¢ each", "4¢ each"],

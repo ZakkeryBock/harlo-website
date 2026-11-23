@@ -162,7 +162,9 @@ export default function TermsPage() {
         <p>
           Harlo has a Free plan and paid plans. The current plans, prices, and limits are published
           on our pricing page and are part of the Order. Carrier plans are priced per truck (power
-          units — tractors and straight trucks, not trailers). Brokerage plans are priced by the
+          units — tractors and straight trucks, not trailers), except Go+, a flat monthly price for
+          up to two trucks. Introductory discounts run for the period and on the terms the pricing
+          page states, then the plan renews at its list price. Brokerage plans are priced by the
           loads included each month, with a per-load charge for loads above that number.
           Enterprise is priced by contract. Paid plans are billed monthly or annually and include a
           monthly allowance of AI credits. Per-load and AI usage above an allowance is billed after

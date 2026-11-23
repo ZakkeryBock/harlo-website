@@ -6,7 +6,7 @@ import { WorkspaceSwitcher } from "@/components/workspaces";
 import { PlatformGrid } from "@/components/platform";
 import { IkeConsole } from "@/components/ike-console";
 import { Button, Check, Container } from "@/components/ui";
-import { BUNDLE_BROKER_DISCOUNT, LINKS, brokerPlan, plan, usd } from "@/lib/site";
+import { BUNDLE_BROKER_DISCOUNT, LINKS, brokerPlan, introPrice, plan, usd } from "@/lib/site";
 import { GUARDRAILS, TRIAL_NOTE } from "@/lib/content";
 
 const PROMISES = ["Live the day you sign up", "Carriers, brokers, or both", "Desktop, phone and driver apps"];
@@ -59,8 +59,20 @@ const HOME_FAQ: QA[] = [
 ];
 
 const TEASER = [
-  { who: "Carriers", price: usd(plan("pro").month!), unit: "per truck / mo", note: "Free up to 2 trucks", href: "/pricing#carrier" },
-  { who: "Brokers", price: usd(brokerPlan("broker").month!), unit: "/ mo, 200 loads", note: "Free up to 25 loads a month", href: "/pricing#broker" },
+  {
+    who: "Carriers",
+    price: usd(introPrice(plan("pro").month!)),
+    unit: "per truck / mo at launch",
+    note: `Free up to 2 trucks. Go+ ${usd(plan("go_plus").month!)} / mo.`,
+    href: "/pricing#carrier",
+  },
+  {
+    who: "Brokers",
+    price: usd(introPrice(brokerPlan("broker").month!)),
+    unit: "/ mo at launch, 200 loads",
+    note: "Free up to 25 loads a month",
+    href: "/pricing#broker",
+  },
   {
     who: "Carrier + Broker",
     price: `${BUNDLE_BROKER_DISCOUNT * 100}% off`,

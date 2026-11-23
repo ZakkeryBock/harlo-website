@@ -3,12 +3,14 @@ import Link from "next/link";
 import { EndCta } from "@/components/end-cta";
 import { Phone } from "@/components/devices";
 import { Button, Check, Container } from "@/components/ui";
-import { LINKS } from "@/lib/site";
+import { LINKS, plan, usd } from "@/lib/site";
+
+const GO_PLUS = plan("go_plus");
 
 export const metadata: Metadata = {
   title: "Harlo Go: Harlo on your phone",
   description:
-    "Harlo Go is the Harlo phone app, included with every plan, Free included. Approve what Ike flags, check any load and snap paperwork from anywhere.",
+    "Harlo Go is the Harlo phone app, included with every plan, Free included. Go+ adds Ike, auto check-in and detention billing for $30 a month.",
   alternates: { canonical: "/go" },
 };
 
@@ -49,7 +51,9 @@ export default function GoPage() {
                 See all Harlo apps
               </Button>
             </div>
-            <p className="mt-4 text-sm text-muted">Free for up to 2 trucks. Same account on phone and desktop.</p>
+            <p className="mt-4 text-sm text-muted">
+              Free for up to 2 trucks, Go+ free for 14 days. Same account on phone and desktop.
+            </p>
           </div>
           <Phone />
         </Container>
@@ -81,8 +85,33 @@ export default function GoPage() {
               "Up to 2 trucks, 3 users and 30 loads a month",
               "Harlo Go on your phone and Harlo on any desktop",
               "25 AI credits a month for Ike",
+              `Go+ for ${usd(GO_PLUS.month!)} a month: Ike, unlimited loads and ${GO_PLUS.ai.replace(" a month", "")}`,
               "Grow into Pro: same apps, same records, more of the system",
             ].map((x) => (
+              <li key={x} className="flex gap-3">
+                <Check className="mt-1.5 text-rust-ink" />
+                <span className="text-ink">{x}</span>
+              </li>
+            ))}
+          </ul>
+        </Container>
+      </section>
+
+      <section className="border-t border-line py-20 sm:py-24">
+        <Container className="grid gap-12 lg:grid-cols-2 lg:gap-20">
+          <div>
+            <p className="text-sm font-semibold text-rust-ink">Go+ · {usd(GO_PLUS.month!)} a month</p>
+            <h2 className="mt-3 text-h2 font-extrabold">It logs your stops. It catches your detention.</h2>
+            <p className="mt-5 text-lead">
+              Pull into the dock and your arrival is already on the load. Sit past free time and your phone tells you,
+              with the broker one tap away. Pull out and the detention is ready to bill.
+            </p>
+            <div className="mt-8">
+              <Button href={LINKS.goSignup}>Try Go+ free for 14 days</Button>
+            </div>
+          </div>
+          <ul className="grid content-start gap-4 text-lead">
+            {GO_PLUS.includes.slice(1).map((x) => (
               <li key={x} className="flex gap-3">
                 <Check className="mt-1.5 text-rust-ink" />
                 <span className="text-ink">{x}</span>
@@ -114,6 +143,7 @@ export default function GoPage() {
         body="Sign up on your phone in two minutes."
         href={LINKS.goSignup}
         label="Start free on your phone"
+        note="Try Go+ free for 14 days. No card required."
       />
     </main>
   );

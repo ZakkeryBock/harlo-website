@@ -80,7 +80,8 @@ export default function IkePage() {
               Every plan includes monthly AI credits, from 25 on Free to 100 per truck on Fleet. One credit is one task.
             </p>
             <p>
-              Paid plans can go past the allowance at a few cents a credit, up to a hard ceiling.{" "}
+              Pro and up can go past the allowance at a few cents a credit, up to a hard ceiling. Go+ includes 150
+              credits a month for owner-operators.{" "}
               <Link href="/pricing" className="font-semibold text-rust-ink underline-offset-4 hover:underline">
                 See credits by plan
               </Link>
