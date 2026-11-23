@@ -12,9 +12,17 @@ const COLUMNS = [
       { href: "/brokers", label: "For brokers" },
       { href: "/workspaces", label: "Workspaces" },
       { href: "/ike", label: "Ike" },
-      { href: "/apps", label: "Apps" },
-      { href: "/go", label: "Harlo Go" },
       { href: "/pricing", label: "Pricing" },
+    ],
+  },
+  {
+    title: "Apps",
+    links: [
+      { href: "/apps#desktop", label: "Harlo for desktop" },
+      { href: "/go", label: "Harlo Go" },
+      { href: "/apps#driver", label: "Harlo Driver" },
+      { href: "/apps", label: "All apps" },
+      { href: LINKS.developers, label: "Harlo API" },
     ],
   },
   {
@@ -42,8 +50,8 @@ const COLUMNS = [
 export function Footer() {
   return (
     <footer className="on-pine bg-pine text-on-pine-muted">
-      <Container className="grid gap-12 py-16 md:grid-cols-[1.4fr_repeat(3,1fr)]">
-        <div className="max-w-xs">
+      <Container className="grid gap-12 py-16 sm:grid-cols-2 lg:grid-cols-[1.4fr_repeat(4,1fr)]">
+        <div className="max-w-xs sm:col-span-2 lg:col-span-1">
           <Wordmark className="h-5 w-auto text-cream" />
           <p className="mt-6 text-[1.75rem] leading-none font-extrabold tracking-[-0.03em] text-white">
             Logistics, <span className="text-rust-light">redefined.</span>
